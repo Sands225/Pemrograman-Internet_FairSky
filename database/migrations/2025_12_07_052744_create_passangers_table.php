@@ -7,18 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id('user_id');
-            $table->string('email', 100)->unique();
-            $table->string('password_hash', 255);
+        Schema::create('passengers', function (Blueprint $table) {
+            $table->id('passenger_id');
+            $table->foreignId('booking_id')->constrained('bookings')->cascadeOnDelete();
             $table->string('full_name', 100);
-            $table->string('phone_number', 20)->nullable();
+            $table->string('identity_number', 50);
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('passengers');
     }
 };
