@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('airports', function (Blueprint $table) {
-            $table->id('airport_id');
+            $table->id();
             $table->string('airport_code', 3)->unique();
             $table->string('airport_name', 100);
             $table->string('city', 50);

@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('airlines', function (Blueprint $table) {
-            $table->id('airline_id');
+            $table->id();
             $table->string('airline_code', 5);
             $table->string('airline_name', 100);
             $table->string('logo_url', 255)->nullable();

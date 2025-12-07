@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('tickets', function (Blueprint $table) {
-            $table->id('ticket_id');
+            $table->id();
             $table->foreignId('booking_id')->constrained('bookings');
             $table->foreignId('passenger_id')->constrained('passengers');
             $table->foreignId('flight_id')->constrained('flights');

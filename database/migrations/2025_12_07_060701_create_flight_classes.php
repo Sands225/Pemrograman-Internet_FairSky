@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('flight_classes', function (Blueprint $table) {
-            $table->id('class_id');
+            $table->id();
             $table->foreignId('flight_id')->constrained('flights')->cascadeOnDelete();
             $table->enum('class_type', ['Economy', 'Business', 'First']);
             $table->decimal('price', 15, 2);

@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('bookings', function (Blueprint $table) {
-            $table->id('booking_id');
+            $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->string('booking_code', 8)->unique();
             $table->timestamp('booking_date')->useCurrent();

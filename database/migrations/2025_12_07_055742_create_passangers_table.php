@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('passengers', function (Blueprint $table) {
-            $table->id('passenger_id');
+            $table->id();
             $table->foreignId('booking_id')->constrained('bookings')->cascadeOnDelete();
             $table->string('full_name', 100);
             $table->string('identity_number', 50);
