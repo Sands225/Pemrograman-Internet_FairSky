@@ -2,82 +2,106 @@
 
 @section('title', 'Register')
 
-@section('content')
+@section('css')
 <style>
-    .plane-background {
-        background: url('/images/homepage_airplane_bg.jpeg');
-        background-size: cover;
-        background-position: center;
-        min-height: 100vh;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .transparent-card {
-        background-color: rgba(255, 255, 255, 0.90);
-    }
+.hero-section {
+    background-image: url('{{ asset('images/homepage_airplane_bg.jpeg') }}');
+    background-size: cover;
+    background-position: center;
+}
 </style>
+@endsection
 
-<div class="container-fluid d-flex flex-column justify-content-center plane-background pt-5">
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-            <div class="card shadow-lg transparent-card" style="border-radius: 15px;">
-                <div class="card-body p-4">
+@section('content')
 
-                    <h3 class="text-center my-4 fw-bold">Create Your Account</h3>
+{{-- FULL PAGE WRAPPER --}}
+<div class="hero-section min-h-screen bg-black/30 bg-blend-darken flex justify-center items-center px-4 pt-28 pb-10">
 
-                    @if (session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
-                    @endif
-                    @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
+    {{-- REGISTER CARD --}}
+    <div class="w-full max-w-md bg-white/90 backdrop-blur shadow-2xl rounded-2xl p-8">
 
-                    <form action="{{ route('register') }}" method="POST">
-                        @csrf
+        <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">
+            Create Your Account
+        </h2>
 
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Full Name</label>
-                            <input type="text" name="full_name" class="form-control @error('full_name') is-invalid @enderror" required>
-                            @error('full_name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Email</label>
-                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" required>
-                            @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Phone Number</label>
-                            <input type="text" name="phone_number" class="form-control">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Password</label>
-                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
-                            @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <button type="submit" class="btn btn-primary w-100 fw-semibold mt-3">
-                            Register
-                        </button>
-                    </form>
-
-                    <div class="text-center my-3">
-                        <p>Already have an account?
-                            <a href="{{ route('login.page') }}" class="text-decoration-none">Login here</a>
-                        </p>
-                    </div>
-
-                </div>
+        {{-- ERROR MESSAGE --}}
+        @if ($errors->any())
+            <div class="mb-4 px-4 py-3 bg-red-100 text-red-700 rounded-lg">
+                <ul class="list-disc pl-5">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
+        @endif
+
+        {{-- FORM --}}
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+
+            {{-- FULL NAME --}}
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-2" for="name">Full Name</label>
+                <input type="text" id="name" name="name"
+                    class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 
+                    @error('name') border-red-500 @enderror"
+                    value="{{ old('name') }}" required>
+                @error('name')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- EMAIL --}}
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-2" for="email">Email</label>
+                <input type="email" id="email" name="email"
+                    class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 
+                    @error('email') border-red-500 @enderror"
+                    value="{{ old('email') }}" required>
+                @error('email')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- PASSWORD --}}
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-2" for="password">Password</label>
+                <input type="password" id="password" name="password"
+                    class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 
+                    @error('password') border-red-500 @enderror"
+                    required>
+                @error('password')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- CONFIRM PASSWORD --}}
+            <div class="mb-3">
+                <label class="block text-sm font-semibold text-gray-700 mb-2" for="password_confirmation">
+                    Confirm Password
+                </label>
+                <input type="password" id="password_confirmation" name="password_confirmation"
+                    class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    required>
+            </div>
+
+            {{-- BUTTON --}}
+            <button type="submit"
+                class="w-full mt-5 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold shadow-lg transition">
+                Register
+            </button>
+        </form>
+
+        {{-- LOGIN LINK --}}
+        <div class="text-center mt-5 text-sm">
+            <p>
+                Already have an account?
+                <a href="{{ route('login') }}" class="text-blue-600 font-semibold hover:underline">
+                    Login Now
+                </a>
+            </p>
         </div>
+
     </div>
 </div>
 

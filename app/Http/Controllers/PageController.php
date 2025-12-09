@@ -20,4 +20,9 @@ class PageController extends Controller
     {
         return view('register');
     }
+
+    public function results()
+    {
+        return view('results');
+    }
 }

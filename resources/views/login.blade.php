@@ -2,67 +2,87 @@
 
 @section('title', 'Login')
 
-@section('content')
+@section('css')
 <style>
-    .plane-background {
-        background: url('/images/homepage_airplane_bg.jpeg');
-        background-size: cover;
-        background-position: center;
-        min-height: 100vh;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .transparent-card {
-        background-color: rgba(255, 255, 255, 0.90);
-    }
+.hero-section {
+    background-image: url('{{ asset('images/homepage_airplane_bg.jpeg') }}');
+    background-size: cover;
+    background-position: center;
+}
 </style>
+@endsection
 
-<div class="container-fluid d-flex flex-column justify-content-center plane-background pt-5">
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-            <div class="card shadow-lg transparent-card" style="border-radius: 15px;">
-                <div class="card-body p-4">
-                    <h3 class="text-center my-4 fw-bold">Log In Your Account</h3>
+@section('content')
 
-                    @if (session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+{{-- FULL PAGE WRAPPER --}}
+<div class="hero-section h-screen bg-black/30 bg-blend-darken flex justify-center items-center px-4">
 
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+    {{-- LOGIN CARD --}}
+    <div class="w-full max-w-md bg-white/90 backdrop-blur shadow-2xl rounded-2xl p-8">
 
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold" for="email">Email</label>
-                            <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" required autofocus>
-                            @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+        <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">
+            Log In Your Account
+        </h2>
 
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold" for="password">Password</label>
-                            <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
-                            @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            <div class="text-end">
-                                {{-- <a href="{{ route('password.request') }}" class="text-decoration-none">Forgot Password?</a> --}}
-                                <a href="#" class="text-decoration-none">Forgot Password?</a>
-                            </div>
-                        </div>
+        {{-- ERROR --}}
+        @if (session('error'))
+            <div class="mb-4 px-4 py-3 bg-red-100 text-red-700 rounded-lg">
+                {{ session('error') }}
+            </div>
+        @endif
 
-                        <button type="submit" class="btn btn-primary w-100 fw-semibold mt-4">Login</button>
-                    </form>
+        {{-- FORM --}}
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
 
-                    <div class="text-center my-3">
-                        {{-- <a href="{{ route('password.request') }}" class="text-decoration-none">Forgot Password?</a> --}}
-                        <p> Don't have an account? <a href="#" class="text-decoration-none">Register Now!</a> </p>
-                    </div>
+            {{-- EMAIL --}}
+            <div class="mb-5">
+                <label class="block text-sm font-semibold text-gray-700 mb-2" for="email">Email</label>
+                <input type="email" 
+                       id="email" 
+                       name="email" 
+                       required autofocus
+                       class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 @error('email') border-red-500 @enderror">
+                @error('email')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- PASSWORD --}}
+            <div class="mb-3">
+                <label class="block text-sm font-semibold text-gray-700 mb-2" for="password">Password</label>
+                <input type="password" 
+                       id="password" 
+                       name="password" 
+                       required
+                       class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 @error('password') border-red-500 @enderror">
+                @error('password')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+
+                <div class="text-right mt-2">
+                    <a href="#" class="text-blue-600 text-sm hover:underline">Forgot Password?</a>
                 </div>
             </div>
+
+            {{-- LOGIN BUTTON --}}
+            <button type="submit"
+                class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold shadow-lg transition">
+                Login
+            </button>
+        </form>
+
+        {{-- REGISTER --}}
+        <div class="text-center mt-5 text-sm">
+            <p>
+                Don't have an account?
+                <a href="{{ route('register') }}" class="text-blue-600 font-semibold hover:underline">
+                    Register Now!
+                </a>
+            </p>
         </div>
+
     </div>
 </div>
+
 @endsection

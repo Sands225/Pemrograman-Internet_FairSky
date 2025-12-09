@@ -5,135 +5,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'SkyWings Aviation')</title>
 
-    <!-- Bootstrap CSS -->
-    <link 
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
-        rel="stylesheet"
-    >
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-    </style>
 
     @yield('css')
+
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    sans: ['Poppins', 'sans-serif'],
+                }
+            }
+        }
+    </script>
 </head>
 
-<body class="">
+<body class="bg-gray-50 font-sans">
 
-{{-- Navigation Bar --}}
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top pt-3 pb-3">
-    <div class="container">
+{{-- NAVIGATION --}}
+<nav class="bg-white shadow-sm fixed top-0 inset-x-0 z-50 py-3">
+    <div class="container mx-auto px-4 flex items-center justify-between">
 
-        {{-- Left Navigation : Logo --}}
-        <a class="navbar-brand fw-bold text-primary" href="{{ route('home') }}">
-            <img src="/images/logo.png" alt="" width="100px">
+        {{-- Logo --}}
+        <a href="{{ route('home') }}">
+            <img src="/images/logo.png" class="w-24" alt="logo">
         </a>
 
-        {{-- Toggle Button for Mobile --}}
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        {{-- Mobile Button --}}
+        <button id="mobileMenuBtn" class="lg:hidden text-gray-600 hover:text-gray-900">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
         </button>
 
-        {{-- Middle Navigation : Links --}}
-        <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
-            <div class="position-absolute top-50 start-50 translate-middle d-none d-lg-flex">
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#Flights">Bookings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Help</a>
-                    </li>
-                </ul>
-            </div>
+        {{-- Desktop Menu --}}
+        <div class="hidden lg:flex items-center space-x-8">
+            <a href="#Flights" class="text-gray-600 hover:text-blue-600 transition">Bookings</a>
+            <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
+            <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Help</a>
+        </div>
 
-            {{-- Right Navigation : Login --}}
-            <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
-                @if (session()->has('user_id'))
-                    {{-- Jika user sudah login --}}
-                    <div class="d-flex align-items-center">
-                        <span class="me-3 fw-semibold">
-                            Hi, {{ session('user_name') }}
-                        </span>
-
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button class="btn btn-outline-danger">Logout</button>
-                        </form>
-                    </div>
-
-                @else
-                    {{-- Jika user belum login --}}
-                    <a href="{{ route('login.page') }}" class="btn btn-primary ms-2">
-                        Login
-                    </a>
-                @endif
-
-            </div>
+        {{-- Auth --}}
+        <div class="hidden lg:flex items-center">
+            @if(session()->has('user_id'))
+                <span class="mr-3 font-semibold text-gray-700">
+                    Hi, {{ session('user_name') }}
+                </span>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="px-4 py-2 border border-red-500 text-red-500 rounded 
+                        hover:bg-red-500 hover:text-white transition">
+                        Logout
+                    </button>
+                </form>
+            @else
+                <a href="{{ route('login.page') }}" 
+                   class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                    Login
+                </a>
+            @endif
         </div>
     </div>
+
+    {{-- Mobile Menu --}}
+    <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-4 px-4">
+        <div class="flex flex-col space-y-3">
+            <a href="#Flights" class="text-gray-600 hover:text-blue-600 transition">Bookings</a>
+            <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
+            <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Help</a>
+
+            @if(session()->has('user_id'))
+                <span class="font-semibold text-gray-700">Hi, {{ session('user_name') }}</span>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="w-full px-4 py-2 border border-red-500 text-red-500 rounded 
+                        hover:bg-red-500 hover:text-white transition">
+                        Logout
+                    </button>
+                </form>
+            @else
+                <a href="{{ route('login.page') }}" 
+                   class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-center transition">
+                    Login
+                </a>
+            @endif
+        </div>
+    </div>
+
 </nav>
 
-{{-- Main Content --}}
+{{-- MAIN CONTENT --}}
 <main class="">
     @yield('content')
 </main>
 
-{{-- Footer --}}
-<footer class="bg-dark text-white pt-5 pb-3">
-    <div class="container">
+{{-- FOOTER --}}
+<footer class="bg-gray-900 text-white pt-12 pb-6">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
 
-        <div class="row">
-
-            <div class="col-md-3 mb-4">
-                <img src="/images/logo.png" alt="" width="100px">
-                <p class="text-secondary">
+            {{-- Logo --}}
+            <div>
+                <img src="/images/logo.png" class="w-24 mb-4" alt="logo">
+                <p class="text-gray-400">
                     Your trusted aviation partner for flights, charters, and training.
                 </p>
             </div>
 
-            <div class="col-md-3 mb-4">
-                <h6 class="fw-bold mb-3">Quick Links</h6>
-                <ul class="list-unstyled text-secondary">
-                    {{-- Add links here if needed --}}
+            {{-- Quick Links --}}
+            <div>
+                <h6 class="font-bold mb-4">Quick Links</h6>
+                <ul class="space-y-2 text-gray-400">
+                    <li>—</li>
                 </ul>
             </div>
 
-            <div class="col-md-3 mb-4">
-                <h6 class="fw-bold mb-3">Company</h6>
-                <ul class="list-unstyled text-secondary">
-                    {{-- Add links here if needed --}}
+            {{-- Company --}}
+            <div>
+                <h6 class="font-bold mb-4">Company</h6>
+                <ul class="space-y-2 text-gray-400">
+                    <li>—</li>
                 </ul>
             </div>
 
-            <div class="col-md-3 mb-4">
-                <h6 class="fw-bold mb-3">Contact</h6>
-                <p class="text-secondary">Email: info@skywings.com</p>
-                <p class="text-secondary">Phone: +1 (555) 123-4567</p>
+            {{-- Contact --}}
+            <div>
+                <h6 class="font-bold mb-4">Contact</h6>
+                <p class="text-gray-400">Email: info@skywings.com</p>
+                <p class="text-gray-400">Phone: +1 (555) 123-4567</p>
             </div>
-
         </div>
 
-        <hr class="border-secondary">
+        <hr class="border-gray-700 mb-6">
 
-        <div class="text-center text-secondary">
+        <p class="text-center text-gray-400">
             &copy; 2024 SkyWings Aviation. All rights reserved.
-        </div>
-
+        </p>
     </div>
 </footer>
 
-{{-- JavaScript --}}
-<script 
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+{{-- JS --}}
+<script>
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
+        document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
 </script>
+
 @yield('js')
 
 </body>

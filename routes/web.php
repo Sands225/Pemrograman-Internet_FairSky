@@ -18,3 +18,5 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 // Forgot password
 Route::get('/forgot-password', [PageController::class, 'forgotPassword'])->name('password.forgot.page');
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('password.forgot');
+
+Route::get('/results', [PageController::class, 'results'])->name('results');
