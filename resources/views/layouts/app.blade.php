@@ -56,9 +56,26 @@
 
             {{-- Right Navigation : Login --}}
             <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
-                <a href="{{ route('login') }}" class="btn btn-primary ms-2">
-                    Login
-                </a>
+                @if (session()->has('user_id'))
+                    {{-- Jika user sudah login --}}
+                    <div class="d-flex align-items-center">
+                        <span class="me-3 fw-semibold">
+                            Hi, {{ session('user_name') }}
+                        </span>
+
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="btn btn-outline-danger">Logout</button>
+                        </form>
+                    </div>
+
+                @else
+                    {{-- Jika user belum login --}}
+                    <a href="{{ route('login.page') }}" class="btn btn-primary ms-2">
+                        Login
+                    </a>
+                @endif
+
             </div>
         </div>
     </div>
