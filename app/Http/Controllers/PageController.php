@@ -15,4 +15,8 @@ class PageController extends Controller
     {
         return view('login');
     }
+
+    public function flights(){
+        return view('flights');
+    }
 }
