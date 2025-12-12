@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Airline extends Model
 {
-    //
+    // L3L3
 }
