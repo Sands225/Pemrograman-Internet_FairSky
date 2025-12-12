@@ -17,6 +17,28 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UsersTableSeeder::class,
+
+            // Master data seeders
+            // import airline dulu untuk 
+            AirlineSeeder::class,
+            // import airline dulu untuk 
+            AirportSeeder::class,
+
+            // Operational data seeders
+            // Pesawat butuh Airline
+            AirplaneSeeder::class,  
+            // Flight butuh Airline, Pesawat, dan Bandara
+            FlightSeeder::class,    
+            // FlightClass butuh Flight
+            FlightClassSeeder::class, 
+
+            // Transactional data seeders
+            // Booking butuh User
+            BookingSeeder::class,   
+            // Passenger butuh Booking
+            PassengerSeeder::class, 
+            // Ticket butuh Booking, Passenger, dan Flight
+            TicketSeeder::class,
         ]);
     }
 }

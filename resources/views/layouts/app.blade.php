@@ -47,7 +47,7 @@
 
         {{-- Desktop Menu --}}
         <div class="hidden lg:flex items-center space-x-8">
-            <a href="#Flights" class="text-gray-600 hover:text-blue-600 transition">Bookings</a>
+            <a href="/flights" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
             <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
             <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Help</a>
         </div>
@@ -66,7 +66,7 @@
                     </button>
                 </form>
             @else
-                <a href="{{ route('login.page') }}" 
+                <a href="{{ route('login') }}" 
                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
                     Login
                 </a>
@@ -77,7 +77,7 @@
     {{-- Mobile Menu --}}
     <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-4 px-4">
         <div class="flex flex-col space-y-3">
-            <a href="#Flights" class="text-gray-600 hover:text-blue-600 transition">Bookings</a>
+            <a href="/flights" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
             <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
             <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Help</a>
 
@@ -91,7 +91,7 @@
                     </button>
                 </form>
             @else
-                <a href="{{ route('login.page') }}" 
+                <a href="{{ route('login') }}" 
                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-center transition">
                     Login
                 </a>

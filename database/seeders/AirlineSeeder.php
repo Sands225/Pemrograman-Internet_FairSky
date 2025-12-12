@@ -6,30 +6,28 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class AirportSeeder extends Seeder
+class AirlineSeeder extends Seeder
 {
     public function run()
     {
-        $airports = [
-            ['code' => 'CGK', 'name' => 'Soekarno-Hatta International Airport', 'city' => 'Jakarta', 'country' => 'Indonesia', 'timezone' => 'Asia/Jakarta'],
-            ['code' => 'DPS', 'name' => 'Ngurah Rai International Airport', 'city' => 'Denpasar', 'country' => 'Indonesia', 'timezone' => 'Asia/Makassar'],
-            ['code' => 'SUB', 'name' => 'Juanda International Airport', 'city' => 'Surabaya', 'country' => 'Indonesia', 'timezone' => 'Asia/Jakarta'],
-            ['code' => 'KNO', 'name' => 'Kualanamu International Airport', 'city' => 'Medan', 'country' => 'Indonesia', 'timezone' => 'Asia/Jakarta'],
-            ['code' => 'UPG', 'name' => 'Sultan Hasanuddin International Airport', 'city' => 'Makassar', 'country' => 'Indonesia', 'timezone' => 'Asia/Makassar'],
-            ['code' => 'SIN', 'name' => 'Changi Airport', 'city' => 'Singapore', 'country' => 'Singapore', 'timezone' => 'Asia/Singapore'],
-            ['code' => 'KUL', 'name' => 'Kuala Lumpur International Airport', 'city' => 'Kuala Lumpur', 'country' => 'Malaysia', 'timezone' => 'Asia/Kuala_Lumpur'],
-            ['code' => 'HND', 'name' => 'Haneda Airport', 'city' => 'Tokyo', 'country' => 'Japan', 'timezone' => 'Asia/Tokyo'],
-            ['code' => 'DXB', 'name' => 'Dubai International Airport', 'city' => 'Dubai', 'country' => 'United Arab Emirates', 'timezone' => 'Asia/Dubai'],
-            ['code' => 'YIA', 'name' => 'Yogyakarta International Airport', 'city' => 'Yogyakarta', 'country' => 'Indonesia', 'timezone' => 'Asia/Jakarta'],
+        $airlines = [
+            ['code' => 'GA', 'name' => 'Garuda Indonesia'],
+            ['code' => 'SQ', 'name' => 'Singapore Airlines'],
+            ['code' => 'QZ', 'name' => 'Indonesia AirAsia'],
+            ['code' => 'JT', 'name' => 'Lion Air'],
+            ['code' => 'ID', 'name' => 'Batik Air'],
+            ['code' => 'QG', 'name' => 'Citilink'],
+            ['code' => 'MH', 'name' => 'Malaysia Airlines'],
+            ['code' => 'EK', 'name' => 'Emirates'],
+            ['code' => 'JL', 'name' => 'Japan Airlines'],
+            ['code' => 'QR', 'name' => 'Qatar Airways'],
         ];
 
-        foreach ($airports as $airport) {
-            DB::table('airports')->insert([
-                'airport_code' => $airport['code'],
-                'airport_name' => $airport['name'],
-                'city' => $airport['city'],
-                'country' => $airport['country'],
-                'timezone' => $airport['timezone'],
+        foreach ($airlines as $airline) {
+            DB::table('airlines')->insert([
+                'airline_code' => $airline['code'],
+                'airline_name' => $airline['name'],
+                'logo_url' => 'https://via.placeholder.com/150?text=' . $airline['code'], // Dummy logo
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

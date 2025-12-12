@@ -12,7 +12,7 @@ class BookingSeeder extends Seeder
     public function run()
     {
         // Ambil ID User acak (selain admin)
-        $userIds = DB::table('users')->where('role', '!=', 'admin')->pluck('id')->toArray();
+        $userIds = DB::table('users')->pluck('id')->toArray();
 
         // Jika tidak ada user lain, pakai ID 1 (admin) sebagai fallback
         if (empty($userIds)) $userIds = [1];
