@@ -6,8 +6,8 @@
     <title>@yield('title', 'SkyWings Aviation')</title>
 
     <!-- Bootstrap CSS -->
-    <link 
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
@@ -43,7 +43,7 @@
             <div class="position-absolute top-50 start-50 translate-middle d-none d-lg-flex">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#Flights">Bookings</a>
+                        <a class="nav-link" href="/flights">Flights</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#about">About Us</a>
@@ -114,7 +114,7 @@
 </footer>
 
 {{-- JavaScript --}}
-<script 
+<script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
 </script>
 @yield('js')
