@@ -3,7 +3,7 @@
 @section('title', 'Flights')
 
 @section('content')
-    <div class="bg-gray-50 min-h-screen py-10">
+    <div class="bg-gray-50 min-h-screenc py-19">
         <div class="container mx-auto px-4">
 
             <h1 class="text-3xl font-bold text-gray-800 mb-8">Search Results</h1>
@@ -47,11 +47,17 @@
 
                 <main class="w-full lg:w-3/4">
 
-                    <div class="flex items-center gap-6 mb-6 text-sm font-medium border-b border-gray-200">
-                        <button class="text-blue-600 border-b-2 border-blue-600 pb-2 px-1">Rekomendasi FairSky</button>
-                        <button class="text-gray-500 hover:text-blue-600 pb-2 px-1">Harga Termurah</button>
-                        <button class="text-gray-500 hover:text-blue-600 pb-2 px-1">Durasi Tercepat</button>
-                    </div>
+                    <div class="flex items-center gap-2 mb-6 overflow-x-auto pb-2">
+                        <a href="{{ request()->fullUrlWithQuery(['sort' => null]) }}" 
+                        class="whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-full shadow-sm transition{{ !request('sort') ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600' }}">Rekomendasi FairSky</a>
+                        
+                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'cheapest']) }}" 
+                        class="whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-full shadow-sm transition{{ request('sort') == 'cheapest' ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600' }}">Harga Termurah</a>
+       
+                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'fastest']) }}" 
+                        class="whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-full shadow-sm transition{{ request('sort') == 'fastest' ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600' }}">Durasi Tercepat</a>
+    
+    </div>
 
                     @forelse($flights as $flight)
                         @php
