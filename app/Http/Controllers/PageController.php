@@ -19,4 +19,9 @@ class PageController extends Controller
     public function flights(){
         return view('flights');
     }
+
+    public function register()
+    {
+        return view('register');
+    }
 }
