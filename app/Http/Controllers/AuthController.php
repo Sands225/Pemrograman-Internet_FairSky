@@ -33,7 +33,32 @@ class AuthController extends Controller
         Session::put('user_name', $user->full_name);
         Session::put('user_email', $user->email);
 
-        return redirect('/'); // redirect ke homepage
+        return redirect('/');
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email'     => 'required|email|unique:users,email',
+            'password'  => 'required|min:6|confirmed'
+        ]);
+
+        // simpan user ke database
+        $userId = DB::table('users')->insertGetId([
+            'full_name'     => $request->full_name,
+            'email'         => $request->email,
+            'password_hash' => Hash::make($request->password),
+            'created_at'    => now(),
+            'updated_at'    => now(),
+        ]);
+
+        // login otomatis setelah register
+        Session::put('user_id', $userId);
+        Session::put('user_name', $request->full_name);
+        Session::put('user_email', $request->email);
+
+        return redirect('/');
     }
 
     public function logout()

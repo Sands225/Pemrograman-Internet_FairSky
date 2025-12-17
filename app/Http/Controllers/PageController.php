@@ -11,7 +11,7 @@ class PageController extends Controller
         return view('home');
     }
 
-    public function login()
+    public function showLogin()
     {
         return view('auth.login');
     }
@@ -20,7 +20,7 @@ class PageController extends Controller
         return view('flights.index');
     }
 
-    public function register()
+    public function showRegister()
     {
         return view('auth.register');
     }
