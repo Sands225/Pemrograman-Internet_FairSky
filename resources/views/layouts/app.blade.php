@@ -66,7 +66,7 @@
                     </button>
                 </form>
             @else
-                <a href="{{ route('login') }}" 
+                <a href="{{ route('auth.login') }}" 
                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
                     Login
                 </a>
@@ -91,7 +91,7 @@
                     </button>
                 </form>
             @else
-                <a href="{{ route('login') }}" 
+                <a href="{{ route('auth.login') }}" 
                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-center transition">
                     Login
                 </a>

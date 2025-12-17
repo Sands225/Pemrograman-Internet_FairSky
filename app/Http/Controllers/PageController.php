@@ -13,15 +13,15 @@ class PageController extends Controller
 
     public function login()
     {
-        return view('login');
+        return view('auth.login');
     }
 
     public function flights(){
-        return view('flights');
+        return view('flights.index');
     }
 
     public function register()
     {
-        return view('register');
+        return view('auth.register');
     }
 }

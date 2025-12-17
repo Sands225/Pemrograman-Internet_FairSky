@@ -39,7 +39,7 @@ class FlightController extends Controller
         // withQueryString() penting agar saat pindah page 2, filter sort tidak hilang
         $flights = $query->paginate(10)->withQueryString();
 
-        return view('flights', compact('flights'));
+        return view('flights.index', compact('flights'));
     }
 
     public function show(Flight $flight)

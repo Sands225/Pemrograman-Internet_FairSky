@@ -36,7 +36,7 @@
         @endif
 
         {{-- FORM --}}
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('auth.register') }}">
             @csrf
 
             {{-- FULL NAME --}}
@@ -96,7 +96,7 @@
         <div class="text-center mt-5 text-sm">
             <p>
                 Already have an account?
-                <a href="{{ route('login') }}" class="text-blue-600 font-semibold hover:underline">
+                <a href="{{ route('auth.login') }}" class="text-blue-600 font-semibold hover:underline">
                     Login Now
                 </a>
             </p>
