@@ -58,7 +58,7 @@
                 <span class="mr-3 font-semibold text-gray-700">
                     Hi, {{ session('user_name') }}
                 </span>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('auth.logout') }}">
                     @csrf
                     <button class="px-4 py-2 border border-red-500 text-red-500 rounded 
                         hover:bg-red-500 hover:text-white transition">
@@ -83,7 +83,7 @@
 
             @if(session()->has('user_id'))
                 <span class="font-semibold text-gray-700">Hi, {{ session('user_name') }}</span>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('auth.logout') }}">
                     @csrf
                     <button class="w-full px-4 py-2 border border-red-500 text-red-500 rounded 
                         hover:bg-red-500 hover:text-white transition">

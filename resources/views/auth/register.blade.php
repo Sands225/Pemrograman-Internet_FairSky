@@ -41,12 +41,12 @@
 
             {{-- FULL NAME --}}
             <div class="mb-4">
-                <label class="block text-sm font-semibold text-gray-700 mb-2" for="name">Full Name</label>
-                <input type="text" id="name" name="name"
+                <label class="block text-sm font-semibold text-gray-700 mb-2" for="full_name">Full Name</label>
+                <input type="text" id="full_name" name="full_name"
                     class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 
-                    @error('name') border-red-500 @enderror"
-                    value="{{ old('name') }}" required>
-                @error('name')
+                    @error('full_name') border-red-500 @enderror"
+                    value="{{ old('full_name') }}" required>
+                @error('full_name')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
