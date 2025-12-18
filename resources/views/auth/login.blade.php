@@ -32,7 +32,7 @@
         @endif
 
         {{-- FORM --}}
-        <form method="POST" action="{{ route('auth.login') }}">
+        <form method="POST" action="{{ route('login') }}">
             @csrf
 
             {{-- EMAIL --}}
@@ -76,7 +76,7 @@
         <div class="text-center mt-5 text-sm">
             <p>
                 Don't have an account?
-                <a href="{{ route('auth.register') }}" class="text-blue-600 font-semibold hover:underline">
+                <a href="{{ route('register') }}" class="text-blue-600 font-semibold hover:underline">
                     Register Now!
                 </a>
             </p>
