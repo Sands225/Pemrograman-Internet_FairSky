@@ -1,0 +1,54 @@
+name: Laravel CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Build Frontend assets
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy to VM
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.AZURE_HOST }}
+          username: ${{ secrets.AZURE_USER }}
+          key: ${{ secrets.AZURE_SSH_KEY }}
+          script: |
+            set -e
+
+            cd /var/www/Pemrograman-Internet_FairSky
+
+            echo "pull latest code"
+            git pull origin main
+
+            echo "install php dependencies"
+            composer install --no-dev --optimize-autoloader
+
+            echo "run migrations"
+            php artisan migrate --force
+
+            echo "optimize laravel"
+            php artisan optimize
+            php artisan config:clear
+            php artisan route:clear
+            php artisan view:clear
+
+            sudo systemctl reload php8.2-fpm
