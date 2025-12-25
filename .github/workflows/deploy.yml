@@ -68,7 +68,7 @@ jobs:
             git checkout -- composer.lock
 
             echo "=== Install dependencies with PHP 8.4 ==="
-            php8.4 /usr/bin/composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+            php8.4 /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
             echo "=== Run migrations ==="
             php8.4 artisan migrate --force
