@@ -1,4 +1,4 @@
-name: Laravel CI/CD Configuration
+name: Laravel CI/CD configuration
 
 on:
   push:
@@ -9,28 +9,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: setup php
+      # ========================
+      # PHP 8.4 for CI
+      # ========================
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.4
           extensions: mbstring, pdo, pdo_mysql, openssl, tokenizer, xml, ctype, json
           coverage: none
 
-      - name: verify php version
+      - name: Verify PHP version (CI)
         run: php -v
 
-      - name: install composer dependencies
+      # ========================
+      # Composer (CI)
+      # ========================
+      - name: Install Composer dependencies
         run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-      - name: build frontend assets
+      # ========================
+      # Frontend build
+      # ========================
+      - name: Build frontend assets
         run: |
           npm ci
           npm run build
 
-      - name: deplot to azure vm
+      # ========================
+      # Deploy to Azure VM
+      # ========================
+      - name: Deploy to Azure VM
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.AZURE_HOST }}
@@ -40,32 +52,32 @@ jobs:
           script: |
             set -e
 
-            cd /var/www/fairsky
+            cd /var/www/Pemrograman-Internet_FairSky
 
-            echo "pphp version"
+            echo "PHP version on VM"
             php -v
 
-            echo "ensure php 8.4"
+            echo "Ensure PHP 8.4"
             sudo update-alternatives --set php /usr/bin/php8.4
 
-            echo "php version after switch"
+            echo "Verify PHP after switch"
             php -v
 
-            echo "reset broken vendor"
+            echo "Reset broken vendor directory"
             rm -rf vendor
-            git checkout -- composer-lock
+            git checkout -- composer.lock
 
-            echo "install dependencies with php 8.4"
-            php8.4 /usr/local/bin/composer install --no-dev --optimizer-autoloader --no-interaction --prefer-dist
+            echo "Install dependencies with PHP 8.4"
+            php8.4 /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-            echo "run migration"
+            echo "Run migrations"
             php8.4 artisan migrate --force
 
-            echo "optimize laravel"
+            echo "Optimize Laravel"
             php8.4 artisan optimize
             php8.4 artisan config:clear
             php8.4 artisan route:clear
             php8.4 artisan view:clear
 
-            echo "reload php-fpm"
+            echo "Reload PHP-FPM"
             sudo systemctl reload php8.4-fpm
