@@ -1,4 +1,4 @@
-name: Laravel CI/CD configuration
+name: Laravel CI/CD
 
 on:
   push:
@@ -8,76 +8,64 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  steps:
+    - name: checkout code
+      uses: actions/checkout@v4
 
-      # ========================
-      # PHP 8.4 for CI
-      # ========================
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.4
-          extensions: mbstring, pdo, pdo_mysql, openssl, tokenizer, xml, ctype, json
-          coverage: none
+    - name: setup php
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.4
+        extensions: mbstring, pdo, pdo_mysql, openssl, tokenizer, xml, ctype, json
+        coverage: none
 
-      - name: Verify PHP version (CI)
-        run: php -v
+    - name: verify php version
+      run: php -v
 
-      # ========================
-      # Composer (CI)
-      # ========================
-      - name: Install Composer dependencies
-        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+    - name: install composer dependencies
+      run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-      # ========================
-      # Frontend build
-      # ========================
-      - name: Build frontend assets
-        run: |
-          npm ci
-          npm run build
+    - name: build frontend assets
+      run: |
+        npm ci
+        npm run build
 
-      # ========================
-      # Deploy to Azure VM
-      # ========================
-      - name: Deploy to Azure VM
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.AZURE_HOST }}
-          username: ${{ secrets.AZURE_USER }}
-          key: ${{ secrets.AZURE_SSH_KEY }}
-          port: 2121
-          script: |
-            set -e
+    - name: deplot to azure vm
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.AZURE_HOST }}
+        username: ${{ secrets.AZURE_USER }}
+        key: ${{ secrets.AZURE_SSH_KEY }}
+        port: 2121
+        script: |
+          set -e
 
-            cd /var/www/Pemrograman-Internet_FairSky
+          cd /var/www/fairsky
 
-            echo "=== PHP version on VM ==="
-            php -v
+          echo "pphp version"
+          php -v
 
-            echo "=== Ensure PHP 8.4 is default ==="
-            sudo update-alternatives --set php /usr/bin/php8.4
+          echo "ensure php 8.4"
+          sudo update-alternatives --set php /usr/bin/php8.4
 
-            echo "=== Verify PHP after switch ==="
-            php -v
+          echo "php version after switch"
+          php -v
 
-            echo "=== Reset broken vendor directory ==="
-            rm -rf vendor
-            git checkout -- composer.lock
+          echo "reset broken vendor"
+          rm -rf vendor
+          git checkout -- composer-lock
 
-            echo "=== Install dependencies with PHP 8.4 ==="
-            php8.4 /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+          echo "install dependencies with php 8.4"
+          php8.4 /usr/local/bin/composer install --no-dev --optimizer-autoloader --no-interaction --prefer-dist
 
-            echo "=== Run migrations ==="
-            php8.4 artisan migrate --force
+          echo "run migration"
+          php8.4 artisan migrate --force
 
-            echo "=== Optimize Laravel ==="
-            php8.4 artisan optimize
-            php8.4 artisan config:clear
-            php8.4 artisan route:clear
-            php8.4 artisan view:clear
+          echo "optimize laravel"
+          php8.4 artisan optimize
+          php8.4 artisan config:clear
+          php8.4 artisan route:clear
+          php8.4 artisan view:clear
 
-            echo "=== Reload PHP-FPM ==="
-            sudo systemctl reload php8.4-fpm
+          echo "reload php-fpm"
+          sudo systemctl reload php8.4-fpm
