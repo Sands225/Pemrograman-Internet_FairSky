@@ -1,4 +1,4 @@
-name: Laravel CI/CD
+name: Laravel CI/CD Configuration
 
 on:
   push:
