@@ -12,6 +12,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # ========================
+      # PHP 8.4 for CI
+      # ========================
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -19,18 +22,27 @@ jobs:
           extensions: mbstring, pdo, pdo_mysql, openssl, tokenizer, xml, ctype, json
           coverage: none
 
-      - name: Verify PHP version
+      - name: Verify PHP version (CI)
         run: php -v
 
+      # ========================
+      # Composer (CI)
+      # ========================
       - name: Install Composer dependencies
         run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-      - name: Build Frontend assets
+      # ========================
+      # Frontend build
+      # ========================
+      - name: Build frontend assets
         run: |
           npm ci
           npm run build
 
-      - name: Deploy to VM
+      # ========================
+      # Deploy to Azure VM
+      # ========================
+      - name: Deploy to Azure VM
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.AZURE_HOST }}
@@ -42,23 +54,30 @@ jobs:
 
             cd /var/www/Pemrograman-Internet_FairSky
 
-            echo "Pull latest code"
-            git pull origin main
-
-            echo "Check PHP version on VM"
+            echo "=== PHP version on VM ==="
             php -v
 
-            echo "Install PHP dependencies"
-            composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+            echo "=== Ensure PHP 8.4 is default ==="
+            sudo update-alternatives --set php /usr/bin/php8.4
 
-            echo "Run migrations"
-            php artisan migrate --force
+            echo "=== Verify PHP after switch ==="
+            php -v
 
-            echo "Optimize Laravel"
-            php artisan optimize
-            php artisan config:clear
-            php artisan route:clear
-            php artisan view:clear
+            echo "=== Reset broken vendor directory ==="
+            rm -rf vendor
+            git checkout -- composer.lock
 
+            echo "=== Install dependencies with PHP 8.4 ==="
+            php8.4 /usr/bin/composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+            echo "=== Run migrations ==="
+            php8.4 artisan migrate --force
+
+            echo "=== Optimize Laravel ==="
+            php8.4 artisan optimize
+            php8.4 artisan config:clear
+            php8.4 artisan route:clear
+            php8.4 artisan view:clear
+
+            echo "=== Reload PHP-FPM ==="
             sudo systemctl reload php8.4-fpm
-
