@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('email', 100)->unique();
-            $table->string('password_hash', 255); // pw dalam format hash
+            $table->string('password', 255); // pw dalam format hash
             $table->string('full_name', 100);
             $table->string('phone_number', 20)->nullable();
             $table->timestamps();

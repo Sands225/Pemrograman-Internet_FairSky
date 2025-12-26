@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'email' => 'admin@fair-sky.com',
-                'password_hash' => Hash::make('admin123'),
+                'password' => Hash::make('admin123'),
                 'full_name' => 'Admin User',
                 'phone_number' => '081234567890',
                 'created_at' => now(),
@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'email' => 'sandi@fair-sky.com',
-                'password_hash' => Hash::make('sandi123'),
+                'password' => Hash::make('sandi123'),
                 'full_name' => 'Sandi',
                 'phone_number' => null,
                 'created_at' => now(),
