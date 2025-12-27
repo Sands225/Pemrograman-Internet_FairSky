@@ -29,7 +29,7 @@ class AirlineSeeder extends Seeder
             DB::table('airlines')->insert([
                 'airline_code' => $airline['code'],
                 'airline_name' => $airline['name'],
-                'logo_url' => 'https://via.placeholder.com/150?text=' . $airline['code'], // Dummy logo
+                'logo_url' => 'public/images/airlines/' . $airline['code'] . '.png',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
