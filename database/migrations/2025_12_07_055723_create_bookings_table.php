@@ -9,11 +9,22 @@ return new class extends Migration {
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+
+            // RELATIONS
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('flight_class_id')->constrained('flight_classes')->cascadeOnDelete();
+
+            // BOOKING INFO
             $table->string('booking_code', 8)->unique();
-            $table->timestamp('booking_date')->useCurrent();
+            $table->string('passenger_name');
+            $table->string('passenger_phone', 20);
+
+            // PAYMENT & STATUS
             $table->decimal('total_price', 15, 2);
+            $table->enum('status', ['confirmed', 'cancelled'])->default('confirmed');
             $table->enum('payment_status', ['Pending', 'Paid', 'Failed', 'Refunded'])->default('Pending');
+
+            $table->timestamp('booking_date')->useCurrent();
             $table->timestamps();
         });
     }
