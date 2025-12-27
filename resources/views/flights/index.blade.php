@@ -48,15 +48,15 @@
                 <main class="w-full lg:w-3/4">
 
                     <div class="flex items-center gap-2 mb-6 overflow-x-auto pb-2">
-                        <a href="{{ request()->fullUrlWithQuery(['sort' => null]) }}" 
+                        <a href="{{ request()->fullUrlWithQuery(['sort' => null]) }}"
                         class="whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-full shadow-sm transition{{ !request('sort') ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600' }}">Rekomendasi FairSky</a>
-                        
-                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'cheapest']) }}" 
+
+                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'cheapest']) }}"
                         class="whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-full shadow-sm transition{{ request('sort') == 'cheapest' ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600' }}">Harga Termurah</a>
-       
-                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'fastest']) }}" 
+
+                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'fastest']) }}"
                         class="whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-full shadow-sm transition{{ request('sort') == 'fastest' ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600' }}">Durasi Tercepat</a>
-    
+
     </div>
 
                     @forelse($flights as $flight)
@@ -77,7 +77,7 @@
                                 <div class="flex-1 w-full">
                                     <div class="flex items-center gap-3 mb-4">
                                         @if($flight->airline->logo_url)
-                                            <img src="{{ $flight->airline->logo_url }}" alt="Logo" class="h-8 w-auto object-contain">
+                                            <img src="{{ $flight->airline->logo_url }}" alt="Logo" class="w-12 h-12 object-contain">
                                         @else
                                             <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-xs font-bold">
                                                 {{ substr($flight->airline->airline_name, 0, 2) }}
@@ -148,7 +148,7 @@
                                             <span class="text-red-500 font-bold">Sold Out</span>
                                         @endif
                                     </div>
-                                    
+
                                     <a href="{{ route('flights.show', $flight->id) }}"
                                         class="inline-block mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg">
                                         Pilih
