@@ -32,7 +32,7 @@
         <div class="container mx-auto h-full flex justify-end items-end mb-10">
             <div class="max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-6 md:p-8 text-xs">
 
-                <form>
+                <form action="{{ route('flights.index') }}" method="GET">
 
                     {{-- Tabs --}}
                     <div class="flex justify-center mb-6 space-x-2">

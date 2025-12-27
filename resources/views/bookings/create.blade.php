@@ -3,7 +3,7 @@
 @section('title', 'Booking')
 
 @section('content')
-<div class="container mx-auto max-w-3xl py-10">
+<div class="container mx-auto max-w-3xl py-10 my-10">
 
     <h1 class="text-2xl font-bold mb-6">Isi Data Penumpang</h1>
 

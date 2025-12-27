@@ -11,19 +11,28 @@ class BookingSeeder extends Seeder
 {
     public function run()
     {
-        // Ambil ID User acak (selain admin)
         $userIds = DB::table('users')->pluck('id')->toArray();
+        $flightClassIds = DB::table('flight_classes')->pluck('id')->toArray();
 
-        // Jika tidak ada user lain, pakai ID 1 (admin) sebagai fallback
-        if (empty($userIds)) $userIds = [1];
+        // Safety fallback
+        if (empty($userIds) || empty($flightClassIds)) {
+            return;
+        }
 
         for ($i = 0; $i < 10; $i++) {
             DB::table('bookings')->insert([
                 'user_id' => $userIds[array_rand($userIds)],
-                'booking_code' => strtoupper(Str::random(6)), // Generate kode unik 6 digit
-                'booking_date' => Carbon::now(),
-                'total_price' => 0, // Nanti diupdate otomatis oleh TicketSeeder
+                'flight_class_id' => $flightClassIds[array_rand($flightClassIds)],
+
+                'booking_code' => strtoupper(Str::random(8)),
+                'passenger_name' => 'Passenger ' . ($i + 1),
+                'passenger_phone' => '08' . rand(1000000000, 9999999999),
+
+                'total_price' => rand(500000, 3000000),
+                'status' => 'confirmed',
                 'payment_status' => 'Paid',
+
+                'booking_date' => Carbon::now(),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
