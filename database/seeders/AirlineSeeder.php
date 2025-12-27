@@ -12,15 +12,17 @@ class AirlineSeeder extends Seeder
     {
         $airlines = [
             ['code' => 'GA', 'name' => 'Garuda Indonesia'],
-            ['code' => 'SQ', 'name' => 'Singapore Airlines'],
+            ['code' => 'IL', 'name' => 'Trigana Air'],
             ['code' => 'QZ', 'name' => 'Indonesia AirAsia'],
             ['code' => 'JT', 'name' => 'Lion Air'],
             ['code' => 'ID', 'name' => 'Batik Air'],
             ['code' => 'QG', 'name' => 'Citilink'],
-            ['code' => 'MH', 'name' => 'Malaysia Airlines'],
-            ['code' => 'EK', 'name' => 'Emirates'],
-            ['code' => 'JL', 'name' => 'Japan Airlines'],
-            ['code' => 'QR', 'name' => 'Qatar Airways'],
+            ['code' => 'IN', 'name' => 'Nam Air'],
+            ['code' => 'IP', 'name' => 'Pelita Air'],
+            ['code' => 'SJ', 'name' => 'Sriwijaya Air'],
+            ['code' => 'IU', 'name' => 'Super Air Jet'],
+            ['code' => '8B', 'name' => 'TransNusa'],
+            ['code' => 'IW', 'name' => 'Wings Air'],
         ];
 
         foreach ($airlines as $airline) {
