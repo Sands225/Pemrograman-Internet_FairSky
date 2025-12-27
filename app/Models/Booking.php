@@ -12,10 +12,17 @@ class Booking extends Model
         'passenger_name',
         'passenger_phone',
         'status',
+        'total_price',
+        'booking_code',
     ];
 
     public function flightClass()
     {
         return $this->belongsTo(FlightClass::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

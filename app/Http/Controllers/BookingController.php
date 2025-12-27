@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\FlightClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
@@ -37,9 +38,13 @@ class BookingController extends Controller
         $booking = Booking::create([
             'user_id' => Auth::id(),
             'flight_class_id' => $request->flight_class_id,
+            'booking_code' => strtoupper(Str::random(8)),
             'passenger_name' => $request->passenger_name,
             'passenger_phone' => $request->passenger_phone,
             'status' => 'confirmed',
+            'total_price' => 0,
+            'payment_status' => 'Pending',
+            'booking_date' => now(),
         ]);
 
         return redirect()->route('bookings.success', $booking->id);
