@@ -3,10 +3,10 @@
 @section('title', 'Flights')
 
 @section('content')
-    <div class="bg-gray-50 min-h-screenc py-19">
+    <div class="bg-gray-50 min-h-screenc pb-18 mt-[80px] mx-20">
         <div class="container mx-auto px-4">
 
-            <h1 class="text-3xl font-bold text-gray-800 mb-8">Search Results</h1>
+            <h1 class="text-3xl font-bold text-gray-800 mb-8">Flight Search Results</h1>
 
             <div class="flex flex-col lg:flex-row gap-8">
 
