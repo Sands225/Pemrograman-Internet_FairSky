@@ -11,7 +11,7 @@
             <div class="flex flex-col lg:flex-row gap-8">
 
                 <aside class="w-full lg:w-1/4">
-                    <form action="{{ route('flights.search') }}" method="GET" id="filterForm">
+                    <form action="{{ route('flights.index') }}" method="GET" id="filterForm">
                         {{-- Mempertahankan parameter pencarian asal/tujuan agar tidak hilang saat filter --}}
                         @foreach(request()->except(['stops', 'waktu', 'page']) as $key => $value)
                             <input type="hidden" name="{{ $key }}" value="{{ $value }}">
@@ -20,7 +20,7 @@
                         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-24">
                             <div class="flex justify-between items-center mb-6">
                                 <h3 class="font-bold text-xl text-gray-800">Filter</h3>
-                                <a href="{{ route('flights.search', request()->only(['from', 'to', 'date'])) }}"
+                                <a href="{{ route('flights.index', request()->only(['from', 'to', 'date'])) }}"
                                    class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition">
                                     Reset
                                 </a>
