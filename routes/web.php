@@ -28,6 +28,12 @@ Route::get('/flights', [FlightController::class, 'index'])
 Route::get('/flights/{flight}', [FlightController::class, 'show'])
     ->name('flights.show');
 
+Route::get('/flights', [FlightController::class, 'index'])
+    ->name('flights.search');
+
+Route::get('/flights/{flight}', [FlightController::class, 'show'])
+    ->name('flights.show');
+
 // Protected Routes
 Route::middleware('auth')->group(function () {
 

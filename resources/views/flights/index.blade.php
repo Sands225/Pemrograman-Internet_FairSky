@@ -11,38 +11,77 @@
             <div class="flex flex-col lg:flex-row gap-8">
 
                 <aside class="w-full lg:w-1/4">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="font-bold text-lg">Filters</h3>
-                            <button class="text-sm text-blue-600 hover:underline">Reset</button>
-                        </div>
+                    <form action="{{ route('flights.search') }}" method="GET" id="filterForm">
+                        {{-- Mempertahankan parameter pencarian asal/tujuan agar tidak hilang saat filter --}}
+                        @foreach(request()->except(['stops', 'waktu', 'page']) as $key => $value)
+                            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                        @endforeach
 
-                        <div class="mb-6 border-b border-gray-100 pb-6">
-                            <h4 class="font-semibold mb-3 text-gray-700">Stops</h4>
-                            <label class="flex items-center space-x-3 mb-2 cursor-pointer">
-                                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="text-gray-600">Langsung (Direct)</span>
-                            </label>
-                            <label class="flex items-center space-x-3 cursor-pointer">
-                                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="text-gray-600">1 Transit</span>
-                            </label>
-                        </div>
-
-                        <div class="mb-6 border-b border-gray-100 pb-6">
-                            <h4 class="font-semibold mb-3 text-gray-700">Waktu Berangkat</h4>
-                            <div class="space-y-2">
-                                <label class="flex items-center space-x-3 cursor-pointer">
-                                    <input type="checkbox" class="rounded border-gray-300 text-blue-600">
-                                    <span class="text-gray-600">Pagi (00:00 - 11:00)</span>
-                                </label>
-                                <label class="flex items-center space-x-3 cursor-pointer">
-                                    <input type="checkbox" class="rounded border-gray-300 text-blue-600">
-                                    <span class="text-gray-600">Siang (11:00 - 16:00)</span>
-                                </label>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-24">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="font-bold text-xl text-gray-800">Filter</h3>
+                                <a href="{{ route('flights.search', request()->only(['from', 'to', 'date'])) }}"
+                                   class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition">
+                                    Reset
+                                </a>
                             </div>
+
+                            {{-- Filter Transit --}}
+                            <div class="mb-8">
+                                <h4 class="font-bold mb-4 text-gray-700 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                                    Jumlah Transit
+                                </h4>
+                                <div class="space-y-3">
+                                    <label class="flex items-center justify-between group cursor-pointer">
+                                        <div class="flex items-center space-x-3">
+                                            <input type="checkbox" name="stops[]" value="0" onchange="this.form.submit()"
+                                                   {{ in_array('0', (array)request('stops')) ? 'checked' : '' }}
+                                                   class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition cursor-pointer">
+                                            <span class="text-gray-600 group-hover:text-gray-900 transition">Langsung</span>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-center justify-between group cursor-pointer">
+                                        <div class="flex items-center space-x-3">
+                                            <input type="checkbox" name="stops[]" value="1" onchange="this.form.submit()"
+                                                   {{ in_array('1', (array)request('stops')) ? 'checked' : '' }}
+                                                   class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition cursor-pointer">
+                                            <span class="text-gray-600 group-hover:text-gray-900 transition">1 Transit</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            {{-- Filter Waktu --}}
+                            <div class="mb-4">
+                                <h4 class="font-bold mb-4 text-gray-700 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    Waktu Keberangkatan
+                                </h4>
+                                <div class="grid grid-cols-1 gap-3">
+                                    {{-- Pagi --}}
+                                    <label class="relative flex flex-col p-3 border rounded-xl cursor-pointer transition {{ in_array('pagi', (array)request('waktu')) ? 'border-blue-500 bg-blue-50' : 'border-gray-100 hover:border-blue-200' }}">
+                                        <input type="checkbox" name="waktu[]" value="pagi" class="hidden" onchange="this.form.submit()"
+                                            {{ in_array('pagi', (array)request('waktu')) ? 'checked' : '' }}>
+                                        <span class="text-xs font-bold {{ in_array('pagi', (array)request('waktu')) ? 'text-blue-700' : 'text-gray-700' }}">Pagi</span>
+                                        <span class="text-[10px] text-gray-500">00:00 - 11:00</span>
+                                    </label>
+
+                                    {{-- Siang --}}
+                                    <label class="relative flex flex-col p-3 border rounded-xl cursor-pointer transition {{ in_array('siang', (array)request('waktu')) ? 'border-blue-500 bg-blue-50' : 'border-gray-100 hover:border-blue-200' }}">
+                                        <input type="checkbox" name="waktu[]" value="siang" class="hidden" onchange="this.form.submit()"
+                                            {{ in_array('siang', (array)request('waktu')) ? 'checked' : '' }}>
+                                        <span class="text-xs font-bold {{ in_array('siang', (array)request('waktu')) ? 'text-blue-700' : 'text-gray-700' }}">Siang</span>
+                                        <span class="text-[10px] text-gray-500">11:00 - 16:00</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full mt-6 bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition lg:hidden">
+                                Terapkan Filter
+                            </button>
                         </div>
-                    </div>
+                    </form>
                 </aside>
 
                 <main class="w-full lg:w-3/4">
