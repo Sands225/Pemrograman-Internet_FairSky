@@ -3,7 +3,7 @@
 @section('title', 'Detail Penerbangan')
 
 @section('content')
-<div class="bg-gray-50 min-h-screen py-10">
+<div class="bg-gray-50 min-h-screen py-10 mt-[60px]">
     <div class="container mx-auto px-4 max-w-5xl">
 
         {{-- Header --}}
@@ -18,7 +18,6 @@
             Detail Penerbangan
         </h1>
 
-        {{-- Card Detail --}}
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
 
             {{-- Airline --}}
@@ -39,6 +38,9 @@
                     </h2>
                     <p class="text-sm text-gray-500">
                         {{ $flight->airplane->model ?? 'Boeing 737' }}
+                    </p>
+                    <p class="text-xs text-gray-400">
+                        Flight No: {{ $flight->flight_number ?? '-' }}
                     </p>
                 </div>
             </div>
@@ -91,13 +93,23 @@
 
                 <div>
                     <p class="text-gray-500">Durasi Penerbangan</p>
-                    <p class="font-medium">
-                        {{ $duration }}
-                    </p>
+                    <p class="font-medium">{{ $duration }}</p>
                 </div>
             </div>
 
-            {{-- Classes & Prices --}}
+            {{-- Fare Rules --}}
+            <div class="border border-gray-100 rounded-lg p-4 mb-8">
+                <p class="font-semibold text-gray-800 mb-2">
+                    Syarat & Ketentuan Tiket
+                </p>
+                <ul class="text-sm text-gray-600 space-y-1">
+                    <li>• Tiket {{ $flight->refundable ? 'dapat' : 'tidak dapat' }} direfund</li>
+                    <li>• Perubahan jadwal {{ $flight->rescheduleable ? 'diperbolehkan' : 'tidak diperbolehkan' }}</li>
+                    <li>• Biaya perubahan mengikuti kebijakan maskapai</li>
+                </ul>
+            </div>
+
+            {{-- Classes --}}
             <h3 class="font-bold text-gray-800 mb-4">
                 Pilih Kelas Penerbangan
             </h3>
@@ -105,10 +117,17 @@
             <div class="space-y-3">
                 @foreach($flight->flightClasses as $class)
                     <div class="flex items-center justify-between border border-gray-100 rounded-lg p-4 hover:border-blue-400 transition">
+
                         <div>
+                            @if($loop->first)
+                                <span class="inline-block mb-1 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">
+                                    Best Value
+                                </span>
+                            @endif
+
                             <p class="font-semibold">{{ $class->class_type }}</p>
                             <p class="text-xs text-gray-500">
-                                Bagasi {{ $class->baggage ?? 20 }}kg · Kursi nyaman
+                                Bagasi Check-in {{ $class->baggage ?? 20 }}kg · Kabin {{ $class->cabin_baggage ?? 7 }}kg
                             </p>
                         </div>
 
@@ -116,9 +135,12 @@
                             <p class="font-bold text-blue-600 text-lg">
                                 IDR {{ number_format($class->price, 0, ',', '.') }}
                             </p>
+                            <p class="text-xs text-gray-400">
+                                Harga sudah termasuk pajak & biaya bandara
+                            </p>
 
                             <a href="{{ route('bookings.create', $class->id) }}"
-                                class="inline-block mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg">
+                               class="inline-block mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg">
                                 Pilih
                             </a>
                         </div>
