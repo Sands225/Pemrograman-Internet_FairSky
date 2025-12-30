@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\FlightClass;
 use App\Models\Payment;
+use App\Services\TicketService;
 use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
@@ -43,9 +44,9 @@ class PaymentController extends Controller
             ->firstOrFail();
 
         // Prevent double payment
-        if ($booking->payment) {
-            abort(409, 'Booking already paid.');
-        }
+        // if ($booking->payment) {
+        //     abort(409, 'Booking already paid.');
+        // }
 
         DB::transaction(function () use ($booking, $request) {
 
@@ -70,6 +71,7 @@ class PaymentController extends Controller
     {
         $booking = Booking::with([
             'payment',
+            'ticket',
             'flightClass.flight.airline',
             'flightClass.flight.originAirport',
             'flightClass.flight.destinationAirport',
@@ -78,51 +80,9 @@ class PaymentController extends Controller
         ->where('user_id', Auth::id())
         ->firstOrFail();
 
-        abort_unless($booking->payment, 404);
+        $ticketService = new TicketService();
+        $ticket = $ticketService->createTicket($booking, $booking->payment->payment_method);
 
         return view('payments.success', compact('booking'));
     }
-
-
-
-
-    // // STEP 2: PROCESS PAYMENT
-    // public function storePayment(Request $request)
-    // {
-    //     $request->validate([
-    //         'payment_method' => 'required|string',
-    //     ]);
-
-    //     $data = session('booking_data');
-
-    //     if (! $data) {
-    //         abort(403, 'Booking data expired.');
-    //     }
-
-    //     // Simpan booking (pembayaran sukses)
-    //     $booking = Booking::create([
-    //         'user_id'         => Auth::id(),
-    //         'flight_class_id' => $data['flight_class_id'],
-    //         'booking_code'    => strtoupper(uniqid('BK')),
-    //         'passenger_name'  => $data['passenger_name'],
-    //         'passenger_phone' => $data['passenger_phone'],
-    //         'status'          => 'confirmed',
-    //         'total_price'     => $data['total_price'],
-    //         'payment_status'  => 'Paid',
-    //         'booking_date'    => now(),
-    //     ]);
-
-    //     // Bersihkan session
-    //     session()->forget('booking_data');
-
-    //     return redirect()->route('payments.success', $booking->id);
-    // }
-
-    // // STEP 3: PAYMENT SUCCESS
-    // public function success(Booking $booking)
-    // {
-    //     $booking->load('flightClass.flight.airline');
-
-    //     return view('payments.success', compact('booking'));
-    // }
 }

@@ -33,7 +33,7 @@
         </p>
     </div>
 
-    <form action="{{ route('bookings.create', $flightClass->flight_id) }}" method="POST"
+    <form action="{{ route('bookings.create', ['flightId' => $flightClass->flight_id, 'flightClassId' => $flightClass->id]) }}" method="POST"
         class="bg-white p-6 rounded-xl shadow space-y-5">
         @csrf
 

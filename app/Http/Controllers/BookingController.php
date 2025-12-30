@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class BookingController extends Controller
 {
 
-    public function createBookingPage(Request $request, $flightId)
+    public function createBookingPage(Request $request, $flightId, $flightClassId)
     {
         $flightClass = FlightClass::with([
             'flight.airline',
@@ -20,22 +20,24 @@ class BookingController extends Controller
             'flight.originAirport',
             'flight.destinationAirport',
         ])
+        ->where('id', $flightClassId)
         ->where('flight_id', $flightId)
         ->firstOrFail();
 
         return view('bookings.create', compact('flightClass'));
     }
 
-    public function createBooking(Request $request, $flightId)
-    {;
+    public function createBooking(Request $request, $flightId, $flightClassId)
+    {
         $validated = $request->validate([
             'passenger_name'  => 'required|string',
             'passenger_phone' => 'required|string',
         ]);
 
-        $booking = DB::transaction(function () use ($validated, $flightId) {
+        $booking = DB::transaction(function () use ($validated, $flightId, $flightClassId) {
 
             $flightClass = FlightClass::where('flight_id', $flightId)
+                ->where('id', $flightClassId)
                 ->lockForUpdate()
                 ->firstOrFail();
 

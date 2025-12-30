@@ -35,20 +35,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('auth.logout');
 
-    Route::get('/flights/{flightId}/bookings', [BookingController::class, 'createBookingPage'])
+    Route::get('/flights/{flightId}/bookings/{flightClassId}', [BookingController::class, 'createBookingPage'])
         ->name('bookings.create');
 
-    Route::post('/flights/{flightId}/bookings', [BookingController::class, 'createBooking'])
+    Route::post('/flights/{flightId}/bookings/{flightClassId}', [BookingController::class, 'createBooking'])
         ->name('bookings.create');
-
-    // Route::post('/bookings/{flightClass}/confirm', [BookingController::class, 'confirm'])
-    //     ->name('bookings.confirm');
-
-    // Route::post('/bookings', [BookingController::class, 'store'])
-    //     ->name('bookings.store');
-
-    // Route::post('/bookings/store', [BookingController::class, 'store'])
-    //     ->name('bookings.store');
 
     Route::get('/payments/{bookingId}', [PaymentController::class, 'createPaymentPage'])
         ->name('payments.create');
@@ -56,6 +47,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/payments/{bookingId}', [PaymentController::class, 'createPayment'])
         ->name('payments.create');
 
-    Route::get('/payments/{bookingId}/success/', [PaymentController::class, 'successPaymentPage'])
+    Route::get('/payments/{bookingId}/status', [PaymentController::class, 'successPaymentPage'])
         ->name('payments.success');
 });
