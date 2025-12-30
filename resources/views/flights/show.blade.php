@@ -108,7 +108,10 @@
                     <li>• Biaya perubahan mengikuti kebijakan maskapai</li>
                 </ul>
             </div>
+        </div>
 
+        {{-- Flight Classes --}}
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             {{-- Classes --}}
             <h3 class="font-bold text-gray-800 mb-4">
                 Pilih Kelas Penerbangan
@@ -139,7 +142,7 @@
                                 Harga sudah termasuk pajak & biaya bandara
                             </p>
 
-                            <a href="{{ route('bookings.create', $class->id) }}"
+                            <a href="{{ route('bookings.create', ['flightId' => $class->id]) }}"
                                class="inline-block mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg">
                                 Pilih
                             </a>
@@ -151,4 +154,8 @@
         </div>
     </div>
 </div>
+
+<pre class="bg-black text-green-400 p-4 rounded text-xs overflow-auto">
+{{ print_r($flight->toArray(), true) }}
+</pre>
 @endsection

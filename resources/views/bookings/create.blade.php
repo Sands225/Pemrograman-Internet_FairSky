@@ -33,8 +33,8 @@
         </p>
     </div>
 
-    <form action="{{ route('bookings.confirm') }}" method="POST"
-          class="bg-white p-6 rounded-xl shadow space-y-5">
+    <form action="{{ route('bookings.create', $flightClass->flight_id) }}" method="POST"
+        class="bg-white p-6 rounded-xl shadow space-y-5">
         @csrf
 
         <input type="hidden" name="flight_class_id" value="{{ $flightClass->id }}">
@@ -123,4 +123,7 @@
         </div>
     </form>
 </div>
+<pre class="bg-black text-green-400 p-4 rounded text-xs overflow-auto">
+{{ print_r($flightClass->toArray(), true) }}
+</pre>
 @endsection
