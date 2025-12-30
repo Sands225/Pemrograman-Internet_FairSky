@@ -5,6 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 
@@ -22,10 +23,10 @@ Route::middleware('guest')->group(function () {
 });
 
 // Flights
-Route::get('/flights', [FlightController::class, 'index'])
+Route::get('/flights', [FlightController::class, 'flightListPage'])
     ->name('flights.index');
 
-Route::get('/flights/{flight}', [FlightController::class, 'show'])
+Route::get('/flights/{flight}', [FlightController::class, 'flightDetailPage'])
     ->name('flights.show');
 
 // Protected Routes
@@ -34,15 +35,27 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('auth.logout');
 
-    Route::get('/bookings/create/{flightClass}', [BookingController::class, 'create'])
+    Route::get('/flights/{flightId}/bookings', [BookingController::class, 'createBookingPage'])
         ->name('bookings.create');
 
-    Route::post('/bookings/confirm', [BookingController::class, 'confirm'])
-        ->name('bookings.confirm');
+    Route::post('/flights/{flightId}/bookings', [BookingController::class, 'createBooking'])
+        ->name('bookings.create');
 
-    Route::post('/bookings/store', [BookingController::class, 'store'])
-        ->name('bookings.store');
+    // Route::post('/bookings/{flightClass}/confirm', [BookingController::class, 'confirm'])
+    //     ->name('bookings.confirm');
 
-    Route::get('/bookings/success/{booking}', [BookingController::class, 'success'])
-        ->name('bookings.success');
+    // Route::post('/bookings', [BookingController::class, 'store'])
+    //     ->name('bookings.store');
+
+    // Route::post('/bookings/store', [BookingController::class, 'store'])
+    //     ->name('bookings.store');
+
+    Route::get('/payments/{bookingId}', [PaymentController::class, 'createPaymentPage'])
+        ->name('payments.create');
+
+    Route::post('/payments/{bookingId}', [PaymentController::class, 'createPayment'])
+        ->name('payments.create');
+
+    Route::get('/payments/{bookingId}/success/', [PaymentController::class, 'successPaymentPage'])
+        ->name('payments.success');
 });
