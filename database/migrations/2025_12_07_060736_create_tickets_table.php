@@ -9,12 +9,21 @@ return new class extends Migration {
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('booking_id')->constrained('bookings');
-            $table->foreignId('passenger_id')->constrained('passengers');
-            $table->foreignId('flight_id')->constrained('flights');
+
+            $table->foreignId('booking_id')
+                ->constrained('bookings')
+                ->cascadeOnDelete();
+
+            $table->string('ticket_number')->unique();
             $table->string('seat_number', 5)->nullable();
+
             $table->enum('class_type', ['Economy', 'Business', 'First']);
-            $table->enum('eticket_status', ['Issued', 'CheckedIn', 'Boarded'])->default('Issued');
+
+            $table->enum('eticket_status', ['Issued', 'CheckedIn', 'Boarded'])
+                  ->default('Issued');
+
+            $table->timestamp('issued_at');
+
             $table->timestamps();
         });
     }

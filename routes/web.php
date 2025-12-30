@@ -5,6 +5,9 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PaymentController;
+use App\Models\Flight;
+use Symfony\Component\Mailer\Transport\RoundRobinTransport;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 
@@ -22,10 +25,10 @@ Route::middleware('guest')->group(function () {
 });
 
 // Flights
-Route::get('/flights', [FlightController::class, 'index'])
+Route::get('/flights', [FlightController::class, 'flightListPage'])
     ->name('flights.index');
 
-Route::get('/flights/{flight}', [FlightController::class, 'show'])
+Route::get('/flights/{flight}', [FlightController::class, 'flightDetailPage'])
     ->name('flights.show');
 
 // Protected Routes
@@ -34,15 +37,42 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('auth.logout');
 
-    Route::get('/bookings/create/{flightClass}', [BookingController::class, 'create'])
+    Route::get('/flights/{flightId}/bookings/{flightClassId}', [BookingController::class, 'createBookingPage'])
         ->name('bookings.create');
 
-    Route::post('/bookings/confirm', [BookingController::class, 'confirm'])
-        ->name('bookings.confirm');
+    Route::post('/flights/{flightId}/bookings/{flightClassId}', [BookingController::class, 'createBooking'])
+        ->name('bookings.create');
 
-    Route::post('/bookings/store', [BookingController::class, 'store'])
-        ->name('bookings.store');
+    Route::get('/payments/{bookingId}', [PaymentController::class, 'createPaymentPage'])
+        ->name('payments.create');
 
-    Route::get('/bookings/success/{booking}', [BookingController::class, 'success'])
-        ->name('bookings.success');
+    Route::post('/payments/{bookingId}', [PaymentController::class, 'createPayment'])
+        ->name('payments.create');
+
+    Route::get('/payments/{bookingId}/status', [PaymentController::class, 'successPaymentPage'])
+        ->name('payments.success');
+});
+
+// Admin Routes
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin', [PageController::class, 'adminDashboard'])
+        ->name('admin.dashboard');
+
+    Route::get('/admin/flights', [FlightController::class, 'adminFlightListPage'])
+        ->name('admin.flights.index');
+
+    Route::get('/admin/flights/create', [FlightController::class, 'createFlightPage'])
+        ->name('admin.flights.create');
+
+    Route::post('/admin/flights/create', [FlightController::class, 'createFlight'])
+        ->name('admin.flights.create');
+
+    Route::get('/admin/flights/{flight}/edit', [FlightController::class, 'editFlightPage'])
+        ->name('admin.flights.edit');
+
+    Route::post('/admin/flights/{flight}/edit', [FlightController::class, 'editFlight'])
+        ->name('admin.flights.edit');
+
+    Route::post('/admin/flights/{flight}/delete', [FlightController::class, 'deleteFlight'])
+        ->name('admin.flights.delete');
 });

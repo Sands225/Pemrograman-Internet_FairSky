@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->string('password', 255); // pw dalam format hash
             $table->string('full_name', 100);
             $table->string('phone_number', 20)->nullable();
+            $table->boolean('is_admin')->default(false);
             $table->timestamps();
         });
     }
