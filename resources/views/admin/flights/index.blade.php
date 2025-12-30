@@ -3,7 +3,7 @@
 @section('title', 'Admin Overview')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 pt-[60px]">
+<div class="min-h-[calc(100vh-5rem)] bg-gray-50">
 
     <div class="container mx-auto max-w-7xl px-6 py-10">
 
@@ -14,7 +14,7 @@
                     Welcome back 👋
                 </h1>
                 <p class="text-gray-500 mt-1">
-                    Performance Summary — {{ now()->format('d F Y') }}
+                    Flight Management Dashboard
                 </p>
             </div>
         </div>
@@ -103,6 +103,6 @@
 
     </div>
 </div>
-{{ dump($getAllFlights) }}
+{{-- {{ dump($getAllFlights) }} --}}
 @endsection
 

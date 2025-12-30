@@ -1,15 +1,15 @@
 <aside class="fixed inset-y-0 left-0 w-64
-              bg-slate-900 text-slate-200 shadow-xl">
+              bg-slate-900 text-slate-200 shadow-xl flex flex-col">
 
     {{-- Logo --}}
-    <div class="h-16 flex items-center justify-center border-b border-slate-700">
+    <div class="h-[5rem] flex items-center border-b border-slate-700 py-8 px-4">
         <span class="text-xl font-extrabold tracking-wide text-white">
-            ✈ FairSky
+            <img src="{{ asset('images/logo.png') }}" alt="FairSky Logo" class="w-40 inline-block">
         </span>
     </div>
 
-    {{-- Navigation --}}
-    <nav class="p-4 space-y-6">
+    {{-- MAIN NAVIGATION --}}
+    <nav class="p-4 space-y-6 text-sm flex-1">
 
         {{-- OVERVIEW --}}
         <div>
@@ -38,4 +38,25 @@
         </div>
 
     </nav>
+
+    {{-- PROFILE --}}
+    <div class="p-4 border-t border-slate-700 text-sm">
+
+        <p class="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+            Profile
+        </p>
+
+        <form method="POST" action="{{ route('auth.logout') }}">
+            @csrf
+
+            <button type="submit"
+                class="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition
+                       text-red-400 hover:bg-slate-800 hover:text-red-300">
+                <span class="text-lg">🚪</span>
+                <span>Logout</span>
+            </button>
+        </form>
+
+    </div>
+
 </aside>
