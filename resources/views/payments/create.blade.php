@@ -4,7 +4,7 @@
 
     @section('content')
 
-    <div class="container mx-auto max-w-4xl py-10">
+    <div class="container mx-auto max-w-4xl py-10 my-[60px]">
 
         <h1 class="text-3xl font-bold mb-8">
             Pembayaran
