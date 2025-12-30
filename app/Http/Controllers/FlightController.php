@@ -54,6 +54,13 @@ class FlightController extends Controller
 
         return view('flights.show', compact('flight'));
     }
+
+    // Admin Functions
+    public function adminFlightListPage()
+    {
+        $getAllFlights = Flight::with(['airline', 'originAirport', 'destinationAirport'])->paginate(15);
+        return view('admin.flights.index', compact('getAllFlights'));
+    }
 }
 
     

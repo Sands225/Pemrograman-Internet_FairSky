@@ -6,6 +6,7 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PaymentController;
+use App\Models\Flight;
 use Symfony\Component\Mailer\Transport\RoundRobinTransport;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -57,7 +58,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [PageController::class, 'adminDashboard'])
         ->name('admin.dashboard');
 
-    Route::get('/admin/flights', [PageController::class, 'adminFlightListPage'])
+    Route::get('/admin/flights', [FlightController::class, 'adminFlightListPage'])
         ->name('admin.flights.index');
 
     Route::get('/admin/flights/create', [FlightController::class, 'createFlightPage'])

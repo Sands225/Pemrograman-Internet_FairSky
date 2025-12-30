@@ -33,7 +33,7 @@
 
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                    <thead class="bg-gray-100 text-gray-600">
+                    <thead class="bg-gray-100 text-gray-600 text-center">
                         <tr>
                             <th class="p-3 font-medium">ID</th>
                             <th class="p-3 font-medium">Flight</th>
@@ -42,8 +42,59 @@
                             <th class="p-3 font-medium">Action</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y">
-                        {{-- rows --}}
+                    <tbody class="divide-y text-center">
+                        @forelse ($getAllFlights as $flight)
+                            {{-- {{ dump($flight) }} --}}
+                            <tr class="hover:bg-gray-50">
+
+                                <td class="p-3 text-gray-600">
+                                    {{ $flight->id }}
+                                </td>
+
+                                <td class="p-3 font-medium text-gray-800 text-left">
+                                    {{ $flight->airline->airline_name ?? '-' }}
+                                </td>
+
+                                <td class="p-3 text-gray-600">
+                                    {{ $flight->originAirport->airport_code ?? '?' }}
+                                    →
+                                    {{ $flight->destinationAirport->airport_code ?? '?' }}
+                                </td>
+
+                                <td class="p-3">
+                                    <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">
+                                        {{ $flight->status ?? 'Unknown' }}
+                                    </span>
+                                </td>
+
+                                <td class="p-3 flex gap-2 justify-center">
+                                    <a href="{{ route('admin.flights.edit', $flight->id) }}"
+                                    class="text-blue-600 hover:underline text-sm">
+                                        Edit
+                                    </a>
+
+                                    <form action="{{ route('admin.flights.delete', $flight->id) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Delete this flight?')">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit"
+                                                class="text-red-600 hover:underline text-sm">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="p-6 text-center text-gray-500">
+                                    No flights found.
+                                </td>
+                            </tr>
+                        @endforelse
+
                     </tbody>
                 </table>
             </div>
@@ -52,5 +103,6 @@
 
     </div>
 </div>
+{{ dump($getAllFlights) }}
 @endsection
 
