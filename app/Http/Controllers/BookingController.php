@@ -7,54 +7,61 @@ use App\Models\FlightClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
-    // STEP 1: FORM BOOKING
-    public function create(FlightClass $flightClass)
+
+    public function createBookingPage(Request $request, $flightId)
     {
-        $flightClass->load('flight.airline', 'flight.originAirport', 'flight.destinationAirport');
+        $flightClass = FlightClass::with([
+            'flight.airline',
+            'flight.airplane',
+            'flight.originAirport',
+            'flight.destinationAirport',
+        ])
+        ->where('flight_id', $flightId)
+        ->firstOrFail();
 
         return view('bookings.create', compact('flightClass'));
     }
 
-    // STEP 2: CONFIRM PAGE
-    public function confirm(Request $request)
-    {
-        $request->validate([
-            'flight_class_id' => 'required|exists:flight_classes,id',
-            'passenger_name' => 'required|string',
+    public function createBooking(Request $request, $flightId)
+    {;
+        $validated = $request->validate([
+            'passenger_name'  => 'required|string',
             'passenger_phone' => 'required|string',
         ]);
 
-        return view('bookings.confirm', [
-            'data' => $request->all()
-        ]);
-    }
+        $booking = DB::transaction(function () use ($validated, $flightId) {
 
-    // STEP 3: SAVE BOOKING
-    public function store(Request $request)
-    {
-        $booking = Booking::create([
-            'user_id' => Auth::id(),
-            'flight_class_id' => $request->flight_class_id,
-            'booking_code' => strtoupper(Str::random(8)),
-            'passenger_name' => $request->passenger_name,
-            'passenger_phone' => $request->passenger_phone,
-            'status' => 'confirmed',
-            'total_price' => 0,
-            'payment_status' => 'Pending',
-            'booking_date' => now(),
-        ]);
+            $flightClass = FlightClass::where('flight_id', $flightId)
+                ->lockForUpdate()
+                ->firstOrFail();
 
-        return redirect()->route('bookings.success', $booking->id);
-    }
+            if ($flightClass->available_seats <= 0) {
+                abort(409, 'No seats available');
+            }
 
-    // STEP 4: SUCCESS
-    public function success(Booking $booking)
-    {
-        $booking->load('flightClass.flight.airline');
+            $flightClass->decrement('available_seats');
 
-        return view('bookings.success', compact('booking'));
+            $price = $flightClass->price;
+            $tax   = $price * 0.1;
+
+            return Booking::create([
+                'user_id'         => Auth::id(),
+                'flight_id'       => $flightClass->flight_id,
+                'flight_class_id' => $flightClass->id,
+                'booking_code'    => strtoupper(Str::random(8)),
+                'passenger_name'  => $validated['passenger_name'],
+                'passenger_phone' => $validated['passenger_phone'],
+                'status'          => 'pending',
+                'payment_status'  => 'Pending',
+                'total_price'     => $price + $tax,
+                'booking_date'    => now(),
+            ]);
+        });
+
+        return redirect()->route('payments.create', $booking->id);
     }
 }

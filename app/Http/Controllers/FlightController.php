@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class FlightController extends Controller
 {
 
-    public function index(Request $request)
+    public function flightListPage(Request $request)
     {
         // 1. Mulai Query Dasar
         $query = Flight::with(['airline', 'originAirport', 'destinationAirport', 'airplane', 'flightClasses'])
@@ -42,7 +42,7 @@ class FlightController extends Controller
         return view('flights.index', compact('flights'));
     }
 
-    public function show(Flight $flight)
+    public function flightDetailPage(Flight $flight)
     {
         $flight->load([
             'airline',
