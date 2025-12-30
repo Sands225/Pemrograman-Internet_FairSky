@@ -6,6 +6,7 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PaymentController;
+use Symfony\Component\Mailer\Transport\RoundRobinTransport;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 
@@ -49,4 +50,28 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/payments/{bookingId}/status', [PaymentController::class, 'successPaymentPage'])
         ->name('payments.success');
+});
+
+// Admin Routes
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin', [PageController::class, 'adminDashboard'])
+        ->name('admin.dashboard');
+
+    Route::get('/admin/flights', [PageController::class, 'adminFlightListPage'])
+        ->name('admin.flights.index');
+
+    Route::get('/admin/flights/create', [FlightController::class, 'createFlightPage'])
+        ->name('admin.flights.create');
+
+    Route::post('/admin/flights/create', [FlightController::class, 'createFlight'])
+        ->name('admin.flights.create');
+
+    Route::get('/admin/flights/{flight}/edit', [FlightController::class, 'editFlightPage'])
+        ->name('admin.flights.edit');
+
+    Route::post('/admin/flights/{flight}/edit', [FlightController::class, 'editFlight'])
+        ->name('admin.flights.edit');
+
+    Route::post('/admin/flights/{flight}/delete', [FlightController::class, 'deleteFlight'])
+        ->name('admin.flights.delete');
 });

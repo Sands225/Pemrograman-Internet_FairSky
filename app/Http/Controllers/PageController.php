@@ -24,4 +24,14 @@ class PageController extends Controller
     {
         return view('auth.register');
     }
+
+    public function adminDashboard()
+    {
+        return view('admin.dashboard');
+    }
+
+    public function adminFlightListPage()
+    {
+        return view('admin.flights.index');
+    }
 }
