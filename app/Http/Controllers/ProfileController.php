@@ -26,6 +26,7 @@ class ProfileController extends Controller
         // (update nama)
         if (!$request->has('tab') || $request->tab == 'profile') {
             $rules['full_name'] = 'required|string|max:100';
+            $rules['email'] =  'required|string|email|max:100|unique:users,email,' . $user->id;
         }
 
         // (update password)
@@ -45,6 +46,10 @@ class ProfileController extends Controller
 
         if ($request->filled('full_name')) {
             $user->full_name = $request->full_name;
+        }
+
+        if ($request->filled('email')) {
+            $user->email = $request->email;
         }
 
         if ($request->filled('new_password')) {

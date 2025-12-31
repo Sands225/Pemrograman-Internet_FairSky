@@ -84,8 +84,12 @@
 
                                         <div class="md:col-span-2">
                                             <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Email Address</label>
-                                            <input type="email" value="{{ $user->email }}"
-                                                   class="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed shadow-sm" readonly>
+                                            <input type="email" name="email" value="{{ old('email', $user->email) }}"
+                                                   class="w-full px-4 py-3 rounded-xl border @error('email') border-red-500 @else border-gray-200 @enderror focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm">
+                                            <p class="text-[10px] text-gray-400 mt-2 italic">Must be an active email.</p>
+                                            @error('email')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                     </div>
 
