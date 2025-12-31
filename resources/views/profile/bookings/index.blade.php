@@ -3,7 +3,7 @@
 @section('title', 'My Bookings')
 
 @section('content')
-    <div class="bg-gray-50 min-h-screen py-10">
+    <div class="bg-gray-50 min-h-screen pt-24 pb-10">
         <div class="container mx-auto px-4 max-w-6xl">
             <h1 class="text-3xl font-bold text-gray-800 mb-8">Purchase List</h1>
 
