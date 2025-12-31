@@ -1,5 +1,3 @@
-<?php
-
 @extends('layouts.app')
 
 @section('title', 'My Bookings')
@@ -28,7 +26,7 @@
                             <a href="{{ route('profile.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl transition">
                                 <span>👤</span> Profile Settings
                             </a>
-                            <a href="{{ route('bookings.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 bg-blue-50 rounded-xl transition">
+                            <a href="{{ route('profile.bookings.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 bg-blue-50 rounded-xl transition">
                                 <span>🎫</span> My Bookings
                             </a>
                             <hr class="my-2 border-gray-50">

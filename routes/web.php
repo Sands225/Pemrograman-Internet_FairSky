@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function(){
         ->name('profile.update');
 
     Route::get('/profile/bookings', [ProfileController::class, 'bookings'])
-        ->name('bookings.index');
+        ->name('profile.bookings.index');
 });
 
 // Flights
