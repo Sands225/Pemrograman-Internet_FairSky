@@ -27,8 +27,11 @@ Route::middleware('guest')->group(function () {
 
 // Profile
 Route::middleware('auth')->group(function(){
-Route::get('/profile', [ProfileController::class, 'index'])
-    ->name('profile.index');
+    Route::get('/profile', [ProfileController::class, 'index'])
+        ->name('profile.index');
+
+    Route::put('/profile' , [ProfileController::class, 'update'])
+        ->name('profile.update');
 });
 
 // Flights

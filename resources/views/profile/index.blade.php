@@ -25,7 +25,7 @@
                             <a href="{{ route('profile.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 bg-blue-50 rounded-xl transition">
                                 <span>👤</span> Account Information
                             </a>
-                            <a href="{{ route('bookings.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl transition">
+                            <a href="{{ route('flights.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl transition">
                                 <span>🎫</span> My Bookings
                             </a>
                             <hr class="my-2 border-gray-50">
@@ -45,26 +45,35 @@
                         <h1 class="text-2xl font-bold text-gray-800 mb-2">Account Information</h1>
                         <p class="text-gray-500 text-sm mb-8">Update your account information here.</p>
 
-                        <form action="#" method="POST" class="space-y-6">
-                            @csrf
-                            {{-- @method('PUT') --}}
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
-                                    <input type="text" name="full_name" value="{{ $user->full_name }}"
-                                           class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition outline-none">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
-                                    <input type="email" name="email" value="{{ $user->email }}"
-                                           class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-500 cursor-not-allowed" readonly>
-                                    <p class="text-[10px] text-gray-400 mt-1 italic">*Email can not be changed due to security reason.</p>
-                                </div>
+                        @if(session('success'))
+                            <div class="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl flex items-center gap-3">
+                                <span>✅</span> {{ session('success') }}
                             </div>
+                        @endif
+
+                        <form action="{{ route('profile.update') }}" method="POST" class="space-y-6">
+                            @csrf
+                            @method('PUT')
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
+                                        <input type="text" name="full_name" value="{{ old('full_name', $user->full_name) }}"
+                                               class="w-full px-4 py-3 rounded-xl border @error('full_name') border-red-500 @else border-gray-200 @enderror focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                        @error('full_name')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
+                                        <input type="email" value="{{ $user->email }}"
+                                               class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed" readonly>
+                                    </div>
+                                </div>
 
                             <div class="pt-4">
-                                <button type="submit" class="bg-blue-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all active:scale-95">
+                                <button type="submit" class="bg-blue-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-100">
                                     Save Changes
                                 </button>
                             </div>
