@@ -24,6 +24,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
 });
 
+// Profile
+Route::middleware('auth')->group(function(){
+Route::get('/profile', [ProfileController::class, 'index'])
+    ->name('profile.index');
+});
+
 // Flights
 Route::get('/flights', [FlightController::class, 'flightListPage'])
     ->name('flights.index');
