@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+
     @yield('css')
 
     <script>
@@ -55,27 +55,50 @@
         {{-- Auth --}}
         <div class="hidden lg:flex items-center">
             @auth
-                <span class="mr-3 font-semibold text-gray-700">
-                    Hi, {{ auth()->user()->full_name }}
-                </span>
-
-                <form method="POST" action="{{ route('auth.logout') }}">
-                    @csrf
-                    <button class="px-4 py-2 border border-red-500 text-red-500 rounded 
-                        hover:bg-red-500 hover:text-white transition">
-                        Logout
+                {{-- Wrapper Dropdown --}}
+                <div class="relative inline-block text-left">
+                    <button id="profileDropdownBtn" class="flex items-center gap-3 focus:outline-none group">
+                        <div class="w-9 h-9 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-sm">
+                            {{ substr(auth()->user()->full_name, 0, 1) }}
+                        </div>
+                        <div class="text-left">
+                            <p class="text-[10px] text-gray-500 leading-none mb-1">Welcome,</p>
+                            <p class="text-sm font-bold text-gray-800 leading-none group-hover:text-blue-600 transition">
+                                {{ auth()->user()->full_name }}
+                            </p>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
                     </button>
-                </form>
+
+                    <div id="profileMenu" class="hidden absolute right-0 mt-3 w-56 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden">
+                        <div class="py-2">
+                            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 transition">
+                                <span>👤</span> Edit Profile
+                            </a>
+                            <a href="{{ route('flights.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 transition">
+                                <span>🎫</span> My Bookings
+                            </a>
+                            <hr class="border-gray-100 my-1">
+                            <form method="POST" action="{{ route('auth.logout') }}">
+                                @csrf
+                                <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition">
+                                    <span>🚪</span> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             @endauth
 
             @guest
-                <a href="{{ route('login') }}" 
-                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                <a href="{{ route('login') }}"
+                   class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-semibold">
                     Login
                 </a>
             @endguest
         </div>
-    </div>
 
     {{-- Mobile Menu --}}
     <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-4 px-4">
@@ -91,7 +114,7 @@
 
                 <form method="POST" action="{{ route('auth.logout') }}">
                     @csrf
-                    <button class="px-4 py-2 border border-red-500 text-red-500 rounded 
+                    <button class="px-4 py-2 border border-red-500 text-red-500 rounded
                         hover:bg-red-500 hover:text-white transition">
                         Logout
                     </button>
@@ -99,7 +122,7 @@
             @endauth
 
             @guest
-                <a href="{{ route('login') }}" 
+                <a href="{{ route('login') }}"
                 class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
                     Login
                 </a>
@@ -163,6 +186,26 @@
 <script>
     document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
         document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('profileDropdownBtn');
+        const menu = document.getElementById('profileMenu');
+
+        if (btn && menu) {
+            // Toggle menu saat tombol diklik
+            btn.addEventListener('click', (e) => {
+                menu.classList.toggle('hidden');
+                e.stopPropagation();
+            });
+
+            // Menutup menu saat klik di luar dropdown
+            window.addEventListener('click', (e) => {
+                if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.add('hidden');
+                }
+            });
+        }
     });
 </script>
 
