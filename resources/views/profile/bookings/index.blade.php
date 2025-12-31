@@ -18,7 +18,7 @@
                                 </div>
                                 <div>
                                     <p class="font-bold leading-tight">{{ $user->full_name }}</p>
-                                    <p class="text-xs text-blue-100 mt-1">Bronze Priority</p>
+                                    <p class="text-xs text-blue-100 mt-1">FairSky User</p>
                                 </div>
                             </div>
                         </div>
@@ -50,11 +50,11 @@
                                     <div class="flex-1">
                                         <div class="flex items-center gap-2 mb-4">
                                             <span class="text-xs font-bold px-2 py-1 bg-blue-100 text-blue-700 rounded uppercase">Flight</span>
-                                            <span class="text-xs text-gray-400">ID Pesanan: {{ $booking->booking_code }}</span>
+                                            <span class="text-xs text-gray-400">ID Booking: {{ $booking->booking_code }}</span>
                                         </div>
                                         <div class="flex items-center gap-4">
                                             @if($booking->logo_url)
-                                                <img src="{{ $booking->logo_url }}" class="w-10 h-10 object-contain">
+                                                <img src="{{asset($booking->logo_url)}}" class="w-10 h-10 object-contain">
                                             @endif
                                             <div>
                                                 <p class="font-bold text-gray-800">{{ $booking->origin_city }} → {{ $booking->destination_city }}</p>
@@ -71,15 +71,15 @@
                                         </span>
                                             <p class="text-lg font-bold text-blue-600 mt-1">IDR {{ number_format($booking->total_price, 0, ',', '.') }}</p>
                                         </div>
-                                        <a href="#" class="text-sm font-bold text-blue-600 hover:underline">Detail Pesanan</a>
+                                        <a href="#" class="text-sm font-bold text-blue-600 hover:underline">Booking Detail</a>
                                     </div>
                                 </div>
                             </div>
                         @empty
                             <div class="bg-white rounded-2xl p-12 text-center border border-gray-100">
                                 <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">🎫</div>
-                                <h3 class="text-lg font-bold text-gray-800">Belum ada pesanan</h3>
-                                <p class="text-gray-500 text-sm mt-1">Tiket pesawat yang Anda beli akan muncul di sini.</p>
+                                <h3 class="text-lg font-bold text-gray-800">No Bookings Have Been Made</h3>
+                                <p class="text-gray-500 text-sm mt-1">Tickets Bought Will Be Shown Here</p>
                                 <a href="{{ route('flights.index') }}" class="inline-block mt-6 bg-blue-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-blue-700 transition">Cari Penerbangan</a>
                             </div>
                         @endforelse

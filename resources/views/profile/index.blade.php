@@ -20,7 +20,7 @@
                                 </div>
                                 <div>
                                     <p class="font-bold leading-tight">{{ $user->full_name }}</p>
-                                    <p class="text-xs text-blue-100 mt-1">FairSky</p>
+                                    <p class="text-xs text-blue-100 mt-1">FairSky User</p>
                                 </div>
                             </div>
                         </div>
