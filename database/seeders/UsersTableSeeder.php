@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('sandi123'),
                 'full_name' => 'Sandi',
                 'phone_number' => null,
-                'is_admin' => true,
+                'is_admin' => false,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

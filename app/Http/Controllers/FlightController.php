@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class FlightController extends Controller
 {
-    public function index(Request $request)
+
+    public function flightListPage(Request $request)
     {
         // 1. Mulai Query Dasar dengan Eager Loading
         $query = Flight::with(['airline', 'originAirport', 'destinationAirport', 'airplane', 'flightClasses'])
@@ -68,7 +69,7 @@ class FlightController extends Controller
         return view('flights.index', compact('flights'));
     }
 
-    public function show(Flight $flight)
+    public function flightDetailPage(Flight $flight)
     {
         $flight->load([
             'airline',
@@ -79,5 +80,12 @@ class FlightController extends Controller
         ]);
 
         return view('flights.show', compact('flight'));
+    }
+
+    // Admin Functions
+    public function adminFlightListPage()
+    {
+        $getAllFlights = Flight::with(['airline', 'originAirport', 'destinationAirport'])->paginate(15);
+        return view('admin.flights.index', compact('getAllFlights'));
     }
 }
