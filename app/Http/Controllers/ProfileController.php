@@ -34,7 +34,7 @@ class ProfileController extends Controller
             // Validasi
             if (!Hash::check($request->current_password, $user->password)) {
                 return redirect()->route('profile.index', ['tab' => 'security'])
-                    ->withErrors(['current_password' => 'Password saat ini salah.'])
+                    ->withErrors(['current_password' => 'Password does not match our records.'])
                     ->withInput();
             }
         }
