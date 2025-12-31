@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use function Laravel\Prompts\table;
 
 class ProfileController extends Controller
 {
@@ -54,5 +55,29 @@ class ProfileController extends Controller
             return redirect()->route('profile.index', ['tab' => $request->tab])
                 ->with('success', 'Changes saved successfully.!');
         }
+    }
+
+    public function bookings() {
+        $user = Auth::user();
+
+        $bookings = DB::table('bookings')
+            ->join('flights', 'bookings.flight_id', '=', 'flights.id')
+            ->join('airlines', 'flights.airline_id', '=', 'airlines.id')
+            ->join('airports as origin', 'flights.origin_airport_id', '=', 'origin.id')
+            ->join('airports as destination', 'flights.destination_airport_id', '=', 'destination.id')
+            ->where('bookings.user_id', $user->id)
+            ->select(
+                'bookings.*',
+                'flights.departure_time',
+                'flights.arrival_time',
+                'airlines.airline_name',
+                'airlines.logo_url',
+                'origin.city as origin_city',
+                'destination.city as destination_city'
+            )
+            ->orderBy('bookings.created_at', 'desc')
+            ->get();
+
+        return view('profile.bookings', compact('user', 'bookings'));
     }
 }
