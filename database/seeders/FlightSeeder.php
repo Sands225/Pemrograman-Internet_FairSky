@@ -10,7 +10,7 @@ class FlightSeeder extends Seeder
 {
     public function run()
     {
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 300; $i++) {
             // 1. Ambil 1 pesawat acak beserta pemiliknya (airline_id)
             $airplane = DB::table('airplanes')->inRandomOrder()->first();
 
@@ -20,7 +20,7 @@ class FlightSeeder extends Seeder
 
             // 3. Tentukan waktu berangkat (mulai besok s/d 3 hari ke depan)
             $departure = Carbon::now()->addDays(rand(1, 3))->addHours(rand(1, 12));
-            $arrival = (clone $departure)->addHours(rand(1, 5)); // Durasi terbang 1-5 jam
+            $arrival = (clone $departure)->addHours(rand(1, 7)); // Durasi terbang 1-7 jam
 
             DB::table('flights')->insert([
                 'airline_id' => $airplane->airline_id, // Harus sama dengan pemilik pesawat
