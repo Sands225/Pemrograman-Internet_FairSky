@@ -142,7 +142,7 @@
                                 Harga sudah termasuk pajak & biaya bandara
                             </p>
 
-                            <a href="{{ route('bookings.create', ['flightId' => $class->flight_id, 'flightClassId' => $class->id]) }}"
+                            <a href="{{ route('bookings.create.page', ['flightId' => $class->flight_id, 'flightClassId' => $class->id]) }}"
                                class="inline-block mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg">
                                 Pilih
                             </a>
