@@ -64,7 +64,7 @@ class PaymentController extends Controller
             ]);
         });
 
-        return redirect()->route('payments.success', $booking->id);
+        return redirect()->route('payments.success.page', $booking->id);
     }
 
     public function successPaymentPage($bookingId)
