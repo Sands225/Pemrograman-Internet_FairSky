@@ -6,6 +6,7 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Flight;
 use Symfony\Component\Mailer\Transport\RoundRobinTransport;
 
@@ -22,6 +23,18 @@ Route::middleware('guest')->group(function () {
         ->name('register');
 
     Route::post('/register', [AuthController::class, 'register']);
+});
+
+// Profile
+Route::middleware('auth')->group(function(){
+    Route::get('/profile', [ProfileController::class, 'index'])
+        ->name('profile.index');
+
+    Route::put('/profile' , [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::get('/profile/bookings', [ProfileController::class, 'bookings'])
+        ->name('profile.bookings.index');
 });
 
 // Flights

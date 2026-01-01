@@ -23,9 +23,9 @@
             {{-- Airline --}}
             <div class="flex items-center gap-4 mb-6">
                 @if($flight->airline->logo_url)
-                    <img src="{{ $flight->airline->logo_url }}"
-                         alt="Logo Airline"
-                         class="h-10 object-contain">
+                    <img src="{{ asset($flight->airline->logo_url) }}"
+                         alt="Logo"
+                         class="w-12 h-15 object-contain">
                 @else
                     <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600">
                         {{ substr($flight->airline->airline_name, 0, 2) }}

@@ -16,7 +16,7 @@
 <div class="">
 
     {{-- HERO SECTION --}}
-    <section 
+    <section
         class="hero-section snap-start h-screen bg-cover bg-center bg-black/30 bg-blend-darken flex flex-col justify-center items-center">
 
         <div class="container h-full content-center mx-auto px-4 text-center mt-20 pt-4 text-white">

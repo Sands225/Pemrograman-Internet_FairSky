@@ -29,6 +29,15 @@ class UsersTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+              'email' => 'agungpurnama100@lele.com',
+              'password' => Hash::make('L3L3_AkU_sUk4_G|t4'),
+              'full_name' => 'AgUnG',
+              'phone_number' => '081337537750',
+                'is_admin' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
         ]);
     }
 }
