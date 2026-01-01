@@ -38,19 +38,19 @@ Route::middleware('auth')->group(function () {
         ->name('auth.logout');
 
     Route::get('/flights/{flightId}/bookings/{flightClassId}', [BookingController::class, 'createBookingPage'])
-        ->name('bookings.create');
+        ->name('bookings.create.page');
 
     Route::post('/flights/{flightId}/bookings/{flightClassId}', [BookingController::class, 'createBooking'])
         ->name('bookings.create');
 
     Route::get('/payments/{bookingId}', [PaymentController::class, 'createPaymentPage'])
-        ->name('payments.create');
+        ->name('payments.create.page');
 
     Route::post('/payments/{bookingId}', [PaymentController::class, 'createPayment'])
         ->name('payments.create');
 
     Route::get('/payments/{bookingId}/status', [PaymentController::class, 'successPaymentPage'])
-        ->name('payments.success');
+        ->name('payments.success.page');
 });
 
 // Admin Routes
@@ -62,17 +62,23 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ->name('admin.flights.index');
 
     Route::get('/admin/flights/create', [FlightController::class, 'createFlightPage'])
-        ->name('admin.flights.create');
+        ->name('admin.flights.create.page');
 
     Route::post('/admin/flights/create', [FlightController::class, 'createFlight'])
         ->name('admin.flights.create');
 
     Route::get('/admin/flights/{flight}/edit', [FlightController::class, 'editFlightPage'])
-        ->name('admin.flights.edit');
+        ->name('admin.flights.edit.page');
 
     Route::post('/admin/flights/{flight}/edit', [FlightController::class, 'editFlight'])
         ->name('admin.flights.edit');
 
-    Route::post('/admin/flights/{flight}/delete', [FlightController::class, 'deleteFlight'])
+    Route::delete('/admin/flights/{flight}/delete', [FlightController::class, 'deleteFlight'])
         ->name('admin.flights.delete');
 });
+
+Route::get('/admin/airlines/{airline}/airplanes', function (\App\Models\Airline $airline) {
+    return $airline->airplanes()
+        ->select('id', 'model', 'total_capacity')
+        ->get();
+})->middleware(['auth', 'admin']);
