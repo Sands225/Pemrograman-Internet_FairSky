@@ -124,6 +124,5 @@
     </form>
 </div>
 <pre class="bg-black text-green-400 p-4 rounded text-xs overflow-auto">
-{{ print_r($flightClass->toArray(), true) }}
 </pre>
 @endsection

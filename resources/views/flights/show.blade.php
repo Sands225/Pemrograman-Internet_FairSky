@@ -156,6 +156,5 @@
 </div>
 
 <pre class="bg-black text-green-400 p-4 rounded text-xs overflow-auto">
-{{ print_r($flight->toArray(), true) }}
 </pre>
 @endsection

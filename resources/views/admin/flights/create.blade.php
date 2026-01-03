@@ -3,7 +3,6 @@
 @section('title', 'Create Flight')
 
 @section('content')
-{{-- {{ dd($airplanes); }} --}}
 <div class="max-w-3xl mx-auto py-10">
 
     <h1 class="text-2xl font-bold mb-6">Create Flight</h1>

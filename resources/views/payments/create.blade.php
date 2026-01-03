@@ -48,8 +48,6 @@
             </div>
         </div>
 
-        {{-- {{ dd($flightClass, $data) }} --}}
-
         {{-- FORM PEMBAYARAN --}}
         <form action="{{ route('payments.create', $booking->id) }}" method="POST">
             @csrf
@@ -84,6 +82,5 @@
     </div>
 
     <pre class="bg-gray-100 p-4 rounded text-xs overflow-auto mb-6">
-    {{ json_encode($booking, JSON_PRETTY_PRINT) }}
     </pre>
     @endsection
