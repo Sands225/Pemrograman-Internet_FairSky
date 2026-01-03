@@ -24,7 +24,7 @@
                 See Clearly, Fly Fairly
             </h1>
             <p class="text-l font-semibold drop-shadow-md mt-4 w-1/2 text-center mx-auto">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui accusamus, sapiente nisi corporis fugiat facilis similique voluptatibus. Inventore tenetur illo eos blanditiis enim laudantium ipsam ratione ut vero sunt. Enim!
+                Experience travel with zero hidden fees. We break down every cost and calculate your carbon footprint upfront, so you can book the smartest, fairest flights for your wallet and the planet.
             </p>
         </div>
 
