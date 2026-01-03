@@ -30,7 +30,7 @@
 
 {{-- NAVIGATION --}}
 <nav class="bg-white shadow-sm fixed top-0 inset-x-0 z-50 py-3 h-[60px]">
-    <div class="container mx-auto px-4 flex items-center justify-between">
+    <div class="container mx-auto px-4 flex items-center justify-between my-auto h-full">
 
         {{-- Logo --}}
         <a href="{{ route('home') }}">
