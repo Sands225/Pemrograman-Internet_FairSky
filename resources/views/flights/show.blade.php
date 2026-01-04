@@ -7,14 +7,16 @@
     <div class="container mx-auto px-4 max-w-5xl">
 
         {{-- Header --}}
-        <div class="mb-6">
-            <a href="{{ url()->previous() }}"
-               class="text-sm text-blue-600 hover:underline">
-                ← Kembali ke hasil pencarian
-            </a>
+        {{-- STEP INDICATOR --}}
+        <div class="flex items-center text-sm text-gray-500 gap-4">
+            <span class="font-semibold text-blue-600">1. Pilih Penerbangan</span>
+            <span>→</span>
+            <span>2. Data Penumpang</span>
+            <span>→</span>
+            <span>3. Pembayaran</span>
         </div>
 
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">
+        <h1 class="text-2xl font-bold text-gray-800 my-6">
             Detail Penerbangan
         </h1>
 
@@ -154,7 +156,4 @@
         </div>
     </div>
 </div>
-
-<pre class="bg-black text-green-400 p-4 rounded text-xs overflow-auto">
-</pre>
 @endsection
