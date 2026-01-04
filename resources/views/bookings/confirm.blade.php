@@ -89,16 +89,14 @@
     </div>
 
     {{-- FORM SUBMIT --}}
-<form action="{{ route('payments.create') }}" method="GET">
-    <button class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold">
-        Lanjut ke Pembayaran
-    </button>
-</form>
+    <form action="{{ route('payments.create') }}" method="GET">
+        <button class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold">
+            Lanjut ke Pembayaran
+        </button>
+    </form>
 
 </div>
 
 <pre class="bg-gray-100 p-4 rounded text-xs overflow-auto mb-6">
-{{ json_encode($flightClass, JSON_PRETTY_PRINT) }}
-{{ json_encode($data, JSON_PRETTY_PRINT) }}
 </pre>
 @endsection

@@ -18,15 +18,17 @@ class PaymentController extends Controller
             'flightClass.flight.airline',
             'flightClass.flight.originAirport',
             'flightClass.flight.destinationAirport',
+            'addons',
             'payment',
         ])
         ->where('id', $bookingId)
         ->where('user_id', Auth::id())
         ->firstOrFail();
 
-        // If already paid, skip payment page
+        // dd($booking);
+
         if ($booking->payment) {
-            return redirect()->route('payments.success', $booking->id);
+            return redirect()->route('payments.success.page', $booking->id);
         }
 
         return view('payments.create', compact('booking'));
