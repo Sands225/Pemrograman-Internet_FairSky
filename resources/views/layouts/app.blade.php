@@ -138,47 +138,91 @@
 </main>
 
 {{-- FOOTER --}}
-<footer class="bg-gray-900 text-white pt-12 pb-6">
-    <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+<footer class="bg-gray-900 text-gray-300 pt-12 pb-6">
+    <div class="container mx-auto px-4 max-w-6xl">
 
-            {{-- Logo --}}
+        {{-- TOP --}}
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+
+            {{-- BRAND --}}
             <div>
-                <img src="/images/logo.png" class="w-24 mb-4" alt="logo">
-                <p class="text-gray-400">
-                    Your trusted aviation partner for flights, charters, and training.
+                <img src="/images/logo.png" class="w-28 mb-4" alt="SkyWings">
+                <p class="text-sm text-gray-400 leading-relaxed">
+                    SkyWings Aviation membantu Anda menemukan penerbangan terbaik
+                    dengan proses pemesanan yang cepat, aman, dan nyaman.
                 </p>
             </div>
 
-            {{-- Quick Links --}}
+            {{-- QUICK LINKS --}}
             <div>
-                <h6 class="font-bold mb-4">Quick Links</h6>
-                <ul class="space-y-2 text-gray-400">
-                    <li>—</li>
+                <h6 class="font-semibold text-white mb-4">Quick Links</h6>
+                <ul class="space-y-2 text-sm">
+                    <li>
+                        <a href="/flights" class="hover:text-white transition">
+                            Flights
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('profile.bookings.index') }}" class="hover:text-white transition">
+                            Popular Destinations
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('profile.index') }}" class="hover:text-white transition">
+                            Profile
+                        </a>
+                    </li>
                 </ul>
             </div>
 
-            {{-- Company --}}
+            {{-- COMPANY --}}
             <div>
-                <h6 class="font-bold mb-4">Company</h6>
-                <ul class="space-y-2 text-gray-400">
-                    <li>—</li>
+                <h6 class="font-semibold text-white mb-4">Company</h6>
+                <ul class="space-y-2 text-sm">
+                    <li>
+                        <a href="#about" class="hover:text-white transition">
+                            About Us
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#contact" class="hover:text-white transition">
+                            Contact
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#help" class="hover:text-white transition">
+                            Help Center
+                        </a>
+                    </li>
                 </ul>
             </div>
 
-            {{-- Contact --}}
+            {{-- CONTACT --}}
             <div>
-                <h6 class="font-bold mb-4">Contact</h6>
-                <p class="text-gray-400">Email: info@skywings.com</p>
-                <p class="text-gray-400">Phone: +1 (555) 123-4567</p>
+                <h6 class="font-semibold text-white mb-4">Contact</h6>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li>Email: info@skywings.com</li>
+                    <li>Phone: +1 (555) 123-4567</li>
+                    <li>Available 24/7</li>
+                </ul>
             </div>
         </div>
 
-        <hr class="border-gray-700 mb-6">
+        {{-- DIVIDER --}}
+        <hr class="border-gray-800 mb-6">
 
-        <p class="text-center text-gray-400">
-            &copy; 2024 SkyWings Aviation. All rights reserved.
-        </p>
+        {{-- BOTTOM --}}
+        <div class="flex flex-col md:flex-row items-center justify-between text-sm text-gray-400 gap-3">
+            <p>
+                © {{ date('Y') }} SkyWings Aviation. All rights reserved.
+            </p>
+
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                <span class="text-gray-600">•</span>
+                <a href="#" class="hover:text-white transition">Terms of Service</a>
+            </div>
+        </div>
     </div>
 </footer>
 
