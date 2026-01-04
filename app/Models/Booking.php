@@ -36,6 +36,11 @@ class Booking extends Model
 
     public function ticket()
     {
-        return $this->belongsTo(Ticket::class);
+        return $this->hasOne(Ticket::class);
+    }
+
+    public function addons()
+    {
+        return $this->hasMany(\App\Models\BookingAddon::class);
     }
 }
