@@ -17,11 +17,11 @@
                             {{-- Dropdown Asal --}}
                             <div class="relative">
                                 <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">From</label>
-                                <select name="from" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none appearance-none bg-no-repeat bg-right pr-10" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C/polyline%3E%3C/svg%3E'); background-position: right 1rem center; background-size: 1em;">
+                                <select name="from" ...>
                                     <option value="">Select Origin</option>
                                     @foreach($airports as $airport)
                                         <option value="{{ $airport->id }}" {{ request('from') == $airport->id ? 'selected' : '' }}>
-                                            {{ $airport->city }} ({{ $airport->iata_code }})
+                                            {{ $airport->city }}{{ $airport->iata_code ? ' ('.$airport->iata_code.')' : '' }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -30,11 +30,11 @@
                             {{-- Dropdown Tujuan --}}
                             <div class="relative">
                                 <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">To</label>
-                                <select name="to" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none appearance-none bg-no-repeat bg-right pr-10" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C/polyline%3E%3C/svg%3E'); background-position: right 1rem center; background-size: 1em;">
+                                <select name="to" ...>
                                     <option value="">Select Destination</option>
                                     @foreach($airports as $airport)
                                         <option value="{{ $airport->id }}" {{ request('to') == $airport->id ? 'selected' : '' }}>
-                                            {{ $airport->city }} ({{ $airport->iata_code }})
+                                            {{ $airport->city }}{{ $airport->iata_code ? ' ('.$airport->iata_code.')' : '' }}
                                         </option>
                                     @endforeach
                                 </select>
