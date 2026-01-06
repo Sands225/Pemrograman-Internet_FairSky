@@ -48,7 +48,7 @@
 
         {{-- Desktop Menu --}}
         <div class="hidden lg:flex items-center gap-x-12">
-            <a href="/flights" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
+            <a href="{{ route('flights.index') }}" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
             <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
             <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Help</a>
         </div>
@@ -104,7 +104,7 @@
     {{-- Mobile Menu --}}
     <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-4 px-4">
         <div class="flex flex-col space-y-3">
-            <a href="/flights" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
+            <a href="#flights" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
             <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
             <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Help</a>
 

@@ -227,9 +227,6 @@
                                                 <div class="absolute -top-1.5 right-0 w-2 h-2 bg-gray-300 rounded-full"></div>
                                                 <div class="absolute -top-1.5 left-0 w-2 h-2 bg-gray-300 rounded-full"></div>
                                                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-1">
-                                                    <svg class="w-4 h-4 text-gray-400 rotate-90" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-                                                    </svg>
                                                 </div>
                                             </div>
                                             <span class="text-xs text-green-600 font-medium mt-1">Langsung</span>
@@ -291,7 +288,7 @@
                         </div>
                     @endforelse
 
-                    <div class="mt-6">
+                    <div class="mt-16 mb-24 flex justify-center">
                         {{ $flights->links() }}
                     </div>
 
