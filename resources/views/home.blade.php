@@ -304,7 +304,7 @@
                 Jakarta → Singapore (CGK → SIN)
             </h5>
             <p class="text-gray-500 mb-3">
-                A modern city destination offering world-class attractions, shopping, and diverse culinary experiences.
+                A modern city destination offering world-class attractions and diverse culinary experiences.
             </p>
 
             <!-- Price -->
