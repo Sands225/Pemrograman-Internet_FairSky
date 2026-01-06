@@ -61,20 +61,14 @@ class FlightController extends Controller
                 $q->where('price', '>=', $request->min_price);
             });
         }
+
         if ($request->filled('max_price')) {
             $query->whereHas('flightClasses', function($q) use ($request) {
                 $q->where('price', '<=', $request->max_price);
             });
         }
 
-        if ($request->get('sort') == 'cheapest') {
-            $query->withMin('flightClasses', 'price')->orderBy('flight_classes_min_price', 'asc');
-        } elseif ($request->get('sort') == 'fastest') {
-            $query->orderByRaw('TIMESTAMPDIFF(MINUTE, departure_time, arrival_time) ASC');
-        } else {
-            $query->orderBy('departure_time', 'asc');
-        }
-
+        // Inter
         if ($request->get('type') == 'international') {
             $query->where(function($q) {
                 $q->whereHas('originAirport', function($a) {
@@ -83,6 +77,16 @@ class FlightController extends Controller
                     $a->where('is_international', true);
                 });
             });
+        }
+
+        // Sorting
+        if ($request->get('sort') == 'cheapest') {
+            $query->withMin('flightClasses', 'price')->orderBy('flight_classes_min_price', 'asc');
+        } elseif ($request->get('sort') == 'fastest') {
+            $query->orderByRaw('TIMESTAMPDIFF(MINUTE, departure_time, arrival_time) ASC');
+        } else {
+            // Default sorting jika tidak memilih termurah/tercepat/internasional
+            $query->orderBy('departure_time', 'asc');
         }
 
         $flights = $query->paginate(10)->withQueryString();

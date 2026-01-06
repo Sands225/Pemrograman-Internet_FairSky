@@ -51,7 +51,7 @@
 
                             {{-- Tombol Search --}}
                             <div class="md:col-span-3 mt-4">
-                                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition shadow-lg shadow-orange-200 flex items-center justify-center gap-2 text-lg">
+                                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition shadow-lg shadow-black-200 flex items-center justify-center gap-2 text-lg">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                                     Cari Penerbangan
                                 </button>
@@ -144,21 +144,27 @@
 
                     {{-- SORTING TABS --}}
                     <div class="flex items-center gap-2 mb-6 overflow-x-auto pb-2">
-                        <a href="{{ request()->fullUrlWithQuery(['sort' => null]) }}"
-                           class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition {{ !request('sort') ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                        <a href="{{ request()->fullUrlWithQuery(['sort' => null, 'type' => null]) }}"
+                           class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
+       {{ (!request('sort') && !request('type')) ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                             Rekomendasi FairSky
                         </a>
-                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'cheapest']) }}"
-                           class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition {{ request('sort') == 'cheapest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+
+                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'cheapest', 'type' => null]) }}"
+                           class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
+       {{ request('sort') == 'cheapest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                             Harga Termurah
                         </a>
-                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'fastest']) }}"
-                           class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition {{ request('sort') == 'fastest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+
+                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'fastest', 'type' => null]) }}"
+                           class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
+       {{ request('sort') == 'fastest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                             Durasi Tercepat
                         </a>
 
-                        <a href="{{ request()->fullUrlWithQuery(['type' => 'international']) }}"
-                           class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition {{ request('type') == 'international' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                        <a href="{{ request()->fullUrlWithQuery(['type' => 'international', 'sort' => null]) }}"
+                           class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
+       {{ request('type') == 'international' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                             International
                         </a>
                     </div>
