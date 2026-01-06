@@ -30,6 +30,16 @@ class PageController extends Controller
         return view('admin.dashboard');
     }
 
+    public function about()
+    {
+        return view('about');
+    }
+
+    public function help()
+    {
+        return view('help');
+    }
+
     // public function adminFlightListPage()
     // {
     //     return view('admin.flights.index');
