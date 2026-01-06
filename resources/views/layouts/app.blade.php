@@ -29,10 +29,11 @@
 <body class="bg-gray-50 font-sans">
 
 {{-- NAVIGATION --}}
-<nav class="bg-white shadow-sm fixed top-0 inset-x-0 z-50 py-3 h-[60px]">
+<nav class="bg-white shadow-sm fixed top-0 inset-x-0 z-50 h-20">
     <div class="container mx-auto px-4 flex items-center justify-between my-auto h-full">
 
         {{-- Logo --}}
+
         <a href="{{ route('home') }}">
             <img src="/images/logo.png" class="w-24" alt="logo">
         </a>
@@ -46,7 +47,7 @@
         </button>
 
         {{-- Desktop Menu --}}
-        <div class="hidden lg:flex items-center gap-x-10">
+        <div class="hidden lg:flex items-center gap-x-12">
             <a href="/flights" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
             <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
             <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Help</a>
