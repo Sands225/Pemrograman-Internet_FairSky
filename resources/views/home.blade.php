@@ -271,6 +271,7 @@
                 <p class="font-semibold mb-1">Ideal for:</p>
                 <p>Adventure seekers, nature lovers, wellness trips</p>
             </div>
+            @endfor
 
             <!-- CTA -->
             <a href="{{ route('flights.index', ['to' => 'LOP']) }}"
@@ -424,6 +425,7 @@
                 <p class="font-semibold mb-1">Ideal for:</p>
                 <p>Food lovers, cultural explorers, urban adventurers</p>
             </div>
+            @endforeach
 
             <!-- CTA -->
             <a href="{{ route('flights.index', ['to' => 'BKK']) }}"
