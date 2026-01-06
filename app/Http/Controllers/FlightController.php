@@ -12,65 +12,82 @@ use Illuminate\Validation\Rule;
 
 class FlightController extends Controller
 {
-
     public function flightListPage(Request $request)
     {
-        // 1. Mulai Query Dasar dengan Eager Loading
+        // Load data untuk dropdown dan filter maskapai
+        $airports = Airport::orderBy('city', 'asc')->get();
+        $airlines = Airline::all(); // Mengambil semua maskapai untuk sidebar filter
+
         $query = Flight::with(['airline', 'originAirport', 'destinationAirport', 'airplane', 'flightClasses'])
             ->where('status', 'Scheduled')
             ->where('departure_time', '>=', now());
 
-        // 2. Filter Pencarian Utama (Dari Search Bar)
-        if ($request->filled('from')) {
-            $query->whereHas('originAirport', function($q) use ($request) {
-                $q->where('id', $request->from);
-            });
-        }
-        if ($request->filled('to')) {
-            $query->whereHas('destinationAirport', function($q) use ($request) {
-                $q->where('id', $request->to);
-            });
-        }
-        if ($request->filled('date')) {
-            $query->whereDate('departure_time', $request->date);
-        }
+        // Filter Pencarian Utama (Dropdown)
+        if ($request->filled('from')) { $query->where('origin_airport_id', $request->from); }
+        if ($request->filled('to')) { $query->where('destination_airport_id', $request->to); }
+        if ($request->filled('date')) { $query->whereDate('departure_time', $request->date); }
 
-        // 3. Logika Filter Sidebar (Transit & Waktu)
-        // Filter Berdasarkan Transit (Stops)
-        if ($request->has('stops')) {
-            $query->whereIn('stops', $request->stops);
-        }
+        // Filter Sidebar: Transit
+        if ($request->has('stops')) { $query->whereIn('stops', $request->stops); }
 
-        // Filter Berdasarkan Waktu Keberangkatan
+        // Filter Sidebar: Waktu Berangkat
         if ($request->has('waktu')) {
             $query->where(function($q) use ($request) {
-                $waktuFilters = (array) $request->waktu;
-                if (in_array('pagi', $waktuFilters)) {
-                    $q->orWhereTime('departure_time', '>=', '00:00')
-                        ->whereTime('departure_time', '<=', '11:00');
-                }
-                if (in_array('siang', $waktuFilters)) {
-                    $q->orWhereTime('departure_time', '>', '11:00')
-                        ->whereTime('departure_time', '<=', '16:00');
-                }
+                $w = (array) $request->waktu;
+                if (in_array('pagi', $w)) $q->orWhereTime('departure_time', '>=', '06:00')->whereTime('departure_time', '<=', '11:00');
+                if (in_array('siang', $w)) $q->orWhereTime('departure_time', '>', '11:00')->whereTime('departure_time', '<=', '16:00');
+                if (in_array('malam', $w)) $q->orWhereTime('departure_time', '>', '16:00')->orWhereTime('departure_time', '<', '06:00');
             });
         }
 
-        // 4. Logika Sorting (Rekomendasi, Termurah, Tercepat)
+        // Filter Sidebar: Waktu Tiba
+        if ($request->has('tiba')) {
+            $query->where(function($q) use ($request) {
+                $t = (array) $request->tiba;
+                if (in_array('pagi', $t)) $q->orWhereTime('arrival_time', '>=', '06:00')->whereTime('arrival_time', '<=', '11:00');
+                if (in_array('siang', $t)) $q->orWhereTime('arrival_time', '>', '11:00')->whereTime('arrival_time', '<=', '16:00');
+                if (in_array('malam', $t)) $q->orWhereTime('arrival_time', '>', '16:00')->orWhereTime('arrival_time', '<', '06:00');
+            });
+        }
+
+        // Filter Sidebar: Maskapai
+        if ($request->has('filter_airlines')) {
+            $query->whereIn('airline_id', $request->filter_airlines);
+        }
+
+        // Filter Sidebar: Rentang Harga
+        if ($request->filled('min_price')) {
+            $query->whereHas('flightClasses', function($q) use ($request) {
+                $q->where('price', '>=', $request->min_price);
+            });
+        }
+        if ($request->filled('max_price')) {
+            $query->whereHas('flightClasses', function($q) use ($request) {
+                $q->where('price', '<=', $request->max_price);
+            });
+        }
+
         if ($request->get('sort') == 'cheapest') {
-            $query->withMin('flightClasses', 'price')
-                ->orderBy('flight_classes_min_price', 'asc');
+            $query->withMin('flightClasses', 'price')->orderBy('flight_classes_min_price', 'asc');
         } elseif ($request->get('sort') == 'fastest') {
             $query->orderByRaw('TIMESTAMPDIFF(MINUTE, departure_time, arrival_time) ASC');
         } else {
             $query->orderBy('departure_time', 'asc');
         }
 
-        // 5. Eksekusi Pagination
-        // withQueryString() memastikan filter stops[] & waktu[] tidak hilang saat ganti page
+        if ($request->get('type') == 'international') {
+            $query->where(function($q) {
+                $q->whereHas('originAirport', function($a) {
+                    $a->where('is_international', true);
+                })->orWhereHas('destinationAirport', function($a) {
+                    $a->where('is_international', true);
+                });
+            });
+        }
+
         $flights = $query->paginate(10)->withQueryString();
 
-        return view('flights.index', compact('flights'));
+        return view('flights.index', compact('flights', 'airports', 'airlines'));
     }
 
     public function flightDetailPage(Flight $flight)
@@ -86,7 +103,6 @@ class FlightController extends Controller
         return view('flights.show', compact('flight'));
     }
 
-    // Admin Functions
     public function adminFlightListPage()
     {
         $getAllFlights = Flight::with(['airline', 'originAirport', 'destinationAirport'])->paginate(15);
@@ -116,17 +132,10 @@ class FlightController extends Controller
             'status' => 'required|in:Scheduled,Cancelled,Delayed',
         ]);
 
-        Airplane::where('id', $validated['airplane_id'])
-            ->where('airline_id', $validated['airline_id'])
-            ->firstOrFail();
-
         $flight->update($validated);
 
-        return redirect()
-            ->route('admin.flights.index')
-            ->with('success', 'Flight updated successfully');
+        return redirect()->route('admin.flights.index')->with('success', 'Flight updated successfully');
     }
-
 
     public function createFlightPage()
     {
@@ -147,27 +156,21 @@ class FlightController extends Controller
             'destination_airport_id' => 'required',
             'departure_time' => 'required|date|after:now',
             'arrival_time' => 'required|date|after:departure_time',
-            // 'base_price' => 'required|numeric|min:0',
         ]);
         $validated['status'] = 'Scheduled';
 
-        $flight = Flight::create($validated);
+        Flight::create($validated);
 
-        return redirect()->route('admin.flights.index')
-            ->with('success', 'Flight created successfully.');
+        return redirect()->route('admin.flights.index')->with('success', 'Flight created successfully.');
     }
 
     public function deleteFlight(Flight $flight)
     {
         DB::transaction(function () use ($flight) {
-            // Hapus kelas penerbangan terkait
             $flight->flightClasses()->delete();
-
-            // Hapus penerbangan
             $flight->delete();
         });
 
-        return redirect()->route('admin.flights.index')
-            ->with('success', 'Flight deleted successfully.');
+        return redirect()->route('admin.flights.index')->with('success', 'Flight deleted successfully.');
     }
 }

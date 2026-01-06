@@ -53,6 +53,12 @@ class AirportSeeder extends Seeder
             ['code' => 'PLU', 'name' => 'Mutiara SIS Al-Jufrie Airport', 'city' => 'Palu', 'country' => 'Indonesia', 'timezone' => 'Asia/Makassar'],
             ['code' => 'KDI', 'name' => 'Haluoleo Airport', 'city' => 'Kendari', 'country' => 'Indonesia', 'timezone' => 'Asia/Makassar'],
             ['code' => 'BUW', 'name' => 'Betoambari Airport', 'city' => 'Baubau', 'country' => 'Indonesia', 'timezone' => 'Asia/Makassar'],
+            // International
+            ['code' => 'KUL', 'name' => 'Kuala Lumpur International Airport', 'city' => 'Kuala Lumpur', 'country' => 'Malaysia', 'is_international' => true, 'timezone' => 'Asia/Kuala_Lumpur'],
+            ['code' => 'SIN', 'name' => 'Singapore Changi Airport', 'city' => 'Singapore', 'country' => 'Singapore','is_international' => true, 'timezone' => 'Asia/Singapore'],
+            ['code' => 'BKK', 'name' => 'Suvarnabhumi Airport', 'city' => 'Bangkok', 'country' => 'Thailand','is_international' => true, 'timezone' => 'Asia/Bangkok'],
+            ['code' => 'NRT', 'name' => 'Narita International Airport', 'city' => 'Tokyo', 'country' => 'Japan','is_international' => true, 'timezone' => 'Asia/Tokyo'],
+            ['code' => 'ICN', 'name' => 'Incheon International Airport', 'city' => 'Seoul', 'country' => 'South Korea','is_international' => true, 'timezone' => 'Asia/Seoul'],
         ];
 
         foreach ($airports as $airport) {
