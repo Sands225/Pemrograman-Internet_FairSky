@@ -8,95 +8,166 @@
 
             <h1 class="text-3xl font-bold text-gray-800 mb-8">Flight Search Results</h1>
 
+            {{-- SEARCH BAR SECTION --}}
+            <div class="bg-transparent pb-12 pt-8 px-4">
+                <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-6">
+                    <form action="{{ route('flights.index') }}" method="GET">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+
+                            {{-- Dropdown Asal --}}
+                            <div class="relative">
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">From</label>
+                                <select name="from" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none appearance-none bg-no-repeat bg-right pr-10" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C/polyline%3E%3C/svg%3E'); background-position: right 1rem center; background-size: 1em;">
+                                    <option value="">Select Origin</option>
+                                    @foreach($airports as $airport)
+                                        <option value="{{ $airport->id }}" {{ request('from') == $airport->id ? 'selected' : '' }}>
+                                            {{ $airport->city }} ({{ $airport->iata_code }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- Dropdown Tujuan --}}
+                            <div class="relative">
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">To</label>
+                                <select name="to" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none appearance-none bg-no-repeat bg-right pr-10" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C/polyline%3E%3C/svg%3E'); background-position: right 1rem center; background-size: 1em;">
+                                    <option value="">Select Destination</option>
+                                    @foreach($airports as $airport)
+                                        <option value="{{ $airport->id }}" {{ request('to') == $airport->id ? 'selected' : '' }}>
+                                            {{ $airport->city }} ({{ $airport->iata_code }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- Input Tanggal --}}
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">Departure Date</label>
+                                <input type="date" name="date"
+                                       min="{{ date('Y-m-d') }}"
+                                       value="{{ request('date', date('Y-m-d')) }}"
+                                       class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none">
+                            </div>
+
+                            {{-- Tombol Search --}}
+                            <div class="md:col-span-3 mt-4">
+                                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition shadow-lg shadow-black-200 flex items-center justify-center gap-2 text-lg">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                    Cari Penerbangan
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <div class="flex flex-col lg:flex-row gap-8">
 
                 <aside class="w-full lg:w-1/4">
                     <form action="{{ route('flights.index') }}" method="GET" id="filterForm">
-                        {{-- Mempertahankan parameter pencarian asal/tujuan agar tidak hilang saat filter --}}
-                        @foreach(request()->except(['stops', 'waktu', 'page']) as $key => $value)
+                        {{-- Parameter pencarian utama agar tidak hilang --}}
+                        @foreach(request()->only(['from', 'to', 'date', 'sort']) as $key => $value)
                             <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                         @endforeach
 
                         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-24">
                             <div class="flex justify-between items-center mb-6">
                                 <h3 class="font-bold text-xl text-gray-800">Filter</h3>
-                                <a href="{{ route('flights.index', request()->only(['from', 'to', 'date'])) }}"
-                                   class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition">
-                                    Reset
-                                </a>
+                                <a href="{{ route('flights.index', request()->only(['from', 'to', 'date'])) }}" class="text-sm font-semibold text-blue-600">Reset</a>
                             </div>
 
-                            {{-- Filter Transit --}}
+                            {{-- FILTER HARGA --}}
                             <div class="mb-8">
-                                <h4 class="font-bold mb-4 text-gray-700 flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
-                                    Jumlah Transit
+                                <h4 class="font-bold mb-4 text-gray-700 text-sm flex items-center gap-2">
+                                    Rentang Harga
                                 </h4>
                                 <div class="space-y-3">
-                                    <label class="flex items-center justify-between group cursor-pointer">
-                                        <div class="flex items-center space-x-3">
-                                            <input type="checkbox" name="stops[]" value="0" onchange="this.form.submit()"
-                                                   {{ in_array('0', (array)request('stops')) ? 'checked' : '' }}
-                                                   class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition cursor-pointer">
-                                            <span class="text-gray-600 group-hover:text-gray-900 transition">Langsung</span>
-                                        </div>
-                                    </label>
-                                    <label class="flex items-center justify-between group cursor-pointer">
-                                        <div class="flex items-center space-x-3">
-                                            <input type="checkbox" name="stops[]" value="1" onchange="this.form.submit()"
-                                                   {{ in_array('1', (array)request('stops')) ? 'checked' : '' }}
-                                                   class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition cursor-pointer">
-                                            <span class="text-gray-600 group-hover:text-gray-900 transition">1 Transit</span>
-                                        </div>
-                                    </label>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-2.5 text-gray-400 text-xs font-bold">IDR</span>
+                                        <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Minimum"
+                                               class="w-full pl-10 pr-4 py-2 text-sm border border-gray-100 rounded-xl focus:ring-1 focus:ring-blue-500 outline-none transition">
+                                    </div>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-2.5 text-gray-400 text-xs font-bold">IDR</span>
+                                        <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Maksimum"
+                                               class="w-full pl-10 pr-4 py-2 text-sm border border-gray-100 rounded-xl focus:ring-1 focus:ring-blue-500 outline-none transition">
+                                    </div>
+                                    <button type="submit" class="w-full bg-blue-50 text-blue-600 font-bold py-2 rounded-xl text-xs hover:bg-blue-100 transition mt-2">
+                                        Terapkan Harga
+                                    </button>
                                 </div>
                             </div>
 
-                            {{-- Filter Waktu --}}
-                            <div class="mb-4">
-                                <h4 class="font-bold mb-4 text-gray-700 flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    Waktu Keberangkatan
+                            {{-- FILTER MASKAPAI (Update Jalur Logo) --}}
+                            <div class="mb-8">
+                                <h4 class="font-bold mb-4 text-gray-700 text-sm flex items-center gap-2">
+                                    Maskapai
                                 </h4>
-                                <div class="grid grid-cols-1 gap-3">
-                                    {{-- Pagi --}}
-                                    <label class="relative flex flex-col p-3 border rounded-xl cursor-pointer transition {{ in_array('pagi', (array)request('waktu')) ? 'border-blue-500 bg-blue-50' : 'border-gray-100 hover:border-blue-200' }}">
-                                        <input type="checkbox" name="waktu[]" value="pagi" class="hidden" onchange="this.form.submit()"
-                                            {{ in_array('pagi', (array)request('waktu')) ? 'checked' : '' }}>
-                                        <span class="text-xs font-bold {{ in_array('pagi', (array)request('waktu')) ? 'text-blue-700' : 'text-gray-700' }}">Pagi</span>
-                                        <span class="text-[10px] text-gray-500">00:00 - 11:00</span>
-                                    </label>
+                                <div class="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                                    @foreach($airlines as $airline)
+                                        <label class="flex items-center space-x-3 cursor-pointer group">
+                                            <input type="checkbox" name="filter_airlines[]" value="{{ $airline->id }}" onchange="this.form.submit()"
+                                                   {{ in_array($airline->id, (array)request('filter_airlines')) ? 'checked' : '' }}
+                                                   class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition">
 
-                                    {{-- Siang --}}
-                                    <label class="relative flex flex-col p-3 border rounded-xl cursor-pointer transition {{ in_array('siang', (array)request('waktu')) ? 'border-blue-500 bg-blue-50' : 'border-gray-100 hover:border-blue-200' }}">
-                                        <input type="checkbox" name="waktu[]" value="siang" class="hidden" onchange="this.form.submit()"
-                                            {{ in_array('siang', (array)request('waktu')) ? 'checked' : '' }}>
-                                        <span class="text-xs font-bold {{ in_array('siang', (array)request('waktu')) ? 'text-blue-700' : 'text-gray-700' }}">Siang</span>
-                                        <span class="text-[10px] text-gray-500">11:00 - 16:00</span>
-                                    </label>
+                                            <img src="{{ asset($airline->logo_url) }}"
+                                                 alt="{{ $airline->airline_name }}"
+                                                 class="w-6 h-6 object-contain">
+
+                                            <span class="text-xs text-gray-600 group-hover:text-gray-900 transition">  {{ $airline->airline_name }}
+                                            </span>
+                                            </label>
+                                    @endforeach
                                 </div>
                             </div>
 
-                            <button type="submit" class="w-full mt-6 bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition lg:hidden">
-                                Terapkan Filter
-                            </button>
+                            {{-- 3. FILTER WAKTU TIBA --}}
+                            <div class="mb-8">
+                                <h4 class="font-bold mb-4 text-gray-700 text-sm">Waktu Tiba</h4>
+                                <div class="grid grid-cols-1 gap-2">
+                                    @foreach(['pagi' => '06:00 - 11:00', 'siang' => '11:00 - 16:00', 'malam' => '16:00 - 06:00'] as $key => $time)
+                                        <label class="relative flex flex-col p-2.5 border rounded-xl cursor-pointer transition {{ in_array($key, (array)request('tiba')) ? 'border-blue-500 bg-blue-50' : 'border-gray-50 hover:border-blue-200' }}">
+                                            <input type="checkbox" name="tiba[]" value="{{ $key }}" class="hidden" onchange="this.form.submit()" {{ in_array($key, (array)request('tiba')) ? 'checked' : '' }}>
+                                            <span class="text-[10px] font-bold {{ in_array($key, (array)request('tiba')) ? 'text-blue-700' : 'text-gray-600' }}">{{ ucfirst($key) }}</span>
+                                            <span class="text-[8px] text-gray-400 font-bold uppercase">{{ $time }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition">Terapkan Harga</button>
                         </div>
                     </form>
                 </aside>
 
                 <main class="w-full lg:w-3/4">
 
+                    {{-- SORTING TABS --}}
                     <div class="flex items-center gap-2 mb-6 overflow-x-auto pb-2">
-                        <a href="{{ request()->fullUrlWithQuery(['sort' => null]) }}"
-                        class="whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-full shadow-sm transition{{ !request('sort') ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600' }}">Rekomendasi FairSky</a>
+                        <a href="{{ request()->fullUrlWithQuery(['sort' => null, 'type' => null]) }}"
+                           class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
+       {{ (!request('sort') && !request('type')) ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                            Rekomendasi FairSky
+                        </a>
 
-                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'cheapest']) }}"
-                        class="whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-full shadow-sm transition{{ request('sort') == 'cheapest' ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600' }}">Harga Termurah</a>
+                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'cheapest', 'type' => null]) }}"
+                           class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
+       {{ request('sort') == 'cheapest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                            Harga Termurah
+                        </a>
 
-                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'fastest']) }}"
-                        class="whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-full shadow-sm transition{{ request('sort') == 'fastest' ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-blue-400 hover:text-blue-600' }}">Durasi Tercepat</a>
+                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'fastest', 'type' => null]) }}"
+                           class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
+       {{ request('sort') == 'fastest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                            Durasi Tercepat
+                        </a>
 
-    </div>
+                        <a href="{{ request()->fullUrlWithQuery(['type' => 'international', 'sort' => null]) }}"
+                           class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
+       {{ request('type') == 'international' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                            International
+                        </a>
+                    </div>
 
                     @forelse($flights as $flight)
                         @php
@@ -189,7 +260,7 @@
                                     </div>
 
                                     <a href="{{ route('flights.show', $flight->id) }}"
-                                        class="inline-block mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg">
+                                       class="inline-block mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg">
                                         Pilih
                                     </a>
                                     {{-- <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-8 rounded-lg shadow-blue-200 shadow-md transition-all duration-200 transform hover:-translate-y-0.5 w-full md:w-auto">

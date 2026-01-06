@@ -75,10 +75,10 @@
                     <div id="profileMenu" class="hidden absolute right-0 mt-3 w-56 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden">
                         <div class="py-2">
                             <a href="{{route('profile.index')}}" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 transition">
-                                <span>👤</span> Edit Profile
+                                Edit Profile
                             </a>
                             <a href="{{ route('profile.bookings.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 transition">
-                                <span>🎫</span> My Bookings
+                                My Bookings
                             </a>
                             <hr class="border-gray-100 my-1">
                             <form method="POST" action="{{ route('auth.logout') }}">

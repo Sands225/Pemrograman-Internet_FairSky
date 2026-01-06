@@ -26,16 +26,16 @@
                         </div>
                         <nav class="p-2">
                             <a href="{{ route('profile.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-bold {{ !request('tab') ? 'text-blue-600 bg-blue-50' : 'text-gray-600 hover:bg-gray-50' }} rounded-xl transition">
-                                <span>👤</span> Profile Settings
+                                Profile Settings
                             </a>
                             <a href="{{ route('profile.bookings.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl transition">
-                                <span>🎫</span> My Bookings
+                                My Bookings
                             </a>
                             <hr class="my-2 border-gray-50">
                             <form method="POST" action="{{ route('auth.logout') }}">
                                 @csrf
                                 <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition text-left">
-                                    <span>🚪</span> Logout
+                                    Logout
                                 </button>
                             </form>
                         </nav>
@@ -58,7 +58,7 @@
 
                     @if(session('success'))
                         <div class="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl flex items-center gap-3 animate-fade-in">
-                            <span>✅</span> {{ session('success') }}
+                             {{ session('success') }}
                         </div>
                     @endif
 
