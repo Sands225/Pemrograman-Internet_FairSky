@@ -8,6 +8,7 @@
     background-image: url('{{ asset('images/homepage_airplane_bg.jpeg') }}');
     background-size: cover;
 }
+
 </style>
 @endsection
 
