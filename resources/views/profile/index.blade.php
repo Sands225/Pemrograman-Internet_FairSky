@@ -31,6 +31,9 @@
                             <a href="{{ route('profile.bookings.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl transition">
                                 My Bookings
                             </a>
+                            <a href="{{ route('profile.tickets.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl transition">
+                                My Tickets
+                            </a>
                             <hr class="my-2 border-gray-50">
                             <form method="POST" action="{{ route('auth.logout') }}">
                                 @csrf
