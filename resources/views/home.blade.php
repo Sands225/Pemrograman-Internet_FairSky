@@ -144,84 +144,296 @@
             </button>
         </div>
 
-        {{-- Domestic --}}
-        <div id="domesticRoutes"
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+{{-- Domestic --}}
+<div id="domesticRoutes"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            @for ($i = 0; $i < 3; $i++)
-            <div class="min-h-[65vh] bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition flex flex-col">
-                <!-- Image -->
-                <img src="/images/bali_img.jpeg" class="w-full h-72 object-cover">
+    {{-- Card 1: Jakarta → Bali --}}
+    <div class="min-h-[65vh] bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition flex flex-col">
+        <!-- Image -->
+        <img src="/images/bali_img.jpeg" class="w-full h-72 object-cover">
 
-                <!-- Content -->
-                <div class="p-6 flex flex-col flex-1">
+        <!-- Content -->
+        <div class="p-6 flex flex-col flex-1">
 
-                    <!-- Destination -->
-                    <h5 class="text-2xl font-semibold mb-1">
-                        Jakarta → Bali
-                    </h5>
-                    <p class="text-gray-500 mb-3">
-                        Tropical paradise & cultural escape
-                    </p>
+            <!-- Destination -->
+            <h5 class="text-xl font-semibold mb-1">
+                Jakarta → Bali (CGK → DPS)
+            </h5>
+            <p class="text-gray-500 mb-3">
+                A tropical paradise offering stunning beaches, rich culture, and unforgettable experiences.
+            </p>
 
-                    <!-- Price -->
-                    <p class="text-2xl font-bold text-blue-600 mb-1">
-                        From IDR 950,000
-                    </p>
+            <!-- Price -->
+            <p class="text-2xl font-bold text-blue-600 mb-1">
+                From IDR 950,000
+            </p>
 
-                    <!-- Highlights -->
-                    <ul class="text-sm text-gray-600 space-y-1 my-4">
-                        <p class="text-lg font-semibold my-2">Highlights:</p>
-                        <li>☀️ Sunny weather year-round</li>
-                        <li>🌴 Beaches & resorts</li>
-                        <li>🍽 Local cuisine</li>
-                        <li>🏄 Outdoor activities</li>
-                    </ul>
+            <!-- Highlights -->
+            <ul class="text-sm text-gray-600 space-y-1 my-4">
+                <p class="text-lg font-semibold my-2">Highlights:</p>
+                <li>☀️ Sunny weather year-round</li>
+                <li>🏖️ World-class beaches & resorts</li>
+                <li>🍽️ Local and international cuisine</li>
+                <li>🎭 Cultural and nature attractions</li>
+            </ul>
 
-                    <!-- CTA -->
-                    <a href="{{ route('flights.index', ['to' => 'DPS']) }}"
-                    class="mt-auto block w-full text-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                        Search Flights
-                    </a>
-                </div>
+            <!-- Ideal For -->
+            <div class="text-sm text-gray-600 mb-4">
+                <p class="font-semibold mb-1">Ideal for:</p>
+                <p>Leisure trips, honeymoons, short escapes</p>
             </div>
-            @endfor
 
+            <!-- CTA -->
+            <a href="{{ route('flights.index', ['to' => 'DPS']) }}"
+            class="mt-auto block w-full text-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Search Flights
+            </a>
         </div>
+    </div>
+
+    {{-- Card 2: Jakarta → Yogyakarta --}}
+    <div class="min-h-[65vh] bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition flex flex-col">
+        <!-- Image -->
+        <img src="/images/Yogya_img.jpg" class="w-full h-72 object-cover">
+
+        <!-- Content -->
+        <div class="p-6 flex flex-col flex-1">
+
+            <!-- Destination -->
+            <h5 class="text-xl font-semibold mb-1">
+                Jakarta → Yogyakarta (CGK → YIA)
+            </h5>
+            <p class="text-gray-500 mb-3">
+                A cultural city rich in history, art, and traditional Javanese heritage.
+            </p>
+
+            <!-- Price -->
+            <p class="text-2xl font-bold text-blue-600 mb-1">
+                From IDR 650,000
+            </p>
+
+            <!-- Highlights -->
+            <ul class="text-sm text-gray-600 space-y-1 my-4">
+                <p class="text-lg font-semibold my-2">Highlights:</p>
+                <li>🏯 Borobudur & Prambanan Temples</li>
+                <li>🎨 Traditional arts & culture</li>
+                <li>🍜 Iconic local cuisine</li>
+                <li>🚶‍♂️ Relaxed and walkable city</li>
+            </ul>
+
+            <!-- Ideal For -->
+            <div class="text-sm text-gray-600 mb-4">
+                <p class="font-semibold mb-1">Ideal for:</p>
+                <p>Cultural tourism, educational trips, backpackers</p>
+            </div>
+
+            <!-- CTA -->
+            <a href="{{ route('flights.index', ['to' => 'YIA']) }}"
+            class="mt-auto block w-full text-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Search Flights
+            </a>
+        </div>
+    </div>
+
+    {{-- Card 3: Surabaya → Lombok --}}
+    <div class="min-h-[65vh] bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition flex flex-col">
+        <!-- Image -->
+        <img src="/images/lombok_img.jpg" class="w-full h-72 object-cover">
+
+        <!-- Content -->
+        <div class="p-6 flex flex-col flex-1">
+
+            <!-- Destination -->
+            <h5 class="text-xl font-semibold mb-1">
+                Surabaya → Lombok (SUB → LOP)
+            </h5>
+            <p class="text-gray-500 mb-3">
+                An exotic island destination with pristine beaches and breathtaking landscapes.
+            </p>
+
+            <!-- Price -->
+            <p class="text-2xl font-bold text-blue-600 mb-1">
+                From IDR 850,000
+            </p>
+
+            <!-- Highlights -->
+            <ul class="text-sm text-gray-600 space-y-1 my-4">
+                <p class="text-lg font-semibold my-2">Highlights:</p>
+                <li>🏝️ Gili Islands & Mandalika Beach</li>
+                <li>🏔️ Mount Rinjani adventure</li>
+                <li>🤿 Snorkeling & diving spots</li>
+                <li>🌅 Quieter and more peaceful than Bali</li>
+            </ul>
+
+            <!-- Ideal For -->
+            <div class="text-sm text-gray-600 mb-4">
+                <p class="font-semibold mb-1">Ideal for:</p>
+                <p>Adventure seekers, nature lovers, wellness trips</p>
+            </div>
+
+            <!-- CTA -->
+            <a href="{{ route('flights.index', ['to' => 'LOP']) }}"
+            class="mt-auto block w-full text-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Search Flights
+            </a>
+        </div>
+    </div>
+
+</div>
 
         {{-- International --}}
-        <div id="internationalRoutes"
-            class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div id="internationalRoutes"
+    class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            @php
-                $intl = [
-                    ['/images/routes/jakarta_singapore.jpg', 'Jakarta ➝ Singapore'],
-                    ['/images/routes/jakarta_tokyo.jpg', 'Jakarta ➝ Tokyo'],
-                    ['/images/routes/bali_sydney.jpg', 'Bali ➝ Sydney'],
-                ];
-            @endphp
+    {{-- Card 1: Jakarta → Singapore --}}
+    <div class="min-h-[65vh] bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition flex flex-col">
+        <!-- Image -->
+        <img src="/images/singapore_img.jpg" class="w-full h-72 object-cover">
 
-            @foreach ($intl as $route)
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
-                <img src="{{ $route[0] }}" class="w-full h-64 object-cover">
+        <!-- Content -->
+        <div class="p-6 flex flex-col flex-1">
 
-                <div class="p-6">
-                    <span class="px-3 py-1 bg-blue-600 text-white text-sm rounded-full mb-3 inline-block">
-                        International
-                    </span>
+            <!-- Badge -->
+            <span class="px-3 py-1 bg-blue-600 text-white text-xs rounded-full mb-3 inline-block w-fit">
+                International
+            </span>
 
-                    <h5 class="text-xl font-semibold mb-2">{{ $route[1] }}</h5>
-                    <p class="text-gray-600 mb-4">Rute internasional cepat dengan maskapai emisi rendah.</p>
+            <!-- Destination -->
+            <h5 class="text-xl font-semibold mb-1">
+                Jakarta → Singapore (CGK → SIN)
+            </h5>
+            <p class="text-gray-500 mb-3">
+                A modern city destination offering world-class attractions, shopping, and diverse culinary experiences.
+            </p>
 
-                    <a href="#"
-                        class="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                        Lihat Penerbangan
-                    </a>
-                </div>
+            <!-- Price -->
+            <p class="text-2xl font-bold text-blue-600 mb-1">
+                From IDR 1,200,000
+            </p>
+
+            <!-- Highlights -->
+            <ul class="text-sm text-gray-600 space-y-1 my-4">
+                <p class="text-lg font-semibold my-2">Highlights:</p>
+                <li>🌆 Iconic city skyline & attractions</li>
+                <li>🛍️ World-class shopping districts</li>
+                <li>🍽️ Multicultural cuisine</li>
+                <li>🚇 Clean, safe & efficient transport</li>
+            </ul>
+
+            <!-- Ideal For -->
+            <div class="text-sm text-gray-600 mb-4">
+                <p class="font-semibold mb-1">Ideal for:</p>
+                <p>Short city trips, business travel, family vacations</p>
             </div>
-            @endforeach
 
+            <!-- CTA -->
+            <a href="{{ route('flights.index', ['to' => 'SIN']) }}"
+            class="mt-auto block w-full text-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Search Flights
+            </a>
         </div>
+    </div>
+
+    {{-- Card 2: Jakarta → Kuala Lumpur --}}
+    <div class="min-h-[65vh] bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition flex flex-col">
+        <!-- Image -->
+        <img src="/images/kualalumpur_img.jpg" class="w-full h-72 object-cover">
+
+        <!-- Content -->
+        <div class="p-6 flex flex-col flex-1">
+
+            <!-- Badge -->
+            <span class="px-3 py-1 bg-blue-600 text-white text-xs rounded-full mb-3 inline-block w-fit">
+                International
+            </span>
+
+            <!-- Destination -->
+            <h5 class="text-xl font-semibold mb-1">
+                Jakarta → Kuala Lumpur (CGK → KUL)
+            </h5>
+            <p class="text-gray-500 mb-3">
+                A vibrant capital city blending modern skyscrapers with rich cultural heritage.
+            </p>
+
+            <!-- Price -->
+            <p class="text-2xl font-bold text-blue-600 mb-1">
+                From IDR 900,000
+            </p>
+
+            <!-- Highlights -->
+            <ul class="text-sm text-gray-600 space-y-1 my-4">
+                <p class="text-lg font-semibold my-2">Highlights:</p>
+                <li>🏙️ Petronas Twin Towers & city landmarks</li>
+                <li>🕌 Cultural diversity & heritage sites</li>
+                <li>🍛 Affordable food & shopping</li>
+                <li>🚕 Easy city transportation</li>
+            </ul>
+
+            <!-- Ideal For -->
+            <div class="text-sm text-gray-600 mb-4">
+                <p class="font-semibold mb-1">Ideal for:</p>
+                <p>Budget travelers, cultural exploration, short holidays</p>
+            </div>
+
+            <!-- CTA -->
+            <a href="{{ route('flights.index', ['to' => 'KUL']) }}"
+            class="mt-auto block w-full text-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Search Flights
+            </a>
+        </div>
+    </div>
+
+    {{-- Card 3: Jakarta → Bangkok --}}
+    <div class="min-h-[65vh] bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition flex flex-col">
+        <!-- Image -->
+        <img src="/images/bangkok_img.jpg" class="w-full h-72 object-cover">
+
+        <!-- Content -->
+        <div class="p-6 flex flex-col flex-1">
+
+            <!-- Badge -->
+            <span class="px-3 py-1 bg-blue-600 text-white text-xs rounded-full mb-3 inline-block w-fit">
+                International
+            </span>
+
+            <!-- Destination -->
+            <h5 class="text-xl font-semibold mb-1">
+                Jakarta → Bangkok (CGK → BKK)
+            </h5>
+            <p class="text-gray-500 mb-3">
+                A lively metropolis known for its temples, street food, and exciting nightlife.
+            </p>
+
+            <!-- Price -->
+            <p class="text-2xl font-bold text-blue-600 mb-1">
+                From IDR 1,500,000
+            </p>
+
+            <!-- Highlights -->
+            <ul class="text-sm text-gray-600 space-y-1 my-4">
+                <p class="text-lg font-semibold my-2">Highlights:</p>
+                <li>🛕 Stunning temples & historical sites</li>
+                <li>🍜 Famous street food scene</li>
+                <li>🛍️ Night markets & shopping malls</li>
+                <li>🌃 Vibrant nightlife & entertainment</li>
+            </ul>
+
+            <!-- Ideal For -->
+            <div class="text-sm text-gray-600 mb-4">
+                <p class="font-semibold mb-1">Ideal for:</p>
+                <p>Food lovers, cultural explorers, urban adventurers</p>
+            </div>
+
+            <!-- CTA -->
+            <a href="{{ route('flights.index', ['to' => 'BKK']) }}"
+            class="mt-auto block w-full text-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Search Flights
+            </a>
+        </div>
+    </div>
+
+</div>
     </div>
     </section>
 
