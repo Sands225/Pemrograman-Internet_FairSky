@@ -98,7 +98,7 @@
                                 </div>
                             </div>
 
-                            {{-- FILTER MASKAPAI (Update Jalur Logo) --}}
+                            {{-- FILTER MASKAPAI --}}
                             <div class="mb-8">
                                 <h4 class="font-bold mb-4 text-gray-700 text-sm flex items-center gap-2">
                                     Maskapai
@@ -121,21 +121,36 @@
                                 </div>
                             </div>
 
-                            {{-- 3. FILTER WAKTU TIBA --}}
+                            {{-- FILTER WAKTU KEBERANGKATAN --}}
+                            <div class="mb-8">
+                                <h4 class="font-bold mb-4 text-gray-700 text-sm flex items-center gap-2">
+                                    Waktu Keberangkatan
+                                </h4>
+                                <div class="grid grid-cols-1 gap-2">
+                                    @foreach(['pagi' => '06:00 - 11:00', 'siang' => '11:00 - 16:00', 'malam' => '16:00 - 06:00'] as $key => $time)
+                                        <label class="relative flex flex-col p-2.5 border rounded-xl cursor-pointer transition {{ in_array($key, (array)request('waktu')) ? 'border-blue-500 bg-blue-50' : 'border-gray-50 hover:border-blue-200' }}">
+                                            <input type="checkbox" name="waktu[]" value="{{ $key }}" class="hidden" onchange="this.form.submit()"
+                                                {{ in_array($key, (array)request('waktu')) ? 'checked' : '' }}>
+                                            <span class="text-[16px] font-bold {{ in_array($key, (array)request('waktu')) ? 'text-blue-700' : 'text-gray-600' }}"> {{ ucfirst($key) }}</span>
+                                            <span class="text-[12px] text-gray-400 font-bold uppercase">{{ $time }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            {{-- FILTER WAKTU TIBA --}}
                             <div class="mb-8">
                                 <h4 class="font-bold mb-4 text-gray-700 text-sm">Waktu Tiba</h4>
                                 <div class="grid grid-cols-1 gap-2">
                                     @foreach(['pagi' => '06:00 - 11:00', 'siang' => '11:00 - 16:00', 'malam' => '16:00 - 06:00'] as $key => $time)
                                         <label class="relative flex flex-col p-2.5 border rounded-xl cursor-pointer transition {{ in_array($key, (array)request('tiba')) ? 'border-blue-500 bg-blue-50' : 'border-gray-50 hover:border-blue-200' }}">
                                             <input type="checkbox" name="tiba[]" value="{{ $key }}" class="hidden" onchange="this.form.submit()" {{ in_array($key, (array)request('tiba')) ? 'checked' : '' }}>
-                                            <span class="text-[10px] font-bold {{ in_array($key, (array)request('tiba')) ? 'text-blue-700' : 'text-gray-600' }}">{{ ucfirst($key) }}</span>
-                                            <span class="text-[8px] text-gray-400 font-bold uppercase">{{ $time }}</span>
+                                            <span class="text-[16px] font-bold {{ in_array($key, (array)request('tiba')) ? 'text-blue-700' : 'text-gray-600' }}">{{ ucfirst($key) }}</span>
+                                            <span class="text-[12px] text-gray-400 font-bold uppercase">{{ $time }}</span>
                                         </label>
                                     @endforeach
                                 </div>
                             </div>
-
-                            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition">Terapkan Harga</button>
                         </div>
                     </form>
                 </aside>
@@ -146,25 +161,25 @@
                     <div class="flex items-center gap-2 mb-6 overflow-x-auto pb-2">
                         <a href="{{ request()->fullUrlWithQuery(['sort' => null, 'type' => null]) }}"
                            class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
-       {{ (!request('sort') && !request('type')) ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                            {{ (!request('sort') && !request('type')) ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                             Rekomendasi FairSky
                         </a>
 
                         <a href="{{ request()->fullUrlWithQuery(['sort' => 'cheapest', 'type' => null]) }}"
                            class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
-       {{ request('sort') == 'cheapest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                            {{ request('sort') == 'cheapest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                             Harga Termurah
                         </a>
 
                         <a href="{{ request()->fullUrlWithQuery(['sort' => 'fastest', 'type' => null]) }}"
                            class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
-       {{ request('sort') == 'fastest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                            {{ request('sort') == 'fastest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                             Durasi Tercepat
                         </a>
 
                         <a href="{{ request()->fullUrlWithQuery(['type' => 'international', 'sort' => null]) }}"
                            class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
-       {{ request('type') == 'international' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                            {{ request('type') == 'international' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                             International
                         </a>
                     </div>
@@ -228,10 +243,6 @@
                                     </div>
 
                                     <div class="mt-4 flex gap-2">
-                                    <span class="inline-flex items-center gap-1 bg-green-50 text-green-700 text-[10px] px-2 py-1 rounded-md font-medium border border-green-100">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                        Info Karbon: 120 kg CO2e
-                                    </span>
                                     </div>
                                 </div>
 
