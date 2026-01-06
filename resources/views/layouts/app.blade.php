@@ -46,7 +46,7 @@
         </button>
 
         {{-- Desktop Menu --}}
-        <div class="hidden lg:flex items-center space-x-8">
+        <div class="hidden lg:flex items-center gap-x-10">
             <a href="/flights" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
             <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
             <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Help</a>
@@ -84,7 +84,7 @@
                             <form method="POST" action="{{ route('auth.logout') }}">
                                 @csrf
                                 <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition">
-                                    <span>🚪</span> Logout
+                                     Logout
                                 </button>
                             </form>
                         </div>
