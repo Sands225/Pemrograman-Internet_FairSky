@@ -4,14 +4,13 @@
 
 @section('content')
 <div class="min-h-[calc(100vh-5rem)] bg-gray-50">
-
     <div class="container mx-auto max-w-7xl px-6 py-10">
 
         {{-- Header --}}
         <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h1 class="text-3xl font-bold text-gray-800">
-                    Welcome back 👋
+                    Welcome back
                 </h1>
                 <p class="text-gray-500 mt-1">
                     Flight Management Dashboard
@@ -26,7 +25,7 @@
                 <h3 class="text-lg font-semibold">Flight Overview</h3>
 
                 <a href="{{ route('admin.flights.create') }}"
-                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 transition text-white text-sm rounded-lg">
+                   class="px-4 py-2 bg-blue-600 hover:bg-blue-700 transition text-white text-sm rounded-lg">
                     + Add Flight
                 </a>
             </div>
@@ -42,11 +41,10 @@
                             <th class="p-3 font-medium">Action</th>
                         </tr>
                     </thead>
+
                     <tbody class="divide-y text-center">
                         @forelse ($getAllFlights as $flight)
-                            {{-- {{ dump($flight) }} --}}
                             <tr class="hover:bg-gray-50">
-
                                 <td class="p-3 text-gray-600">
                                     {{ $flight->id }}
                                 </td>
@@ -69,13 +67,13 @@
 
                                 <td class="p-3 flex gap-2 justify-center">
                                     <a href="{{ route('admin.flights.edit', $flight->id) }}"
-                                    class="text-blue-600 hover:underline text-sm">
+                                       class="text-blue-600 hover:underline text-sm">
                                         Edit
                                     </a>
 
                                     <form action="{{ route('admin.flights.delete', $flight->id) }}"
-                                        method="POST"
-                                        onsubmit="return confirm('Delete this flight?')">
+                                          method="POST"
+                                          onsubmit="return confirm('Delete this flight?')">
                                         @csrf
                                         @method('DELETE')
 
@@ -85,7 +83,6 @@
                                         </button>
                                     </form>
                                 </td>
-
                             </tr>
                         @empty
                             <tr>
@@ -94,15 +91,16 @@
                                 </td>
                             </tr>
                         @endforelse
-
                     </tbody>
                 </table>
             </div>
 
-        </div>
+            {{-- Pagination --}}
+            <div class="mt-6">
+                {{ $getAllFlights->links() }}
+            </div>
 
+        </div>
     </div>
 </div>
-{{-- {{ dump($getAllFlights) }} --}}
 @endsection
-

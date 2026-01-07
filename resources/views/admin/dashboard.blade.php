@@ -10,7 +10,7 @@
         {{-- Header --}}
         <div class="mb-8">
             <h1 class="text-3xl font-bold text-gray-800">
-                Welcome back 👋
+                Welcome back
             </h1>
             <p class="text-gray-500 mt-1">
                 Performance Summary
@@ -46,7 +46,6 @@
             <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition">
                 <div class="flex items-center justify-between">
                     <p class="text-sm text-gray-500">Offset Revenue</p>
-                    <span class="text-purple-500 text-xl">🌱</span>
                 </div>
                 <h2 class="text-3xl font-bold mt-3">
                     Rp {{ number_format($offsetRevenue, 0, ',', '.') }}
@@ -101,7 +100,7 @@
                 <ul class="space-y-2 text-sm">
                     @forelse($routes as $route)
                         <li>
-                            ✈️ {{ $route->origin }} → {{ $route->destination }}
+                            {{ $route->origin }} → {{ $route->destination }} <br>
                             ({{ $route->total }} flights)
                         </li>
                     @empty

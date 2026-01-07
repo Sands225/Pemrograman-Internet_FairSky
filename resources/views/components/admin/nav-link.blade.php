@@ -10,6 +10,5 @@
                 ? 'bg-slate-800 text-white'
                 : 'text-slate-300 hover:bg-slate-800 hover:text-white'
           }}">
-    <span class="text-lg leading-none">{{ $icon }}</span>
     <span>{{ $label }}</span>
 </a>
