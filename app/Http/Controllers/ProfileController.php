@@ -59,7 +59,7 @@ class ProfileController extends Controller
         if ($user->isDirty()) {
             $user->save();
             return redirect()->route('profile.index', ['tab' => $request->tab])
-                ->with('success', 'Changes saved successfully.!');
+                ->with('success', 'Changes saved successfully!');
         }
     }
 
