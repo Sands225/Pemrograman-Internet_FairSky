@@ -18,10 +18,11 @@ return new class extends Migration {
             $table->decimal('amount', 10, 2);
 
             $table->enum('payment_status', [
-                'PENDING',
-                'SUCCESS',
-                'FAILED'
-            ])->default('PENDING');
+                'Pending',
+                'Paid',
+                'Failed',
+                'Refunded',
+            ])->default('Pending');
 
             $table->string('transaction_code')->nullable();
             $table->timestamp('paid_at')->nullable();

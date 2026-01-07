@@ -39,6 +39,11 @@ class DatabaseSeeder extends Seeder
             PassengerSeeder::class, 
             // Ticket butuh Booking, Passenger, dan Flight
             TicketSeeder::class,
+            // Payment butuh Booking
+            PaymentSeeder::class,
+
+            // BookingAddon butuh Booking
+            BookingAddonSeeder::class,
         ]);
     }
 }
