@@ -80,6 +80,9 @@
                             <a href="{{ route('profile.bookings.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 transition">
                                 My Bookings
                             </a>
+                            <a href="{{ route('profile.tickets.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 transition">
+                                My Tickets
+                            </a>
                             <hr class="border-gray-100 my-1">
                             <form method="POST" action="{{ route('auth.logout') }}">
                                 @csrf
