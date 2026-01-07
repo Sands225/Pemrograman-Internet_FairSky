@@ -71,7 +71,7 @@ class FlightController extends Controller
             });
         }
 
-        // Inter
+        // International
         if ($request->get('type') == 'international') {
             $query->where(function($q) {
                 $q->whereHas('originAirport', function($a) {
