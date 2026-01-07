@@ -17,11 +17,11 @@
                             {{-- Dropdown Asal --}}
                             <div class="relative">
                                 <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">From</label>
-                                <select name="from" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none appearance-none bg-no-repeat bg-right pr-10" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C/polyline%3E%3C/svg%3E'); background-position: right 1rem center; background-size: 1em;">
+                                <select name="from" ...>
                                     <option value="">Select Origin</option>
                                     @foreach($airports as $airport)
                                         <option value="{{ $airport->id }}" {{ request('from') == $airport->id ? 'selected' : '' }}>
-                                            {{ $airport->city }} ({{ $airport->iata_code }})
+                                            {{ $airport->city }}{{ $airport->iata_code ? ' ('.$airport->iata_code.')' : '' }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -30,11 +30,11 @@
                             {{-- Dropdown Tujuan --}}
                             <div class="relative">
                                 <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">To</label>
-                                <select name="to" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none appearance-none bg-no-repeat bg-right pr-10" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C/polyline%3E%3C/svg%3E'); background-position: right 1rem center; background-size: 1em;">
+                                <select name="to" ...>
                                     <option value="">Select Destination</option>
                                     @foreach($airports as $airport)
                                         <option value="{{ $airport->id }}" {{ request('to') == $airport->id ? 'selected' : '' }}>
-                                            {{ $airport->city }} ({{ $airport->iata_code }})
+                                            {{ $airport->city }}{{ $airport->iata_code ? ' ('.$airport->iata_code.')' : '' }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -98,7 +98,7 @@
                                 </div>
                             </div>
 
-                            {{-- FILTER MASKAPAI (Update Jalur Logo) --}}
+                            {{-- FILTER MASKAPAI --}}
                             <div class="mb-8">
                                 <h4 class="font-bold mb-4 text-gray-700 text-sm flex items-center gap-2">
                                     Maskapai
@@ -121,21 +121,36 @@
                                 </div>
                             </div>
 
-                            {{-- 3. FILTER WAKTU TIBA --}}
+                            {{-- FILTER WAKTU KEBERANGKATAN --}}
+                            <div class="mb-8">
+                                <h4 class="font-bold mb-4 text-gray-700 text-sm flex items-center gap-2">
+                                    Waktu Keberangkatan
+                                </h4>
+                                <div class="grid grid-cols-1 gap-2">
+                                    @foreach(['pagi' => '06:00 - 11:00', 'siang' => '11:00 - 16:00', 'malam' => '16:00 - 06:00'] as $key => $time)
+                                        <label class="relative flex flex-col p-2.5 border rounded-xl cursor-pointer transition {{ in_array($key, (array)request('waktu')) ? 'border-blue-500 bg-blue-50' : 'border-gray-50 hover:border-blue-200' }}">
+                                            <input type="checkbox" name="waktu[]" value="{{ $key }}" class="hidden" onchange="this.form.submit()"
+                                                {{ in_array($key, (array)request('waktu')) ? 'checked' : '' }}>
+                                            <span class="text-[16px] font-bold {{ in_array($key, (array)request('waktu')) ? 'text-blue-700' : 'text-gray-600' }}"> {{ ucfirst($key) }}</span>
+                                            <span class="text-[12px] text-gray-400 font-bold uppercase">{{ $time }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            {{-- FILTER WAKTU TIBA --}}
                             <div class="mb-8">
                                 <h4 class="font-bold mb-4 text-gray-700 text-sm">Waktu Tiba</h4>
                                 <div class="grid grid-cols-1 gap-2">
                                     @foreach(['pagi' => '06:00 - 11:00', 'siang' => '11:00 - 16:00', 'malam' => '16:00 - 06:00'] as $key => $time)
                                         <label class="relative flex flex-col p-2.5 border rounded-xl cursor-pointer transition {{ in_array($key, (array)request('tiba')) ? 'border-blue-500 bg-blue-50' : 'border-gray-50 hover:border-blue-200' }}">
                                             <input type="checkbox" name="tiba[]" value="{{ $key }}" class="hidden" onchange="this.form.submit()" {{ in_array($key, (array)request('tiba')) ? 'checked' : '' }}>
-                                            <span class="text-[10px] font-bold {{ in_array($key, (array)request('tiba')) ? 'text-blue-700' : 'text-gray-600' }}">{{ ucfirst($key) }}</span>
-                                            <span class="text-[8px] text-gray-400 font-bold uppercase">{{ $time }}</span>
+                                            <span class="text-[16px] font-bold {{ in_array($key, (array)request('tiba')) ? 'text-blue-700' : 'text-gray-600' }}">{{ ucfirst($key) }}</span>
+                                            <span class="text-[12px] text-gray-400 font-bold uppercase">{{ $time }}</span>
                                         </label>
                                     @endforeach
                                 </div>
                             </div>
-
-                            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition">Terapkan Harga</button>
                         </div>
                     </form>
                 </aside>
@@ -146,25 +161,25 @@
                     <div class="flex items-center gap-2 mb-6 overflow-x-auto pb-2">
                         <a href="{{ request()->fullUrlWithQuery(['sort' => null, 'type' => null]) }}"
                            class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
-       {{ (!request('sort') && !request('type')) ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                            {{ (!request('sort') && !request('type')) ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                             Rekomendasi FairSky
                         </a>
 
                         <a href="{{ request()->fullUrlWithQuery(['sort' => 'cheapest', 'type' => null]) }}"
                            class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
-       {{ request('sort') == 'cheapest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                            {{ request('sort') == 'cheapest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                             Harga Termurah
                         </a>
 
                         <a href="{{ request()->fullUrlWithQuery(['sort' => 'fastest', 'type' => null]) }}"
                            class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
-       {{ request('sort') == 'fastest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                            {{ request('sort') == 'fastest' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                             Durasi Tercepat
                         </a>
 
                         <a href="{{ request()->fullUrlWithQuery(['type' => 'international', 'sort' => null]) }}"
                            class="whitespace-nowrap px-6 py-2.5 text-sm font-bold rounded-full transition
-       {{ request('type') == 'international' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                            {{ request('type') == 'international' ? 'bg-blue-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                             International
                         </a>
                     </div>
@@ -212,9 +227,6 @@
                                                 <div class="absolute -top-1.5 right-0 w-2 h-2 bg-gray-300 rounded-full"></div>
                                                 <div class="absolute -top-1.5 left-0 w-2 h-2 bg-gray-300 rounded-full"></div>
                                                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-1">
-                                                    <svg class="w-4 h-4 text-gray-400 rotate-90" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-                                                    </svg>
                                                 </div>
                                             </div>
                                             <span class="text-xs text-green-600 font-medium mt-1">Langsung</span>
@@ -228,10 +240,6 @@
                                     </div>
 
                                     <div class="mt-4 flex gap-2">
-                                    <span class="inline-flex items-center gap-1 bg-green-50 text-green-700 text-[10px] px-2 py-1 rounded-md font-medium border border-green-100">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                        Info Karbon: 120 kg CO2e
-                                    </span>
                                     </div>
                                 </div>
 
@@ -280,7 +288,7 @@
                         </div>
                     @endforelse
 
-                    <div class="mt-6">
+                    <div class="mt-16 mb-24 flex justify-center">
                         {{ $flights->links() }}
                     </div>
 

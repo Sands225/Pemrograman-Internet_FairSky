@@ -29,10 +29,11 @@
 <body class="bg-gray-50 font-sans">
 
 {{-- NAVIGATION --}}
-<nav class="bg-white shadow-sm fixed top-0 inset-x-0 z-50 py-3 h-[60px]">
+<nav class="bg-white shadow-sm fixed top-0 inset-x-0 z-50 h-20">
     <div class="container mx-auto px-4 flex items-center justify-between my-auto h-full">
 
         {{-- Logo --}}
+
         <a href="{{ route('home') }}">
             <img src="/images/logo.png" class="w-24" alt="logo">
         </a>
@@ -46,10 +47,10 @@
         </button>
 
         {{-- Desktop Menu --}}
-        <div class="hidden lg:flex items-center space-x-8">
-            <a href="/flights" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
-            <a href="{{ route('about') }}" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
-            <a href="{{ route('help') }}" class="text-gray-600 hover:text-blue-600 transition">Help</a>
+        <div class="hidden lg:flex items-center gap-x-12">
+            <a href="{{ route('flights.index') }}" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
+            <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
+            <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Help</a>
         </div>
 
         {{-- Auth --}}
@@ -84,7 +85,7 @@
                             <form method="POST" action="{{ route('auth.logout') }}">
                                 @csrf
                                 <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition">
-                                    <span>🚪</span> Logout
+                                     Logout
                                 </button>
                             </form>
                         </div>
