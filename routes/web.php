@@ -38,6 +38,12 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/profile/bookings', [ProfileController::class, 'bookings'])
         ->name('profile.bookings.index');
+
+    Route::get('/profile/tickets', [ProfileController::class, 'tickets'])
+        ->name('profile.tickets.index');
+    
+    Route::get('/profile/tickets/{ticket}', [ProfileController::class, 'ticketDetail'])
+        ->name('tickets.detail');
 });
 
 // Flights

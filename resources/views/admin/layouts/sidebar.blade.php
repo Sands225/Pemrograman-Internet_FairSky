@@ -19,7 +19,6 @@
 
             <x-admin.nav-link
                 route="admin.dashboard"
-                icon="📊"
                 label="Dashboard" />
         </div>
 
@@ -33,7 +32,6 @@
 
             <x-admin.nav-link
                 route="admin.flights.index"
-                icon="✈️"
                 label="Flights" />
         </div>
 
@@ -52,7 +50,6 @@
             <button type="submit"
                 class="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition
                        text-red-400 hover:bg-slate-800 hover:text-red-300">
-                <span class="text-lg">🚪</span>
                 <span>Logout</span>
             </button>
         </form>

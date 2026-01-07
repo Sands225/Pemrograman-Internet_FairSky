@@ -32,8 +32,17 @@ class TicketService
             return Ticket::create([
                 'booking_id'    => $booking->id,
                 'ticket_number' => 'TKT-' . strtoupper(Str::random(10)),
+                'seat_number'   => $this->generateSeatNumber(),
                 'issued_at'     => now(),
             ]);
         });
+    }
+
+    private function generateSeatNumber(): string
+    {
+        $row  = chr(rand(65, 90)); // A–Z
+        $seat = rand(1, 30);       // 1–30
+
+        return $row . $seat;
     }
 }

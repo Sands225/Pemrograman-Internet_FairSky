@@ -31,6 +31,9 @@
                             <a href="{{ route('profile.bookings.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl transition">
                                 My Bookings
                             </a>
+                            <a href="{{ route('profile.tickets.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl transition">
+                                My Tickets
+                            </a>
                             <hr class="my-2 border-gray-50">
                             <form method="POST" action="{{ route('auth.logout') }}">
                                 @csrf
@@ -94,7 +97,7 @@
                                     </div>
 
                                     <div class="pt-6 flex justify-end gap-3 border-t border-gray-50 mt-8">
-                                        <button type="button" class="px-6 py-2.5 text-sm font-bold text-gray-400 hover:text-gray-600 transition">Maybe later</button>
+                                        {{-- <button type="button" class="px-6 py-2.5 text-sm font-bold text-gray-400 hover:text-gray-600 transition">Maybe later</button> --}}
                                         <button type="submit" class="bg-blue-600 text-white font-bold px-10 py-2.5 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-100 active:scale-95">
                                             Save
                                         </button>

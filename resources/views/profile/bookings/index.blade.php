@@ -29,6 +29,9 @@
                             <a href="{{ route('profile.bookings.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 bg-blue-50 rounded-xl transition">
                                My Bookings
                             </a>
+                            <a href="{{ route('profile.tickets.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl transition">
+                                My Tickets
+                            </a>
                             <hr class="my-2 border-gray-50">
                             <form method="POST" action="{{ route('auth.logout') }}">
                                 @csrf
@@ -66,7 +69,7 @@
                                     {{-- Status & Aksi --}}
                                     <div class="flex flex-row md:flex-col justify-between items-end border-t md:border-t-0 md:border-l border-gray-50 pt-4 md:pt-0 md:pl-6">
                                         <div class="text-right">
-                                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold {{ $booking->status == 'Completed' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700' }}">
+                                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold {{ $booking->status == 'confirmed' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700' }}">
                                             {{ $booking->status }}
                                         </span>
                                             <p class="text-lg font-bold text-blue-600 mt-1">IDR {{ number_format($booking->total_price, 0, ',', '.') }}</p>

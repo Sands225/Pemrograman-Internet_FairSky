@@ -8,149 +8,146 @@
 
             <h1 class="text-3xl font-bold text-gray-800 mb-8">Flight Search Results</h1>
 
-            {{-- SEARCH BAR SECTION --}}
-            <div class="bg-transparent pb-12 pt-8 px-4">
-                <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-6">
-                    <form action="{{ route('flights.index') }}" method="GET">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
-
-                            {{-- Dropdown Asal --}}
-                            <div class="relative">
-                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">From</label>
-                                <select name="from" ...>
-                                    <option value="">Select Origin</option>
-                                    @foreach($airports as $airport)
-                                        <option value="{{ $airport->id }}" {{ request('from') == $airport->id ? 'selected' : '' }}>
-                                            {{ $airport->city }}{{ $airport->iata_code ? ' ('.$airport->iata_code.')' : '' }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            {{-- Dropdown Tujuan --}}
-                            <div class="relative">
-                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">To</label>
-                                <select name="to" ...>
-                                    <option value="">Select Destination</option>
-                                    @foreach($airports as $airport)
-                                        <option value="{{ $airport->id }}" {{ request('to') == $airport->id ? 'selected' : '' }}>
-                                            {{ $airport->city }}{{ $airport->iata_code ? ' ('.$airport->iata_code.')' : '' }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            {{-- Input Tanggal --}}
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">Departure Date</label>
-                                <input type="date" name="date"
-                                       min="{{ date('Y-m-d') }}"
-                                       value="{{ request('date', date('Y-m-d')) }}"
-                                       class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none">
-                            </div>
-
-                            {{-- Tombol Search --}}
-                            <div class="md:col-span-3 mt-4">
-                                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition shadow-lg shadow-black-200 flex items-center justify-center gap-2 text-lg">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                                    Cari Penerbangan
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
             <div class="flex flex-col lg:flex-row gap-8">
-
                 <aside class="w-full lg:w-1/4">
                     <form action="{{ route('flights.index') }}" method="GET" id="filterForm">
-                        {{-- Parameter pencarian utama agar tidak hilang --}}
-                        @foreach(request()->only(['from', 'to', 'date', 'sort']) as $key => $value)
-                            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+
+                        {{-- Preserve ALL query parameters except pagination --}}
+                        @foreach(request()->except(['page']) as $key => $value)
+                            @if(is_array($value))
+                                @foreach($value as $v)
+                                    <input type="hidden" name="{{ $key }}[]" value="{{ $v }}">
+                                @endforeach
+                            @else
+                                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                            @endif
                         @endforeach
 
                         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-24">
+
+                            {{-- HEADER --}}
                             <div class="flex justify-between items-center mb-6">
-                                <h3 class="font-bold text-xl text-gray-800">Filter</h3>
-                                <a href="{{ route('flights.index', request()->only(['from', 'to', 'date'])) }}" class="text-sm font-semibold text-blue-600">Reset</a>
+                                <h3 class="font-bold text-xl text-gray-800">Search & Filter</h3>
+                                <a href="{{ route('flights.index') }}"
+                                class="text-sm font-semibold text-blue-600">
+                                    Reset
+                                </a>
                             </div>
 
-                            {{-- FILTER HARGA --}}
+                            {{-- SEARCH SECTION --}}
+                            <div class="mb-8 space-y-4">
+
+                                {{-- FROM --}}
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">From</label>
+                                    <select name="from"
+                                            class="w-full px-3 py-2 text-sm border rounded-xl focus:ring-2 focus:ring-blue-500">
+                                        <option value="">Select Origin</option>
+                                        @foreach($airports as $airport)
+                                            <option value="{{ $airport->id }}"
+                                                {{ request('from') == $airport->id ? 'selected' : '' }}>
+                                                {{ $airport->city }}
+                                                {{ $airport->iata_code ? ' ('.$airport->iata_code.')' : '' }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                {{-- TO --}}
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">To</label>
+                                    <select name="to"
+                                            class="w-full px-3 py-2 text-sm border rounded-xl focus:ring-2 focus:ring-blue-500">
+                                        <option value="">Select Destination</option>
+                                        @foreach($airports as $airport)
+                                            <option value="{{ $airport->id }}"
+                                                {{ request('to') == $airport->id ? 'selected' : '' }}>
+                                                {{ $airport->city }}
+                                                {{ $airport->iata_code ? ' ('.$airport->iata_code.')' : '' }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                {{-- DATE --}}
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Departure Date</label>
+                                    <input type="date"
+                                        name="date"
+                                        min="{{ date('Y-m-d') }}"
+                                        value="{{ request('date', date('Y-m-d')) }}"
+                                        class="w-full px-3 py-2 text-sm border rounded-xl focus:ring-2 focus:ring-blue-500">
+                                </div>
+                            </div>
+
+                            {{-- PRICE FILTER --}}
                             <div class="mb-8">
-                                <h4 class="font-bold mb-4 text-gray-700 text-sm flex items-center gap-2">
-                                    Rentang Harga
-                                </h4>
+                                <h4 class="font-bold mb-4 text-gray-700 text-sm">Rentang Harga</h4>
                                 <div class="space-y-3">
-                                    <div class="relative">
-                                        <span class="absolute left-3 top-2.5 text-gray-400 text-xs font-bold">IDR</span>
-                                        <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Minimum"
-                                               class="w-full pl-10 pr-4 py-2 text-sm border border-gray-100 rounded-xl focus:ring-1 focus:ring-blue-500 outline-none transition">
-                                    </div>
-                                    <div class="relative">
-                                        <span class="absolute left-3 top-2.5 text-gray-400 text-xs font-bold">IDR</span>
-                                        <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Maksimum"
-                                               class="w-full pl-10 pr-4 py-2 text-sm border border-gray-100 rounded-xl focus:ring-1 focus:ring-blue-500 outline-none transition">
-                                    </div>
-                                    <button type="submit" class="w-full bg-blue-50 text-blue-600 font-bold py-2 rounded-xl text-xs hover:bg-blue-100 transition mt-2">
-                                        Terapkan Harga
-                                    </button>
+                                    <input type="number"
+                                        name="min_price"
+                                        value="{{ request('min_price') }}"
+                                        placeholder="Minimum"
+                                        class="w-full px-3 py-2 text-sm border rounded-xl">
+                                    <input type="number"
+                                        name="max_price"
+                                        value="{{ request('max_price') }}"
+                                        placeholder="Maksimum"
+                                        class="w-full px-3 py-2 text-sm border rounded-xl">
                                 </div>
                             </div>
 
-                            {{-- FILTER MASKAPAI --}}
+                            {{-- AIRLINE FILTER --}}
                             <div class="mb-8">
-                                <h4 class="font-bold mb-4 text-gray-700 text-sm flex items-center gap-2">
-                                    Maskapai
-                                </h4>
-                                <div class="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                                <h4 class="font-bold mb-4 text-gray-700 text-sm">Maskapai</h4>
+                                <div class="space-y-3 max-h-48 overflow-y-auto pr-2">
                                     @foreach($airlines as $airline)
-                                        <label class="flex items-center space-x-3 cursor-pointer group">
-                                            <input type="checkbox" name="filter_airlines[]" value="{{ $airline->id }}" onchange="this.form.submit()"
-                                                   {{ in_array($airline->id, (array)request('filter_airlines')) ? 'checked' : '' }}
-                                                   class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition">
-
-                                            <img src="{{ asset($airline->logo_url) }}"
-                                                 alt="{{ $airline->airline_name }}"
-                                                 class="w-6 h-6 object-contain">
-
-                                            <span class="text-xs text-gray-600 group-hover:text-gray-900 transition">  {{ $airline->airline_name }}
-                                            </span>
-                                            </label>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            {{-- FILTER WAKTU KEBERANGKATAN --}}
-                            <div class="mb-8">
-                                <h4 class="font-bold mb-4 text-gray-700 text-sm flex items-center gap-2">
-                                    Waktu Keberangkatan
-                                </h4>
-                                <div class="grid grid-cols-1 gap-2">
-                                    @foreach(['pagi' => '06:00 - 11:00', 'siang' => '11:00 - 16:00', 'malam' => '16:00 - 06:00'] as $key => $time)
-                                        <label class="relative flex flex-col p-2.5 border rounded-xl cursor-pointer transition {{ in_array($key, (array)request('waktu')) ? 'border-blue-500 bg-blue-50' : 'border-gray-50 hover:border-blue-200' }}">
-                                            <input type="checkbox" name="waktu[]" value="{{ $key }}" class="hidden" onchange="this.form.submit()"
-                                                {{ in_array($key, (array)request('waktu')) ? 'checked' : '' }}>
-                                            <span class="text-[16px] font-bold {{ in_array($key, (array)request('waktu')) ? 'text-blue-700' : 'text-gray-600' }}"> {{ ucfirst($key) }}</span>
-                                            <span class="text-[12px] text-gray-400 font-bold uppercase">{{ $time }}</span>
+                                        <label class="flex items-center gap-3">
+                                            <input type="checkbox"
+                                                name="filter_airlines[]"
+                                                value="{{ $airline->id }}"
+                                                {{ in_array($airline->id, (array) request('filter_airlines', [])) ? 'checked' : '' }}>
+                                            <img src="{{ asset($airline->logo_url) }}" class="w-6 h-6">
+                                            <span class="text-xs">{{ $airline->airline_name }}</span>
                                         </label>
                                     @endforeach
                                 </div>
                             </div>
 
-                            {{-- FILTER WAKTU TIBA --}}
+                            {{-- DEPARTURE TIME --}}
+                            <div class="mb-8">
+                                <h4 class="font-bold mb-4 text-gray-700 text-sm">Waktu Keberangkatan</h4>
+                                @foreach(['pagi','siang','malam'] as $key)
+                                    <label class="flex items-center gap-2">
+                                        <input type="checkbox"
+                                            name="waktu[]"
+                                            value="{{ $key }}"
+                                            {{ in_array($key, (array) request('waktu', [])) ? 'checked' : '' }}>
+                                        <span class="text-sm">{{ ucfirst($key) }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+
+                            {{-- ARRIVAL TIME --}}
                             <div class="mb-8">
                                 <h4 class="font-bold mb-4 text-gray-700 text-sm">Waktu Tiba</h4>
-                                <div class="grid grid-cols-1 gap-2">
-                                    @foreach(['pagi' => '06:00 - 11:00', 'siang' => '11:00 - 16:00', 'malam' => '16:00 - 06:00'] as $key => $time)
-                                        <label class="relative flex flex-col p-2.5 border rounded-xl cursor-pointer transition {{ in_array($key, (array)request('tiba')) ? 'border-blue-500 bg-blue-50' : 'border-gray-50 hover:border-blue-200' }}">
-                                            <input type="checkbox" name="tiba[]" value="{{ $key }}" class="hidden" onchange="this.form.submit()" {{ in_array($key, (array)request('tiba')) ? 'checked' : '' }}>
-                                            <span class="text-[16px] font-bold {{ in_array($key, (array)request('tiba')) ? 'text-blue-700' : 'text-gray-600' }}">{{ ucfirst($key) }}</span>
-                                            <span class="text-[12px] text-gray-400 font-bold uppercase">{{ $time }}</span>
-                                        </label>
-                                    @endforeach
-                                </div>
+                                @foreach(['pagi','siang','malam'] as $key)
+                                    <label class="flex items-center gap-2">
+                                        <input type="checkbox"
+                                            name="tiba[]"
+                                            value="{{ $key }}"
+                                            {{ in_array($key, (array) request('tiba', [])) ? 'checked' : '' }}>
+                                        <span class="text-sm">{{ ucfirst($key) }}</span>
+                                    </label>
+                                @endforeach
                             </div>
+
+                            {{-- APPLY BUTTON --}}
+                            <button type="submit"
+                                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl">
+                                Cari & Terapkan Filter
+                            </button>
+
                         </div>
                     </form>
                 </aside>

@@ -35,18 +35,6 @@
 
                 <form action="{{ route('flights.index') }}" method="GET">
 
-                    {{-- Tabs --}}
-                    <div class="flex justify-center mb-6 space-x-2">
-                        <button type="button"
-                            class="px-6 py-2 bg-blue-600 text-white rounded-lg font-small hover:bg-blue-700 transition">
-                            Round Trip
-                        </button>
-                        <button type="button"
-                            class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-100 transition">
-                            One-Way Trip
-                        </button>
-                    </div>
-
                     {{-- Form Fields --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 

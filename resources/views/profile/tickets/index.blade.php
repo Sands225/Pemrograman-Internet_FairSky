@@ -1,0 +1,139 @@
+@extends('layouts.app')
+
+@section('title', 'My Tickets')
+
+@section('content')
+{{-- {{ dd($user, $tickets) }} --}}
+<div class="bg-gray-50 min-h-screen pt-24 pb-10">
+    <div class="container mx-auto px-4 max-w-6xl">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">My Tickets</h1>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            {{-- SIDEBAR --}}
+            <aside class="w-full lg:w-1/4">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-24">
+                    <div class="p-6 bg-blue-600 text-white">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center font-bold text-xl">
+                                {{ substr($user->full_name, 0, 1) }}
+                            </div>
+                            <div>
+                                <p class="font-bold leading-tight">{{ $user->full_name }}</p>
+                                <p class="text-xs text-blue-100 mt-1">FairSky User</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <nav class="p-2">
+                        <a href="{{ route('profile.index') }}"
+                           class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl transition">
+                            Profile Settings
+                        </a>
+
+                        <a href="{{ route('profile.bookings.index') }}"
+                           class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-xl transition">
+                            My Bookings
+                        </a>
+
+                        <a href="{{ route('profile.tickets.index') }}"
+                           class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 bg-blue-50 rounded-xl transition">
+                            My Tickets
+                        </a>
+
+                        <hr class="my-2 border-gray-50">
+
+                        <form method="POST" action="{{ route('auth.logout') }}">
+                            @csrf
+                            <button type="submit"
+                                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition text-left">
+                                🚪 Logout
+                            </button>
+                        </form>
+                    </nav>
+                </div>
+            </aside>
+
+            {{-- TICKET LIST --}}
+            <main class="flex-1">
+                <div class="space-y-4">
+                    @forelse($tickets as $ticket)
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition">
+                            <div class="flex flex-col md:flex-row justify-between gap-6">
+
+                                {{-- Ticket Info --}}
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <span class="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded uppercase">
+                                            Ticket
+                                        </span>
+                                        <span class="text-xs text-gray-400">
+                                            Ticket No: {{ $ticket->ticket_number }}
+                                        </span>
+                                    </div>
+
+                                    <div class="flex items-center gap-4">
+                                        @if($ticket->logo_url)
+                                            <img src="{{ asset($ticket->logo_url) }}"
+                                                 class="w-10 h-10 object-contain">
+                                        @endif
+
+                                        <div>
+                                            <p class="font-bold text-gray-800">
+                                                {{ $ticket->origin_city }} → {{ $ticket->destination_city }}
+                                            </p>
+                                            <p class="text-sm text-gray-500">
+                                                {{ $ticket->airline_name }}
+                                                • {{ \Carbon\Carbon::parse($ticket->departure_time)->format('d M Y, H:i') }}
+                                            </p>
+                                            <p class="text-xs text-gray-400 mt-1">
+                                                Passenger: {{ $ticket->passenger_name }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Status & Action --}}
+                                <div class="flex flex-row md:flex-col justify-between items-end border-t md:border-t-0 md:border-l border-gray-50 pt-4 md:pt-0 md:pl-6">
+                                    <div class="text-right">
+                                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold
+                                            {{ $ticket->eticket_status === 'CheckedIn'
+                                                ? 'bg-gray-100 text-gray-700'
+                                                : 'bg-green-100 text-green-700' }}">
+                                            {{ $ticket->eticket_status }}
+                                        </span>
+
+                                        <p class="text-sm text-gray-500 mt-2">
+                                            Seat: <span class="font-bold">{{ $ticket->seat_number ?? '-' }}</span>
+                                        </p>
+                                    </div>
+
+                                    <a href="{{ route('tickets.detail', $ticket->id) }}"
+                                       class="text-sm font-bold text-blue-600 hover:underline">
+                                        View Ticket
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="bg-white rounded-2xl p-12 text-center border border-gray-100">
+                            <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                                🎟️
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800">
+                                No Tickets Found
+                            </h3>
+                            <p class="text-gray-500 text-sm mt-1">
+                                Your issued tickets will appear here
+                            </p>
+                            <a href="{{ route('flights.index') }}"
+                               class="inline-block mt-6 bg-blue-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-blue-700 transition">
+                                Book a Flight
+                            </a>
+                        </div>
+                    @endforelse
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+@endsection

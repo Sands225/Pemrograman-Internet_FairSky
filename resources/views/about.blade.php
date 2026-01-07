@@ -4,14 +4,6 @@
 
 @section('content')
 
-{{-- HERO SECTION --}}
-<!-- <section class="bg-gradient-to-b from-gray-800 to-gray-900 py-20 bg-cover bg-center relative" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ asset('images/homepage_airplane_bg.jpeg') }}'); background-attachment: fixed;">
-    <div class="container mx-auto px-4 text-center">
-        <img src="{{ asset('images/logo.png') }}" alt="FairSky Logo" class="mx-auto h-40 mb-8">
-        <h1 class="text-4xl font-bold text-white">About FairSky</h1>
-    </div>
-</section> -->
-
 {{-- THE ORIGIN STORY --}}
 <section class="py-16 pt-24 bg-white">
     <div class="container mx-auto px-4 max-w-5xl">
@@ -19,13 +11,17 @@
             
             {{-- Image --}}
             <div class="order-2 lg:order-1">
-                <div class="bg-gradient-to-br from-blue-500 to-blue-600 h-80 rounded-2xl shadow-lg"></div>
+                <div class="h-80 rounded-2xl shadow-lg overflow-hidden">
+                    <img src="{{ asset('images/about_plane.jpg') }}"
+                        alt="FairSky Origin"
+                        class="w-full h-full object-cover">
+                </div>
             </div>
 
             {{-- Content --}}
             <div class="order-1 lg:order-2">
                 <h2 class="text-3xl font-bold mb-4">The Origin Story</h2>
-                <p class="text-gray-600 leading-relaxed">
+                <p class="text-gray-600 leading-relaxed text-justify">
                     FairSky was born from a simple yet powerful idea: air travel should be transparent, fair, and accessible to everyone. 
                     We noticed that booking flights often came with hidden fees, confusing pricing structures, and a lack of clarity 
                     about the environmental impact of each journey. Our founders, a team of travel enthusiasts and tech innovators, 
@@ -47,7 +43,7 @@
             {{-- Content --}}
             <div>
                 <h2 class="text-3xl font-bold mb-4">Business Transparency</h2>
-                <p class="text-gray-600 leading-relaxed">
+                <p class="text-gray-600 leading-relaxed text-justify">
                     At FairSky, transparency isn't just a buzzword—it's the foundation of everything we do. We believe that travelers 
                     deserve to know exactly what they're paying for, without any hidden surprises at checkout. That's why we break down 
                     every cost component: base fare, taxes, service fees, and baggage charges—all displayed upfront before you book. 
@@ -59,8 +55,12 @@
             </div>
 
             {{-- Image --}}
-            <div>
-                <div class="bg-gradient-to-br from-blue-500 to-blue-600 h-80 rounded-2xl shadow-lg"></div>
+            <div class="order-2 lg:order-1">
+                <div class="h-80 rounded-2xl shadow-lg overflow-hidden">
+                    <img src="{{ asset('images/about_market-research.png') }}"
+                        alt="Market Research"
+                        class="w-full h-full object-cover">
+                </div>
             </div>
 
         </div>
@@ -71,32 +71,58 @@
 <section class="py-16 bg-white">
     <div class="container mx-auto px-4 max-w-5xl">
         
-        <h2 class="text-3xl font-bold text-center mb-10">Environment Partner</h2>
+        <h2 class="text-3xl font-bold text-center mb-10">
+            Environment Partners
+        </h2>
 
         {{-- Partner Logos --}}
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-            <div class="bg-gradient-to-br from-blue-500 to-blue-600 h-32 rounded-xl shadow flex items-center justify-center hover:shadow-lg transition">
-                <span class="text-white font-bold text-lg">Partner 1</span>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10 items-center">
+
+            <div class="flex items-center justify-center bg-gray-50 h-32 rounded-xl shadow 
+                        hover:shadow-lg transition">
+                <img src="{{ asset('images/partners/gold-standard.png') }}"
+                     alt="Gold Standard"
+                     class="h-14 object-contain">
             </div>
-            <div class="bg-gradient-to-br from-blue-500 to-blue-600 h-32 rounded-xl shadow flex items-center justify-center hover:shadow-lg transition">
-                <span class="text-white font-bold text-lg">Partner 2</span>
+
+            <div class="flex items-center justify-center bg-gray-50 h-32 rounded-xl shadow 
+                        hover:shadow-lg transition">
+                <img src="{{ asset('images/partners/verra.png') }}"
+                     alt="Verra"
+                     class="h-14 object-contain">
             </div>
-            <div class="bg-gradient-to-br from-blue-500 to-blue-600 h-32 rounded-xl shadow flex items-center justify-center hover:shadow-lg transition">
-                <span class="text-white font-bold text-lg">Partner 3</span>
+
+            <div class="flex items-center justify-center bg-gray-50 h-32 rounded-xl shadow 
+                        hover:shadow-lg transition">
+                <img src="{{ asset('images/partners/atmosfair.png') }}"
+                     alt="atmosfair"
+                     class="h-14 object-contain">
             </div>
-            <div class="bg-gradient-to-br from-blue-500 to-blue-600 h-32 rounded-xl shadow flex items-center justify-center hover:shadow-lg transition">
-                <span class="text-white font-bold text-lg">Partner 4</span>
+
+            <div class="flex items-center justify-center bg-gray-50 h-32 rounded-xl shadow 
+                        hover:shadow-lg transition">
+                <img src="{{ asset('images/partners/nature-conservacy.png') }}"
+                     alt="The Nature Conservancy"
+                     class="h-14 object-contain">
             </div>
+
         </div>
 
         {{-- Description --}}
-        <p class="text-gray-600 leading-relaxed text-center">
-            We're proud to partner with leading environmental organizations to offset carbon emissions and promote sustainable 
-            aviation practices. Through our partnerships with global carbon offset programs, reforestation initiatives, and 
-            clean energy projects, every flight booked through FairSky contributes to a greener future. Our partners help us 
-            calculate accurate carbon footprints for each flight and provide verified offset options. Together, we're working 
-            toward a goal of making air travel more environmentally responsible while maintaining the convenience and accessibility 
-            that modern travelers need.
+        <p class="text-gray-600 leading-relaxed text-center max-w-4xl mx-auto">
+            FairSky aligns with globally recognized environmental organizations and sustainability standards
+            to support responsible aviation. Through certified carbon offset programs, reforestation initiatives,
+            and clean energy projects, every flight booked through our platform contributes toward reducing
+            environmental impact.
+            <br><br>
+            These initiatives help ensure accurate carbon footprint calculations and provide travelers with
+            transparent, trusted options to make more environmentally conscious travel decisions—without
+            sacrificing convenience or accessibility.
+        </p>
+
+        {{-- Disclaimer --}}
+        <p class="text-sm text-gray-400 text-center mt-6">
+            Logos shown represent sustainability standards and initiatives aligned with FairSky’s mission.
         </p>
 
     </div>
@@ -105,7 +131,6 @@
 {{-- READY TO EXPLORE --}}
 <section class="py-16 bg-gray-50">
     <div class="container mx-auto px-4 text-center">
-        
         <h2 class="text-3xl md:text-4xl font-bold mb-8 leading-tight">
             Ready To Explore in a Better Way?
         </h2>
@@ -119,15 +144,6 @@
             Explore Flights
         </a>
 
-    </div>
-</section>
-
-{{-- JOIN SMART TRAVELERS --}}
-<section class="py-12 bg-white">
-    <div class="container mx-auto px-4">
-        <p class="text-2xl md:text-3xl font-semibold text-center text-gray-800 max-w-3xl mx-auto">
-            Join thousands of smart travelers who choose honesty above all else.
-        </p>
     </div>
 </section>
 

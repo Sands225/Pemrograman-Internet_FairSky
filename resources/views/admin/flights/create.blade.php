@@ -93,7 +93,7 @@
         </div>
 
         {{-- Price --}}
-        <div>
+        {{-- <div>
             <label class="block text-sm font-medium">Base Price (IDR)</label>
             <input type="number"
                    name="base_price"
@@ -101,7 +101,7 @@
                    value="{{ old('base_price') }}"
                    class="w-full border rounded p-2">
             @error('base_price') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
-        </div>
+        </div> --}}
 
         {{-- Actions --}}
         <div class="flex gap-3 pt-4">

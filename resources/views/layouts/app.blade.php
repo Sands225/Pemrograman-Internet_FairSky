@@ -49,8 +49,8 @@
         {{-- Desktop Menu --}}
         <div class="hidden lg:flex items-center gap-x-12">
             <a href="{{ route('flights.index') }}" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
-            <a href="#about" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
-            <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Help</a>
+            <a href="{{ route('about') }}" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
+            <a href="{{ route('help') }}" class="text-gray-600 hover:text-blue-600 transition">Help</a>
         </div>
 
         {{-- Auth --}}
@@ -81,6 +81,9 @@
                             <a href="{{ route('profile.bookings.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 transition">
                                 My Bookings
                             </a>
+                            <a href="{{ route('profile.tickets.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 transition">
+                                My Tickets
+                            </a>
                             <hr class="border-gray-100 my-1">
                             <form method="POST" action="{{ route('auth.logout') }}">
                                 @csrf
@@ -104,7 +107,7 @@
     {{-- Mobile Menu --}}
     <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-4 px-4">
         <div class="flex flex-col space-y-3">
-            <a href="/flights" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
+            <a href="{{ route('flights.index') }}" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
             <a href="{{ route('about') }}" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
             <a href="{{ route('help') }}" class="text-gray-600 hover:text-blue-600 transition">Help</a>
 
@@ -164,11 +167,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('profile.bookings.index') }}" class="hover:text-white transition">
-                            Popular Destinations
-                        </a>
-                    </li>
-                    <li>
                         <a href="{{ route('profile.index') }}" class="hover:text-white transition">
                             Profile
                         </a>
@@ -181,17 +179,12 @@
                 <h6 class="font-semibold text-white mb-4">Company</h6>
                 <ul class="space-y-2 text-sm">
                     <li>
-                        <a href="#about" class="hover:text-white transition">
+                        <a href="{{ route('about') }}" class="hover:text-white transition">
                             About Us
                         </a>
                     </li>
                     <li>
-                        <a href="#contact" class="hover:text-white transition">
-                            Contact
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#help" class="hover:text-white transition">
+                        <a href="{{ route('help') }}" class="hover:text-white transition">
                             Help Center
                         </a>
                     </li>
@@ -213,16 +206,10 @@
         <hr class="border-gray-800 mb-6">
 
         {{-- BOTTOM --}}
-        <div class="flex flex-col md:flex-row items-center justify-between text-sm text-gray-400 gap-3">
+        <div class="flex flex-col md:flex-row items-center justify-center text-sm text-gray-400 gap-3">
             <p>
                 © {{ date('Y') }} SkyWings Aviation. All rights reserved.
             </p>
-
-            <div class="flex items-center gap-4">
-                <a href="#" class="hover:text-white transition">Privacy Policy</a>
-                <span class="text-gray-600">•</span>
-                <a href="#" class="hover:text-white transition">Terms of Service</a>
-            </div>
         </div>
     </div>
 </footer>
