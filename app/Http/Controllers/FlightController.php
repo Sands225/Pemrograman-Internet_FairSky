@@ -110,10 +110,33 @@ class FlightController extends Controller
         return view('flights.show', compact('flight'));
     }
 
-    public function adminFlightListPage()
+    public function adminFlightListPage(Request $request)
     {
-        $getAllFlights = Flight::with(['airline', 'originAirport', 'destinationAirport'])->paginate(15);
-        return view('admin.flights.index', compact('getAllFlights'));
+        $search = $request->input('search');
+
+        $getAllFlights = Flight::with([
+                'airline',
+                'originAirport',
+                'destinationAirport'
+            ])
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->whereHas('airline', function ($q) use ($search) {
+                            $q->where('airline_name', 'like', "%{$search}%");
+                        })
+                    ->orWhereHas('originAirport', function ($q) use ($search) {
+                            $q->where('airport_code', 'like', "%{$search}%");
+                        })
+                    ->orWhereHas('destinationAirport', function ($q) use ($search) {
+                            $q->where('airport_code', 'like', "%{$search}%");
+                        })
+                    ->orWhere('status', 'like', "%{$search}%");
+                });
+            })
+            ->paginate(10)
+            ->withQueryString(); // keeps search when paginating
+
+        return view('admin.flights.index', compact('getAllFlights', 'search'));
     }
 
     public function editFlightPage(Flight $flight)

@@ -21,13 +21,39 @@
         {{-- Flights Table --}}
         <div class="bg-white rounded-xl shadow-sm p-6">
 
-            <div class="flex justify-between items-center mb-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
                 <h3 class="text-lg font-semibold">Flight Overview</h3>
 
-                <a href="{{ route('admin.flights.create') }}"
-                   class="px-4 py-2 bg-blue-600 hover:bg-blue-700 transition text-white text-sm rounded-lg">
-                    + Add Flight
-                </a>
+                <div class="flex gap-3 w-full sm:w-auto">
+                    {{-- Search --}}
+                    <form method="GET" action="{{ route('admin.flights.index') }}" class="flex gap-2">
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ request('search') }}"
+                            placeholder="Search flights..."
+                            class="px-3 py-2 border rounded-lg text-sm w-64 focus:outline-none focus:ring focus:border-blue-300"
+                        >
+
+                        <button type="submit"
+                                class="px-4 py-2 bg-gray-800 text-white text-sm rounded-lg hover:bg-gray-900">
+                            Search
+                        </button>
+
+                        @if(request('search'))
+                            <a href="{{ route('admin.flights.index') }}"
+                               class="px-4 py-2 bg-gray-200 text-sm rounded-lg hover:bg-gray-300">
+                                Clear
+                            </a>
+                        @endif
+                    </form>
+
+                    {{-- Add Flight --}}
+                    <a href="{{ route('admin.flights.create') }}"
+                       class="px-4 py-2 bg-blue-600 hover:bg-blue-700 transition text-white text-sm rounded-lg">
+                        + Add Flight
+                    </a>
+                </div>
             </div>
 
             <div class="overflow-x-auto">
@@ -45,9 +71,7 @@
                     <tbody class="divide-y text-center">
                         @forelse ($getAllFlights as $flight)
                             <tr class="hover:bg-gray-50">
-                                <td class="p-3 text-gray-600">
-                                    {{ $flight->id }}
-                                </td>
+                                <td class="p-3 text-gray-600">{{ $flight->id }}</td>
 
                                 <td class="p-3 font-medium text-gray-800 text-left">
                                     {{ $flight->airline->airline_name ?? '-' }}
@@ -76,7 +100,6 @@
                                           onsubmit="return confirm('Delete this flight?')">
                                         @csrf
                                         @method('DELETE')
-
                                         <button type="submit"
                                                 class="text-red-600 hover:underline text-sm">
                                             Delete
