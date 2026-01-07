@@ -57,6 +57,7 @@ class Flight extends Model
      * @return float Estimated CO₂ emissions in kg per passenger (rounded to 1 decimal)
      * @throws \Exception If flight duration cannot be calculated
      */
+    
     public function calculateCarbonEmissions()
     {
         // Validate that required timestamps exist
