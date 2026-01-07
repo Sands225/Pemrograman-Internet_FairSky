@@ -60,46 +60,31 @@ class Flight extends Model
     
     public function calculateCarbonEmissions()
     {
-        // Validate that required timestamps exist
+        // Validasi time stamp
         if (!$this->departure_time || !$this->arrival_time) {
             return 0.0;
         }
 
-        // Calculate flight duration in hours
         $departure = \Carbon\Carbon::parse($this->departure_time);
         $arrival = \Carbon\Carbon::parse($this->arrival_time);
 
-        // Handle edge case: invalid time range
         if ($arrival <= $departure) {
             return 0.0;
         }
 
         $durationInHours = $departure->diffInMinutes($arrival) / 60;
 
-        // Handle edge case: negative or zero duration
         if ($durationInHours <= 0) {
             return 0.0;
         }
 
-        // Determine emission factor based on piecewise model
         $emissionFactor = $this->getEmissionFactor($durationInHours);
 
-        // Calculate total emissions: duration × emission factor
         $estimatedEmission = $durationInHours * $emissionFactor;
 
         return round($estimatedEmission, 1);
     }
 
-    /**
-     * Get emission factor (kg CO₂/hour) based on flight duration.
-     *
-     * Piecewise emission model:
-     * - Short flights burn more fuel per hour due to takeoff/landing overhead
-     * - Long flights benefit from fuel-efficient cruise optimization
-     *
-     * @param float $durationInHours Flight duration in decimal hours
-     * @return int Emission factor in kg CO₂/hour
-     */
     private function getEmissionFactor($durationInHours)
     {
         if ($durationInHours < 1) {
