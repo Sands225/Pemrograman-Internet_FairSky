@@ -12,7 +12,7 @@
             {{-- Image --}}
             <div class="order-2 lg:order-1">
                 <div class="h-80 rounded-2xl shadow-lg overflow-hidden">
-                    <img src="{{ asset('images/about_plane.jpg') }}"
+                    <img src="{{ asset('images/about_plane.png') }}"
                         alt="FairSky Origin"
                         class="w-full h-full object-cover">
                 </div>
