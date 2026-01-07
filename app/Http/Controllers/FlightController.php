@@ -23,12 +23,15 @@ class FlightController extends Controller
             ->where('departure_time', '>=', now());
 
         // Filter Pencarian Utama (Dropdown)
-        if ($request->filled('from')) { $query->where('origin_airport_id', $request->from); }
-        if ($request->filled('to')) { $query->where('destination_airport_id', $request->to); }
-        if ($request->filled('date')) { $query->whereDate('departure_time', $request->date); }
-
-        // Filter Sidebar: Transit
-        if ($request->has('stops')) { $query->whereIn('stops', $request->stops); }
+        if ($request->filled('from')) {
+            $query->where('origin_airport_id', $request->from);
+        }
+        if ($request->filled('to')) {
+            $query->where('destination_airport_id', $request->to);
+        }
+        if ($request->filled('date')) {
+            $query->whereDate('departure_time', $request->date);
+        }
 
         // Filter Sidebar: Waktu Berangkat
         if ($request->has('waktu')) {
