@@ -22,7 +22,7 @@ class AirplaneSeeder extends Seeder
             'Boeing 737 MAX 8',
             ];
 
-        for ($i = 0; $i < 120; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
             // Ambil ID maskapai secara acak
             $airlineId = DB::table('airlines')->inRandomOrder()->value('id');
 

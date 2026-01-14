@@ -17,9 +17,7 @@
 <div class="">
 
     {{-- HERO SECTION --}}
-    <section
-        class="hero-section snap-start h-screen bg-cover bg-center bg-black/30 bg-blend-darken flex flex-col justify-center items-center">
-
+    <section class="hero-section snap-start h-screen bg-cover bg-center bg-black/30 bg-blend-darken flex flex-col justify-center items-center">
         <div class="container h-full content-center mx-auto px-4 text-center mt-20 pt-4 text-white">
             <h1 class="text-4xl md:text-6xl font-bold mb-3 drop-shadow-lg">
                 See Clearly, Fly Fairly
@@ -30,85 +28,83 @@
         </div>
 
         {{-- HERO BOX --}}
-        <div class="container mx-auto h-full flex justify-end items-end mb-10">
-            <div class="max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl p-6 md:p-8 text-xs">
+        <div class="max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl px-6 pt-6 pb-10 md:px-8 md:pt-8 md:pb-12 text-xs">
+            <form action="{{ route('flights.index') }}" method="GET">
 
-                <form action="{{ route('flights.index') }}" method="GET">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
-                    {{-- Form Fields --}}
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {{-- FROM --}}
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600 mb-2">Where From?</label>
+                        <div class="flex items-center w-full border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-blue-500 bg-white overflow-hidden transition-all duration-200">
+                            <span class="pl-4 pr-3 text-blue-600 flex-shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+                            </span>
 
-                        {{-- From --}}
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-600 mb-2">Where From?</label>
-                            <div class="relative">
-                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-600">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                </span>
-                                <input type="text" name="from" placeholder="LWO, Lviv"
-                                    class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                            </div>
+                            <select name="from" class="w-full py-3 pr-4 border-none focus:ring-0 appearance-none bg-transparent text-gray-700 outline-none cursor-pointer font-medium">
+                                <option value="">Select Origin</option>
+                                @foreach($airports as $airport)
+                                    <option value="{{ $airport->id }}">
+                                        {{ $airport->city }}{{ $airport->iata_code ? ' ('.$airport->iata_code.')' : '' }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
-
-                        {{-- To --}}
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-600 mb-2">Where To?</label>
-                            <div class="relative">
-                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-600">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                    </svg>
-                                </span>
-                                <input type="text" name="to" placeholder="LHR, London"
-                                    class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                            </div>
-                        </div>
-
-                        {{-- Departure --}}
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-600 mb-2">Departure</label>
-                            <div class="relative">
-                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-600">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                    </svg>
-                                </span>
-                                <input type="date" name="departure"
-                                    class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                            </div>
-                        </div>
-
-                        {{-- Return --}}
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-600 mb-2">Return</label>
-                            <div class="relative">
-                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-600">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
-                                    </svg>
-                                </span>
-                                <input type="date" name="return_date"
-                                    class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                            </div>
-                        </div>
-
                     </div>
 
-                    {{-- Search Button --}}
-                    <div class="text-center mt-6">
-                        <button
-                            class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition">
-                            Search Flights
-                        </button>
+                    {{-- TO --}}
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600 mb-2">Where To?</label>
+                        <div class="flex items-center w-full border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-blue-500 bg-white overflow-hidden transition-all duration-200">
+                            <span class="pl-4 pr-3 text-blue-600 flex-shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+                            </span>
+
+                            <select name="to" class="w-full py-3 pr-4 border-none focus:ring-0 appearance-none bg-transparent text-gray-700 outline-none cursor-pointer font-medium">
+                                <option value="">Select Destination</option>
+                                @foreach($airports as $airport)
+                                    <option value="{{ $airport->id }}">
+                                        {{ $airport->city }}{{ $airport->iata_code ? ' ('.$airport->iata_code.')' : '' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
+
+                    {{-- DEPARTURE DATE --}}
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600 mb-2">Departure</label>
+                        <div class="relative">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-600 z-10">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </span>
+                            <input type="date" name="date" min="{{ date('Y-m-d') }}" value="{{ date('Y-m-d') }}"
+                                   class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+
+                    {{-- RETURN --}}
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-600 mb-2">Return</label>
+                        <div class="relative">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-600 z-10">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                    </span>
+                            <input type="date" name="return_date" min="{{ date('Y-m-d') }}"
+                                   class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-6">
+                    <button type="submit" class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition">
+                        Search Flights
+                    </button>
+                </div>
+
+            </form>
+        </div>
 
                 </form>
             </div>
@@ -643,15 +639,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- CTA -->
-            <div class="text-center mt-16">
-                <a href="{{ route('flights.index') }}"
-                class="inline-block px-10 py-4 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 transition">
-                    Find Your Flight
-                </a>
-            </div>
-
         </div>
     </section>
 

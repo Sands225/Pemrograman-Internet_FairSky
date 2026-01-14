@@ -47,7 +47,7 @@
         </button>
 
         {{-- Desktop Menu --}}
-        <div class="hidden lg:flex items-center gap-x-12">
+        <div class="hidden lg:flex items-centre gap-x-20">
             <a href="{{ route('flights.index') }}" class="text-gray-600 hover:text-blue-600 transition">Flights</a>
             <a href="{{ route('about') }}" class="text-gray-600 hover:text-blue-600 transition">About Us</a>
             <a href="{{ route('help') }}" class="text-gray-600 hover:text-blue-600 transition">Help</a>
