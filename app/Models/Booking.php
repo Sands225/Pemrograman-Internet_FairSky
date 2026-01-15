@@ -13,15 +13,25 @@ class Booking extends Model
         'booking_code',
         'passenger_name',
         'passenger_phone',
+        'total_price',
         'status',
         'payment_status',
-        'total_price',
         'booking_date',
     ];
 
-    public function payment()
+    protected $casts = [
+        'booking_date' => 'datetime',
+        'total_price'  => 'decimal:2',
+    ];
+
+    public function user()
     {
-        return $this->hasOne(Payment::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function flight()
+    {
+        return $this->belongsTo(Flight::class);
     }
 
     public function flightClass()
@@ -29,18 +39,13 @@ class Booking extends Model
         return $this->belongsTo(FlightClass::class);
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function ticket()
-    {
-        return $this->hasOne(Ticket::class);
-    }
-
     public function addons()
     {
-        return $this->hasMany(\App\Models\BookingAddon::class);
+        return $this->hasMany(BookingAddon::class);
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
     }
 }
