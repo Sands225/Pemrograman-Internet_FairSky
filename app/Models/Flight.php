@@ -11,10 +11,8 @@ class Flight extends Model
 
     protected $guarded = ['id'];
 
-    // Relasi ke Maskapai
     public function airplane()
     {
-        // memberitahu Flight punya relasi ke tabel airplanes
         return $this->belongsTo(Airplane::class, 'airplane_id');
     }
     public function airline()
@@ -22,19 +20,16 @@ class Flight extends Model
         return $this->belongsTo(Airline::class, 'airline_id');
     }
 
-    // Relasi ke Bandara Asal
     public function originAirport()
     {
         return $this->belongsTo(Airport::class, 'origin_airport_id');
     }
 
-    // Relasi ke Bandara Tujuan
     public function destinationAirport()
     {
         return $this->belongsTo(Airport::class, 'destination_airport_id');
     }
 
-    // Relasi ke Kelas Penerbangan (Untuk ambil Harga)
     public function flightClasses()
     {
         return $this->hasMany(FlightClass::class, 'flight_id');
