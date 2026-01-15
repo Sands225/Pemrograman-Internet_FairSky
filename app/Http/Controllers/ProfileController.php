@@ -27,6 +27,7 @@ class ProfileController extends Controller
         if (!$request->has('tab') || $request->tab == 'profile') {
             $rules['full_name'] = 'required|string|max:100';
             $rules['email'] =  'required|string|email|max:100|unique:users,email,' . $user->id;
+            $rules['phone_number'] = 'nullable|string|max:20';
         }
 
         // (update password)
@@ -52,6 +53,10 @@ class ProfileController extends Controller
             $user->email = $request->email;
         }
 
+        if ($request->filled('phone_number')) {
+            $user->phone_number = $request->phone_number;
+        }
+        
         if ($request->filled('new_password')) {
             $user->password = Hash::make($request->new_password);
         }

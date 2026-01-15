@@ -14,15 +14,13 @@ class FlightController extends Controller
 {
     public function flightListPage(Request $request)
     {
-        // Load data untuk dropdown dan filter maskapai
         $airports = Airport::orderBy('city', 'asc')->get();
-        $airlines = Airline::all(); // Mengambil semua maskapai untuk sidebar filter
+        $airlines = Airline::all(); 
 
         $query = Flight::with(['airline', 'originAirport', 'destinationAirport', 'airplane', 'flightClasses'])
             ->where('status', 'Scheduled')
             ->where('departure_time', '>=', now());
 
-        // Filter Pencarian Utama (Dropdown)
         if ($request->filled('from')) {
             $query->where('origin_airport_id', $request->from);
         }
@@ -33,7 +31,6 @@ class FlightController extends Controller
             $query->whereDate('departure_time', $request->date);
         }
 
-        // Filter Sidebar: Waktu Berangkat
         if ($request->has('waktu')) {
             $query->where(function($q) use ($request) {
                 $w = (array) $request->waktu;
@@ -43,7 +40,6 @@ class FlightController extends Controller
             });
         }
 
-        // Filter Sidebar: Waktu Tiba
         if ($request->has('tiba')) {
             $query->where(function($q) use ($request) {
                 $t = (array) $request->tiba;
@@ -53,12 +49,10 @@ class FlightController extends Controller
             });
         }
 
-        // Filter Sidebar: Maskapai
         if ($request->has('filter_airlines')) {
             $query->whereIn('airline_id', $request->filter_airlines);
         }
 
-        // Filter Sidebar: Rentang Harga
         if ($request->filled('min_price')) {
             $query->whereHas('flightClasses', function($q) use ($request) {
                 $q->where('price', '>=', $request->min_price);

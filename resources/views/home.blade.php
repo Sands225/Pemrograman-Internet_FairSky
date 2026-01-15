@@ -145,7 +145,7 @@
             <h5 class="text-xl font-semibold mb-1">
                 Jakarta → Bali (CGK → DPS)
             </h5>
-            <p class="text-gray-500 mb-3">
+            <p class="text-red-500 mb-3">
                 A tropical paradise offering stunning beaches, rich culture, and unforgettable experiences.
             </p>
 
@@ -189,7 +189,7 @@
             <h5 class="text-xl font-semibold mb-1">
                 Jakarta → Yogyakarta (CGK → YIA)
             </h5>
-            <p class="text-gray-500 mb-3">
+            <p class="text-red-500 mb-3">
                 A cultural city rich in history, art, and traditional Javanese heritage.
             </p>
 

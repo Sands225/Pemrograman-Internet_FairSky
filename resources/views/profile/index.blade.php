@@ -94,6 +94,16 @@
                                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                             @enderror
                                         </div>
+
+                                        <div class="md:col-span-2">
+                                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Phone Number</label>
+                                            <input type="text" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}"
+                                                   class="w-full px-4 py-3 rounded-xl border @error('phone_number') border-red-500 @else border-gray-200 @enderror focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm">
+                                            <p class="text-[10px] text-gray-400 mt-2 italic"></p>
+                                            @error('phone_number')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <div class="pt-6 flex justify-end gap-3 border-t border-gray-50 mt-8">
