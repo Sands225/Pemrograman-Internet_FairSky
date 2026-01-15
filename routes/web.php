@@ -11,6 +11,10 @@ use App\Models\Flight;
 use Symfony\Component\Mailer\Transport\RoundRobinTransport;
 use App\Http\Controllers\Admin\DashboardController;
 
+use App\Http\Controllers\Admin\BookingController as AdminBookingController;
+use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
+use App\Http\Controllers\Admin\TicketController as AdminTicketController;
+
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/help', [PageController::class, 'help'])->name('help');
@@ -104,3 +108,24 @@ Route::get('/admin/airlines/{airline}/airplanes', function (\App\Models\Airline 
         ->select('id', 'model', 'total_capacity')
         ->get();
 })->middleware(['auth', 'admin']);
+
+Route::prefix('admin')
+    ->middleware(['auth', 'admin'])
+    ->name('admin.')
+    ->group(function () {
+
+        Route::get('/bookings', [AdminBookingController::class, 'index'])
+            ->name('bookings.index');
+
+        Route::get('/bookings/{booking}', [AdminBookingController::class, 'show'])
+            ->name('bookings.show');
+
+        Route::get('/payments', [AdminPaymentController::class, 'index'])
+            ->name('payments.index');
+
+        Route::post('/payments/{booking}/paid', [AdminPaymentController::class, 'markPaid'])
+            ->name('payments.markPaid');
+
+        Route::get('/tickets', [AdminTicketController::class, 'index'])
+            ->name('tickets.index');
+    });

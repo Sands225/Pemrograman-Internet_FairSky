@@ -21,6 +21,7 @@ class Ticket extends Model
     protected $casts = [
         'class_type' => 'string',
         'eticket_status' => 'string',
+        'issued_at' => 'datetime',
     ];
 
     public function booking()

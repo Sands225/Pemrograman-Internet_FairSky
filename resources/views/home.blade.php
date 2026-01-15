@@ -28,7 +28,7 @@
         </div>
 
         {{-- HERO BOX --}}
-        <div class="max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl px-6 pt-6 pb-10 md:px-8 md:pt-8 md:pb-12 text-xs">
+        <div class="max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl px-6 pt-6 pb-10 md:px-8 md:pt-8 md:pb-12 text-xs mb-20">
             <form action="{{ route('flights.index') }}" method="GET">
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
