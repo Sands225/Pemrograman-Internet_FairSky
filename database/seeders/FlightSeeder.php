@@ -10,7 +10,7 @@ class FlightSeeder extends Seeder
 {
     public function run()
     {
-        for ($i = 1; $i <= 300; $i++) {
+        for ($i = 1; $i <= 5000; $i++) {
             // 1. Ambil 1 pesawat acak beserta pemiliknya (airline_id)
             $airplane = DB::table('airplanes')->inRandomOrder()->first();
 

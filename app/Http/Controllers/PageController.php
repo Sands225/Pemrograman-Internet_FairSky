@@ -8,7 +8,8 @@ class PageController extends Controller
 {
     public function home()
     {
-        return view('home');
+        $airports = \App\Models\Airport::orderBy('city', 'asc')->get();
+        return view('home', compact('airports'));
     }
 
     public function showLogin()
