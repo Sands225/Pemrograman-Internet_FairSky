@@ -73,7 +73,6 @@ class PaymentController extends Controller
     {
         $booking = Booking::with([
             'payment',
-            'ticket',
             'flightClass.flight.airline',
             'flightClass.flight.originAirport',
             'flightClass.flight.destinationAirport',
